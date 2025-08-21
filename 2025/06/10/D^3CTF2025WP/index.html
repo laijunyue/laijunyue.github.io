@@ -25,22 +25,22 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="WEBd3jtar思路1234567漏洞点主要是再tar和untar逻辑，压缩文件时只会保留unicode编码的最后两位，解压还原文件名时用0补齐也就是说jsp的unicode编码是\u006a\u0073\u0070，而unicode编码的最后两位与\u006a\u0073\u0070相同的字符或汉字例如交乳买: \u4e6a\u4e73\u4e70以 &quot;6a&quot; 结尾的其他字">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819132343657.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819132352007.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819133016341.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819133248509.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250819132343657.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250819132352007.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250819133016341.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250819133248509.png">
 <meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/Za8SD9pQM6sQSjxiaWVORnBicx5YZz00BzCYykmicMc6cgqufhU0q7icrsrlhBklMauDHM8m7kht26mteicLTsyicQuA/640?wx_fmt=png&from=appmsg&watermark=1&tp=wxpic&wxfrom=5&wx_lazy=1">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819133856001.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819133903293.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250819133856001.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250819133903293.png">
 <meta property="article:published_time" content="2025-06-10T04:04:01.000Z">
-<meta property="article:modified_time" content="2025-08-19T05:45:10.516Z">
+<meta property="article:modified_time" content="2025-08-21T09:52:36.932Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="PHP">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819132343657.png">
+<meta name="twitter:image" content="http://laijunyue.github.io/images/image-20250819132343657.png">
     
     
     <!--- Icon Part-->
@@ -421,8 +421,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-08-19 13:45:10</span>
-            <span class="mobile">2025-08-19 13:45:10</span>
+            <span class="desktop">2025-08-21 17:52:36</span>
+            <span class="mobile">2025-08-21 17:52:36</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -477,13 +477,13 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819132343657.png"
+                     data-src="/../images/image-20250819132343657.png"
                       alt="image-20250819132343657"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819132352007.png"
+                     data-src="/../images/image-20250819132352007.png"
                       alt="image-20250819132352007"
                 ></p>
 <h2 id="d3model"><a href="#d3model" class="headerlink" title="d3model"></a>d3model</h2><p>参考：</p>
@@ -491,7 +491,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819133016341.png"
+                     data-src="/../images/image-20250819133016341.png"
                       alt="image-20250819133016341"
                 ></p>
 <h2 id="tidy-quic"><a href="#tidy-quic" class="headerlink" title="tidy quic"></a>tidy quic</h2><h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">主要是缓冲池复用，先发&quot;       flag&quot;触发WAF，字符长度可控，长度位11，下次再发送&quot;I want&quot;</span><br><span class="line">缓冲池复用就可拼接为&quot;I want flag&quot;</span><br></pre></td></tr></table></figure></div>
@@ -499,7 +499,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819133248509.png"
+                     data-src="/../images/image-20250819133248509.png"
                       alt="image-20250819133248509"
                 ></p>
 <h2 id="d3invitation"><a href="#d3invitation" class="headerlink" title="d3invitation"></a>d3invitation</h2><h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">拿AKSK，拼接绕过权限，列桶，拿flag</span><br><span class="line">参考：</span><br><span class="line">https://forum.butian.net/share/4340</span><br><span class="line">https://help.aliyun.com/zh/oss/developer-reference/use-temporary-access-credentials-provided-by-sts-to-access-oss</span><br></pre></td></tr></table></figure></div>
@@ -513,13 +513,13 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819133856001.png"
+                     data-src="/../images/image-20250819133856001.png"
                       alt="image-20250819133856001"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250819133903293.png"
+                     data-src="/../images/image-20250819133903293.png"
                       alt="image-20250819133903293"
                 ></p>
 
@@ -536,7 +536,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-08-19 13:45:10
+                    :</strong> 2025-08-21 17:52:36
             </li>
         
         <li>

@@ -25,26 +25,26 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="URLDNS链首先我们看看URL方法的作用 12345public static void main(String[] args) throws Exception &amp;#123;    &#x2F;&#x2F; URL类    URL url &#x3D; new URL(&quot;http:&#x2F;&#x2F;t5pyqm.dnslog.cn&#x2F;&quot;);    url.hashCode();&amp;#125;  URL类重写了hashCo">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805112144699.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805112231706.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805124047670.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805113429861.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805113532418.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805113622858.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805124030869.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805115144316.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805115302157.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805115351963.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805124236939.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250805112144699.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250805112231706.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250805124047670.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250805113429861.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250805113532418.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250805113622858.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250805124030869.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250805115144316.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250805115302157.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250805115351963.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250805124236939.png">
 <meta property="article:published_time" content="2025-08-06T07:04:05.000Z">
-<meta property="article:modified_time" content="2025-08-06T07:18:38.726Z">
+<meta property="article:modified_time" content="2025-08-21T09:53:46.835Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="PHP">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805112144699.png">
+<meta name="twitter:image" content="http://laijunyue.github.io/images/image-20250805112144699.png">
     
     
     <!--- Icon Part-->
@@ -425,8 +425,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-08-06 15:18:38</span>
-            <span class="mobile">2025-08-06 15:18:38</span>
+            <span class="desktop">2025-08-21 17:53:46</span>
+            <span class="mobile">2025-08-21 17:53:46</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -483,19 +483,19 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805112144699.png"
+                     data-src="/../images/image-20250805112144699.png"
                       alt="image-20250805112144699"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805112231706.png"
+                     data-src="/../images/image-20250805112231706.png"
                       alt="image-20250805112231706"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805124047670.png"
+                     data-src="/../images/image-20250805124047670.png"
                       alt="image-20250805124047670"
                 ></p>
 <p>那么好了，我们的最终目的已经知道了，就是要调用URL.hashCode，而反序列化的入口是ois.readObject()，相当于现在的思路是哪个类重写了readObject()方法，当反序列化这个类时调用它的readObject()，而它的readObject()方法又能实现或间接实现xxx.hashCode的调用，那我们将xxx赋值为URL，那么这条链子就通了。</p>
@@ -503,19 +503,19 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805113429861.png"
+                     data-src="/../images/image-20250805113429861.png"
                       alt="image-20250805113429861"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805113532418.png"
+                     data-src="/../images/image-20250805113532418.png"
                       alt="image-20250805113532418"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805113622858.png"
+                     data-src="/../images/image-20250805113622858.png"
                       alt="image-20250805113622858"
                 ></p>
 <h4 id="POC编写"><a href="#POC编写" class="headerlink" title="POC编写"></a>POC编写</h4><p>hashMap用put方法向HashMap中添加键值对，我们将键赋值为URL对象</p>
@@ -524,7 +524,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805124030869.png"
+                     data-src="/../images/image-20250805124030869.png"
                       alt="image-20250805124030869"
                 ></p>
 <p>可以看到请求成功，但是真的是这样吗？</p>
@@ -532,20 +532,20 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805115144316.png"
+                     data-src="/../images/image-20250805115144316.png"
                       alt="image-20250805115144316"
                 ></p>
 <p>关键点就在于hashCode的值为-1，无法执行URL中的hashCode方法</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805115302157.png"
+                     data-src="/../images/image-20250805115302157.png"
                       alt="image-20250805115302157"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805115351963.png"
+                     data-src="/../images/image-20250805115351963.png"
                       alt="image-20250805115351963"
                 ></p>
 <p>这就要用到反射了，通过反射将url对象中的hashCode属性的值改为666，那么在put操作的时候会直接return，就不会去调用hashCode()方法了</p>
@@ -554,7 +554,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250805124236939.png"
+                     data-src="/../images/image-20250805124236939.png"
                       alt="image-20250805124236939"
                 ></p>
 
@@ -571,7 +571,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-08-06 15:18:38
+                    :</strong> 2025-08-21 17:53:46
             </li>
         
         <li>

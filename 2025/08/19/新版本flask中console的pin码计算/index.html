@@ -25,25 +25,25 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="新版本flask中console的pin码计算——SeikaiCTF2025 MyFlaskApp就刚打的SEKAICTF2025中的一道My Flask App，记录一下新版本flask中console的pin码计算 由于靶机时间只有5分钟，所有我跑本地来进行记录 参考：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;m1xian&#x2F;p&#x2F;18528813#flask%E7%9A%84pin%E7%">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816141455975.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816141549937.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816142002699.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250816141455975.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250816141549937.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250816142002699.png">
 <meta property="og:image" content="https://img2024.cnblogs.com/blog/3475290/202411/3475290-20241105210546074-271902130.png">
 <meta property="og:image" content="https://img2024.cnblogs.com/blog/3475290/202411/3475290-20241105210546448-1101135830.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816143801850.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816144501981.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816144516099.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816144835247.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816144917580.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250816143801850.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250816144501981.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250816144516099.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250816144835247.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250816144917580.png">
 <meta property="article:published_time" content="2025-08-19T11:07:05.000Z">
-<meta property="article:modified_time" content="2025-08-18T05:13:41.497Z">
+<meta property="article:modified_time" content="2025-08-21T09:52:18.011Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="PHP">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816141455975.png">
+<meta name="twitter:image" content="http://laijunyue.github.io/images/image-20250816141455975.png">
     
     
     <!--- Icon Part-->
@@ -424,8 +424,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-08-18 13:13:41</span>
-            <span class="mobile">2025-08-18 13:13:41</span>
+            <span class="desktop">2025-08-21 17:52:18</span>
+            <span class="mobile">2025-08-21 17:52:18</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -484,13 +484,13 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816141455975.png"
+                     data-src="/../images/image-20250816141455975.png"
                       alt="image-20250816141455975"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816141549937.png"
+                     data-src="/../images/image-20250816141549937.png"
                       alt="image-20250816141549937"
                 ></p>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>下面就根据SEKAICTF2025中的一道<strong>My Flask App</strong>来讲解一下思路</p>
@@ -498,7 +498,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816142002699.png"
+                     data-src="/../images/image-20250816142002699.png"
                       alt="image-20250816142002699"
                 ></p>
 <p>现在的问题是我们无法使用&#x2F;console进入debug的控制台，也无法获取返回的cookie</p>
@@ -553,7 +553,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816143801850.png"
+                     data-src="/../images/image-20250816143801850.png"
                       alt="image-20250816143801850"
                 ></p>
 <p><code>你是不是想说为什么不直接读flag，我也想啊，可惜dockerfile将flag文件改成了随机命名，也就是说你根本不知道flag文件名是啥，说实话，如果能直接读flag那这题也没有啥意义了(bushi</code></p>
@@ -569,27 +569,27 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816144501981.png"
+                     data-src="/../images/image-20250816144501981.png"
                       alt="image-20250816144501981"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816144516099.png"
+                     data-src="/../images/image-20250816144516099.png"
                       alt="image-20250816144516099"
                 ></p>
 <p>之后就要有点技巧了，把抓访问&#x2F;console的包然后加cookie改host后放包，随便输入一个python代码，即可返回secret即s的值</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816144835247.png"
+                     data-src="/../images/image-20250816144835247.png"
                       alt="image-20250816144835247"
                 ></p>
 <p>之后便可命令执行了</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250816144917580.png"
+                     data-src="/../images/image-20250816144917580.png"
                       alt="image-20250816144917580"
                 ></p>
 
@@ -606,7 +606,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-08-18 13:13:41
+                    :</strong> 2025-08-21 17:52:18
             </li>
         
         <li>

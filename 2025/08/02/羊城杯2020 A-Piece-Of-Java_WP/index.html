@@ -25,21 +25,21 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="羊城杯2020 A-Piece-Of-Java WP题记算是比较老的一道题了，主要还是不怎么会java，以学习的心态来复现这道题 考点CC5，CC7 JDBC反序列化漏洞 分析反编译jar包发现 &#x2F;index和 &#x2F;hello两个路由 123456789101112131415161718192021222324@PostMapping(&amp;#123;&quot;&#x2F;index&amp;qu">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802120221010.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802120221010.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802123116490.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802123300081.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802123533444.png">
-<meta property="og:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802123822987.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250802120221010.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250802120221010.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250802123116490.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250802123300081.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250802123533444.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250802123822987.png">
 <meta property="article:published_time" content="2025-08-02T11:07:05.000Z">
-<meta property="article:modified_time" content="2025-08-06T07:18:47.617Z">
+<meta property="article:modified_time" content="2025-08-21T09:51:26.559Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="PHP">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802120221010.png">
+<meta name="twitter:image" content="http://laijunyue.github.io/images/image-20250802120221010.png">
     
     
     <!--- Icon Part-->
@@ -420,8 +420,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-08-06 15:18:47</span>
-            <span class="mobile">2025-08-06 15:18:47</span>
+            <span class="desktop">2025-08-21 17:51:26</span>
+            <span class="mobile">2025-08-21 17:51:26</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -487,7 +487,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802120221010.png"
+                     data-src="/../images/image-20250802120221010.png"
                       alt="image-20250802120221010"
                 ></p>
 <p>但是现实往往是残酷的，这是序列化和反序列化的逻辑</p>
@@ -500,7 +500,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802120221010.png"
+                     data-src="/../images/image-20250802120221010.png"
                       alt="image-20250802120221010"
                 ></p>
 <div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">connect</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> <span class="string">&quot;jdbc:mysql://&quot;</span> + <span class="built_in">this</span>.host + <span class="string">&quot;:&quot;</span> + <span class="built_in">this</span>.port + <span class="string">&quot;/jdbc?user=&quot;</span> + <span class="built_in">this</span>.username + <span class="string">&quot;&amp;password=&quot;</span> + <span class="built_in">this</span>.password + <span class="string">&quot;&amp;connectTimeout=3000&amp;socketTimeout=6000&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.connection = DriverManager.getConnection(url);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception var3) &#123;</span><br><span class="line">        var3.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
@@ -522,26 +522,26 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802123116490.png"
+                     data-src="/../images/image-20250802123116490.png"
                       alt="image-20250802123116490"
                 ></p>
 <p>在<strong>resultSetToMap</strong>的<strong>mappedValues.put</strong>中调用<strong>rs.getObject</strong>，继续跟进<strong>ResultSet</strong>接口的实现，在的<strong>ResultSetImpl</strong>找到<strong>getObject</strong>方法存在反序列化操作</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802123300081.png"
+                     data-src="/../images/image-20250802123300081.png"
                       alt="image-20250802123300081"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802123533444.png"
+                     data-src="/../images/image-20250802123533444.png"
                       alt="image-20250802123533444"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="C:\Users\27284\AppData\Roaming\Typora\typora-user-images\image-20250802123822987.png"
+                     data-src="/../images/image-20250802123822987.png"
                       alt="image-20250802123822987"
                 ></p>
 <p><strong>在拦截器的第二个方法，也就是在查询后执行的postProccess也会反序列化一次，所以总共触发两次反序列化RCE</strong></p>
@@ -572,7 +572,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-08-06 15:18:47
+                    :</strong> 2025-08-21 17:51:26
             </li>
         
         <li>
