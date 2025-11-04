@@ -53,7 +53,7 @@
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250812132632141.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250812132511640.png">
 <meta property="article:published_time" content="2024-10-12T07:08:05.000Z">
-<meta property="article:modified_time" content="2025-09-11T09:50:05.449Z">
+<meta property="article:modified_time" content="2025-10-10T09:16:08.903Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="JAVA">
@@ -379,7 +379,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">13</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -387,7 +387,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">20</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">29</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -441,8 +441,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-09-11 17:50:05</span>
-            <span class="mobile">2025-09-11 17:50:05</span>
+            <span class="desktop">2025-10-10 17:16:08</span>
+            <span class="mobile">2025-10-10 17:16:08</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -573,7 +573,8 @@
                      data-src="/../images/image-20250822114950490.png"
                       alt="image-20250822114950490"
                 ></p>
-<p>MyObjectInputStream类过滤了下方这些类，注意是通过resolveClass的方式获取classname，所以无法通 过UTF8 Overlong Encoding的方式绕过</p>
+<p>MyObjectInputStream类过滤了下方这些类，注意是通过resolveClass的方式获取classname，所以无法通过UTF8 Overlong Encoding的方式绕过</p>
+<h4 id="插一句"><a href="#插一句" class="headerlink" title="插一句"></a>插一句</h4><p>反序列化引擎在调用 <code>resolveClass</code> 时，<code>desc.getName()</code> 会<strong>自动</strong>将 <code>0xC0 0xAF</code> 解码为 <code>/</code>，因为它会验证 <strong>这个两字节序列 <code>0xC0 0xAF</code> 是表示代码点 <code>0x2F</code> 的最短可能序列</strong>，显然不是，因为 <code>0x2F</code> 是一个 ASCII 字符，它完全可以用<strong>单字节</strong> <code>0x2F</code> 来表示而不是两字节序列</p>
 <p>可参考<a class="link"   target="_blank" rel="noopener" href="https://www.imooc.com/article/323732" >https://www.imooc.com/article/323732 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&quot;java.lang.Runtime&quot;</span><br><span class="line">&quot;java.lang.ProcessBuilder&quot;</span><br><span class="line">&quot;com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl&quot;</span><br><span class="line">&quot;java.security.SignedObject&quot;</span><br><span class="line">&quot;com.sun.jndi.ldap.LdapAttribute&quot;</span><br><span class="line">&quot;org.apache.commons.beanutils&quot;</span><br><span class="line">&quot;org.apache.commons.collections&quot;</span><br><span class="line">&quot;javax.management.BadAttributeValueExpException&quot;</span><br><span class="line">&quot;com.sun.org.apache.xpath.internal.objects.XString&quot;</span><br></pre></td></tr></table></figure></div>
 
@@ -753,7 +754,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-09-11 17:50:05
+                    :</strong> 2025-10-10 17:16:08
             </li>
         
         <li>
@@ -821,10 +822,10 @@
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="next"
                         rel="next"
-                        href="/2024/09/10/%E7%AC%AC%E5%9B%9B%E5%B1%8A%E2%80%9C%E9%95%BF%E5%9F%8E%E6%9D%AF%E2%80%9D%E6%9A%A8%E4%BA%AC%E6%B4%A5%E5%86%80%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%8A%80%E8%83%BD%E7%AB%9E%E8%B5%9B%EF%BC%88%E5%88%9D%E8%B5%9B%EF%BC%89CandyShop%20WP/"
+                        href="/2024/09/25/XGCTF_%E8%A5%BF%E7%93%9C%E6%9D%AF%20WEB%20WP/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">第四届“长城杯”暨京津冀网络安全技能竞赛（初赛）CandyShop WP</span>
+                                <span class="post-nav-title-item">XGCTF_西瓜杯 WEB WP</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -888,7 +889,7 @@
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">2024羊城杯WP</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lyrics-For-You"><span class="nav-text">Lyrics For You</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ez-java"><span class="nav-text">ez_java</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E4%BF%A1%E6%81%AF"><span class="nav-text">题目信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="nav-text">启动脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WriteUp"><span class="nav-text">WriteUp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tomtom2"><span class="nav-text">tomtom2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat-0%E8%A7%A3"><span class="nav-text">Tomcat(0解)</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lyrics-For-You"><span class="nav-text">Lyrics For You</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ez-java"><span class="nav-text">ez_java</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E4%BF%A1%E6%81%AF"><span class="nav-text">题目信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC"><span class="nav-text">启动脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WriteUp"><span class="nav-text">WriteUp</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E4%B8%80%E5%8F%A5"><span class="nav-text">插一句</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tomtom2"><span class="nav-text">tomtom2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat-0%E8%A7%A3"><span class="nav-text">Tomcat(0解)</span></a></li></ol></li></ol>
 
     </div>
 </div>

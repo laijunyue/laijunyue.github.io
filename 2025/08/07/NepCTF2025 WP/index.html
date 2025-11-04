@@ -60,7 +60,7 @@
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250821234335050.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250821234349058.png">
 <meta property="article:published_time" content="2025-08-07T04:30:05.000Z">
-<meta property="article:modified_time" content="2025-08-21T16:11:53.078Z">
+<meta property="article:modified_time" content="2025-09-23T07:58:47.906Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="JAVA">
@@ -386,7 +386,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">13</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -394,7 +394,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">20</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">29</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -448,8 +448,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-08-22 00:11:53</span>
-            <span class="mobile">2025-08-22 00:11:53</span>
+            <span class="desktop">2025-09-23 15:58:47</span>
+            <span class="mobile">2025-09-23 15:58:47</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -542,7 +542,7 @@
                      data-src="/../images/wps4.jpg"
                       alt="img"
                 ></p>
-<h2 id="fakeXSS"><a href="#fakeXSS" class="headerlink" title="fakeXSS"></a><strong>fakeXSS</strong></h2><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">首页注册用户-&gt;登录-&gt;传头像接口获取cos的临时的上传aksk-&gt;访问并列出存储桶-&gt;下载服务端源码server_bak.js</span><br><span class="line">-&gt;拿到管理员账号密码，可以修改首页背景图片-&gt;分析漏洞点在背景图片的代码，直接url拼接打XSS</span><br><span class="line">-&gt;/api/set-login-bg接口设置payload-&gt;服务端bot使用客户端软件访问首页，客户端用electron框架，并注入了electronAPI</span><br><span class="line">-&gt;electronAPI有curl函数可调用curl file协议读/flag</span><br></pre></td></tr></table></figure></div>
+<h2 id="fakeXSS"><a href="#fakeXSS" class="headerlink" title="fakeXSS"></a><strong>fakeXSS</strong></h2><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">首页注册用户-&gt;登录-&gt;上传头像接口获取cos的临时aksk-&gt;访问并列出存储桶-&gt;下载服务端源码server_bak.js</span><br><span class="line">-&gt;拿到管理员账号密码，可以修改首页背景图片-&gt;分析漏洞点在背景图片的代码，直接url拼接打XSS</span><br><span class="line">-&gt;/api/set-login-bg接口设置payload-&gt;服务端bot使用客户端软件访问首页，客户端用electron框架，并注入了electronAPI</span><br><span class="line">-&gt;electronAPI有curl函数可调用curl file协议读/flag</span><br></pre></td></tr></table></figure></div>
 
 <p>先注册一个用户登录，上传头像接口处可以获得一组cos的临时的上传aksk</p>
 <p><img  
@@ -629,7 +629,7 @@
                      data-src="/../images/wps8.jpg"
                       alt="img"
                 ></p>
-<p>出题人忘了删shiro的CB依赖。然后又发现忘了删自己测试的exp，本-来是想让我们自己写链子</p>
+<p>出题人忘了删shiro的CB依赖。然后又发现忘了删自己测试的exp，本来是想让我们自己写链子</p>
 <h2 id="safe-bank"><a href="#safe-bank" class="headerlink" title="safe_bank"></a><strong>safe_bank</strong></h2><p>该题源于研究强网杯决赛的ezlogin时发现的一个有趣的小trick，当然因为考虑不周，还是出现了一些非预期，红豆泥私密马赛。</p>
 <p>说回题目，<code>jsonpickle</code>采用<code>Unpickler._restore</code>对序列化对象进行恢复。而每种标签又对应着不同的<code>_restore</code>函数。例如<code>py/object</code> ，会调用<code>_restore_object</code>进行处理。</p>
 <p><img  
@@ -1056,7 +1056,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-08-22 00:11:53
+                    :</strong> 2025-09-23 15:58:47
             </li>
         
         <li>

