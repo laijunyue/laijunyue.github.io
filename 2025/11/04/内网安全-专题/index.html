@@ -87,7 +87,7 @@
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251118151941717.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20251118152033796.png">
 <meta property="article:published_time" content="2025-11-04T01:35:22.000Z">
-<meta property="article:modified_time" content="2025-11-24T06:11:02.208Z">
+<meta property="article:modified_time" content="2025-11-27T01:06:36.165Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CS">
 <meta property="article:tag" content="MSF">
@@ -422,7 +422,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">32</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">42</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -476,8 +476,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-11-24 14:11:02</span>
-            <span class="mobile">2025-11-24 14:11:02</span>
+            <span class="desktop">2025-11-27 09:06:36</span>
+            <span class="mobile">2025-11-27 09:06:36</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -564,7 +564,7 @@
 <p>简单来讲，Kerberos协议认证就是一个第三方认证机构，客户机&#x2F;服务器 双方并不需要去建立信任关系，他们之间是否信任直接去问这个第三方认证机构(Kerberos)就可以了。</p>
 <h1 id="红日靶场搭建与复现"><a href="#红日靶场搭建与复现" class="headerlink" title="红日靶场搭建与复现"></a>红日靶场搭建与复现</h1><p>地址：<a class="link"   target="_blank" rel="noopener" href="http://vulnstack.qiyuanxuetang.net/vuln/" >http://vulnstack.qiyuanxuetang.net/vuln/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <h2 id="靶场1"><a href="#靶场1" class="headerlink" title="靶场1"></a>靶场1</h2><p>环境链接：<a class="link"   target="_blank" rel="noopener" href="http://vulnstack.qiyuanxuetang.net/vuln/detail/2/" >http://vulnstack.qiyuanxuetang.net/vuln/detail/2/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a><strong>搭建</strong></h3><p>下载靶场主机，，是虚拟机文件，直接用虚拟机打开就可以用了，但是需要配一下网段</p>
+<h3 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a><strong>搭建</strong></h3><p>下载靶场主机，是虚拟机文件，直接用虚拟机打开就可以用了，但是需要配一下网段</p>
 <p>如图打开会有一个后缀名为vmx的文件，点击即可</p>
 <p><img  
                      lazyload
@@ -761,7 +761,7 @@
 <p><strong>会话中断</strong>：改用 <code>spawn</code> 代替 <code>inject</code> 或检查杀软拦截</p>
 </blockquote>
 <h3 id="内网信息收集"><a href="#内网信息收集" class="headerlink" title="内网信息收集"></a>内网信息收集</h3><p><strong>一域二端三明文</strong></p>
-<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">net view                 # 查看局域网内其他主机名</span><br><span class="line">net config Workstation   # 查看计算机名、全名、用户名、系统版本、工作站、域、登录域</span><br><span class="line">net user                 # 查看本机用户列表</span><br><span class="line">net user /domain         # 查看域用户</span><br><span class="line">net localgroup administrators # 查看本地管理员组（通常会有域用户）</span><br><span class="line">net view /domain         # 查看有几个域</span><br><span class="line">net user 用户名 /domain   # 获取指定域用户的信息</span><br><span class="line">net group /domain        # 查看域里面的工作组，查看把用户分了多少组（只能在域控上操作）</span><br><span class="line">net group 组名 /domain    # 查看域中某工作组</span><br><span class="line">net group &quot;domain admins&quot; /domain  # 查看域管理员的名字</span><br><span class="line">net group &quot;domain computers&quot; /domain  # 查看域中的其他主机名</span><br><span class="line">net group &quot;doamin controllers&quot; /domain  # 查看域控制器主机名（可能有多台）</span><br><span class="line"></span><br><span class="line">定位域控</span><br><span class="line">nltest /DCLIST:域名		# 查看域控机器名</span><br><span class="line">net group <span class="string">&quot;doamin controllers&quot;</span> /domain  # 查看域控制器主机名（可能有多台）</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Css"><figure class="iseeu highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">net view                 # 查看局域网内其他主机名</span><br><span class="line">net config Workstation   # 查看计算机名、全名、用户名、系统版本、工作站、域、登录域</span><br><span class="line">net user                 # 查看本机用户列表</span><br><span class="line">net user /domain         # 查看域用户</span><br><span class="line">net localgroup administrators # 查看本地管理员组（通常会有域用户）</span><br><span class="line">net view /domain         # 查看有几个域</span><br><span class="line">net user 用户名 /domain   # 获取指定域用户的信息</span><br><span class="line">net group /domain        # 查看域里面的工作组，查看把用户分了多少组（只能在域控上操作）</span><br><span class="line">net group 组名 /domain    # 查看域中某工作组</span><br><span class="line">net group &quot;domain admins&quot; /domain  # 查看域管理员的名字</span><br><span class="line">net group &quot;domain computers&quot; /domain  # 查看域中的其他主机名</span><br><span class="line">net group &quot;doamin controllers&quot; /domain  # 查看域控制器主机名（可能有多台）</span><br><span class="line"></span><br><span class="line">定位域控</span><br><span class="line">net <span class="selector-tag">time</span> /domain         # 显示当前域的时间，结合ping命令定位域控 </span><br><span class="line">nltest /DCLIST:域名		# 查看域控机器名</span><br><span class="line">net group <span class="string">&quot;doamin controllers&quot;</span> /domain  # 查看域控制器主机名（可能有多台）</span><br></pre></td></tr></table></figure></div>
 
 <p>先来看一下权限，如果权限是普通的admin权限的话我们使用<code>getsystem</code>来提升到<code>system权限</code></p>
 <p><img  
@@ -1039,7 +1039,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-11-24 14:11:02
+                    :</strong> 2025-11-27 09:06:36
             </li>
         
         <li>
@@ -1111,10 +1111,10 @@
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="next"
                         rel="next"
-                        href="/2025/10/23/CISCN%202023%20WEB/"
+                        href="/2025/11/04/DASCTF%202025%E4%B8%8B%E5%8D%8A%E5%B9%B4%E8%B5%9BWP/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">CISCN 2023 WEB 复现</span>
+                                <span class="post-nav-title-item">DASCTF 2025下半年赛 WP</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -1206,7 +1206,7 @@
               <span>2022</span>
               -
             
-            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
         </div>
         
             <script data-swup-reload-script src="https://cn.vercount.one/js"></script>

