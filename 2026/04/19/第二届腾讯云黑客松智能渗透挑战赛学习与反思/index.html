@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="xiaolaisec">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://laijunyue.github.io/2026/04/19/第二届腾讯云黑客松智能渗透挑战赛学习与反思/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="差不多零零散散加起来花了一周的时间，我用codex辅助编程，二次开发了一个agent准备这次的比赛(codex真不如claude)，原本也设计了一个sandbox，但是由于太菜，环境老崩，加上时间原因，遂放弃。 这次比赛打完是0成本，比赛期间全程用的是赛方提供的MINIMAX模型，主要两个原因，一是没钱，二是想测一下国产模型的能力。最终结果也不容乐观，agent就只有在开赛第一天上午不到5分钟的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第二届腾讯云黑客松智能渗透挑战赛学习与反思">
+<meta property="og:url" content="http://laijunyue.github.io/2026/04/19/%E7%AC%AC%E4%BA%8C%E5%B1%8A%E8%85%BE%E8%AE%AF%E4%BA%91%E9%BB%91%E5%AE%A2%E6%9D%BE%E6%99%BA%E8%83%BD%E6%B8%97%E9%80%8F%E6%8C%91%E6%88%98%E8%B5%9B%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%8F%8D%E6%80%9D/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="差不多零零散散加起来花了一周的时间，我用codex辅助编程，二次开发了一个agent准备这次的比赛(codex真不如claude)，原本也设计了一个sandbox，但是由于太菜，环境老崩，加上时间原因，遂放弃。 这次比赛打完是0成本，比赛期间全程用的是赛方提供的MINIMAX模型，主要两个原因，一是没钱，二是想测一下国产模型的能力。最终结果也不容乐观，agent就只有在开赛第一天上午不到5分钟的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20260410204331206.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20260417195824314.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20260418145435042.png">
+<meta property="article:published_time" content="2026-04-19T05:12:16.000Z">
+<meta property="article:modified_time" content="2026-04-19T06:53:11.832Z">
+<meta property="article:author" content="xiaolaisec">
+<meta property="article:tag" content="LangChain">
+<meta property="article:tag" content="meta-tooling">
+<meta property="article:tag" content="React Agent">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://laijunyue.github.io/images/image-20260410204331206.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/background.jpg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/background.jpg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/background.jpg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            第二届腾讯云黑客松智能渗透挑战赛学习与反思 -
+        
+        Welcome to xiaolaisec&#39;s blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Welcome to xiaolaisec&#39;s blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"laijunyue.github.io","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","delete_mask":false,"headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null},"highlight_theme":{"light":"github","dark":"vs2015"}},"toc":{"enable":true,"max_depth":6,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]},"pangu_js":false},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null},"side_tools":{"gear_rotation":true,"auto_expand":false}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/background.jpg","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"xiaolaisec's blog","subtitle":{"text":["欢迎来到我的博客(｡･∀･)ﾉﾞ","悟已往之不谏，知来者之可追...","随心所欲地享受每一天\\(￣︶￣*\\))","随时随地，浏览记录O(∩_∩)O","如果喜欢，建议给个支持( •̀ ω •́ )✧","喜欢的话，留个言好嘛(oﾟvﾟ)ノ","你有建议？反馈作者(●^◡^●)","文字正在不断轮换(*￣3￣)╭","正在努力更新博客(ง •_•)ง","正在不断努力改善博客中ε=( o｀ω′)ノ"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn","show_author":false},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null},"style":"default"}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true},"width":{"home":"1200px","pages":"1000px"}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null,"show_on_mobile":true},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3},"excerpt_length":200},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Welcome to xiaolaisec&#39;s blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">22</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">第二届腾讯云黑客松智能渗透挑战赛学习与反思</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/xiaolai.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">xiaolaisec</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-04-19 13:12:16</span>
+        <span class="mobile">2026-04-19 13:12:16</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-04-19 14:53:11</span>
+            <span class="mobile">2026-04-19 14:53:11</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/LangChain/">LangChain</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/meta-tooling/">meta-tooling</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/React-Agent/">React Agent</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <blockquote>
+<p>差不多零零散散加起来花了一周的时间，我用<strong>codex</strong>辅助编程，二次开发了一个agent准备这次的比赛(codex真不如claude)，原本也设计了一个<strong>sandbox</strong>，但是由于太菜，环境老崩，加上时间原因，遂放弃。</p>
+<p>这次比赛打完是0成本，比赛期间全程用的是赛方提供的<strong>MINIMAX模型</strong>，主要两个原因，一是没钱，二是想测一下国产模型的能力。最终结果也不容乐观，agent就只有在开赛第一天上午<strong>不到5分钟的时间解了5道题</strong>，以为是开始，没想到是巅峰了…</p>
+<p>后续由于我代码逻辑的问题，如并发解题(同时开启三道赛题，每道赛题有独立的agent进行解题)死锁的问题、工具调用、请求超时等，让agent处理稍微高难度一点的题目的时候就会一直卡，后面也是修修补补，但也无济于事，可能也和模型能力有很大关系。</p>
+</blockquote>
+<p>这里贴两张图吧，其实国产模型在解决中等及以下难度题的时候效果还是可以的，像赛前给的demo题，4题解完最快的时候也不到3分钟。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20260410204331206.png"
+                      alt="image-20260410204331206"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20260417195824314.png"
+                      alt="image-20260417195824314"
+                ></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>去年12月，我像往常一样刷着微信公众号，或许命中注定，我的目光一下子就被“腾讯云黑客松·智能渗透挑战赛”这个标题吸引住了。可惜的是，当时比赛已经结束了，而且那时的我对 Agent 这个概念还停留在一个“小白”阶段。对于一个做传统网络安全的人来说，在 2025 年之前，我其实一直对 AI 抱有一定的抵触情绪，尤其是在黑盒安全领域。因为我平时接触的大多数场景都是黑盒，白盒更多只是在打比赛的时候才会涉及。在Agent的概念还没火起来之前，AI在黑盒领域的应用还非常鸡肋，但接触了这个比赛，我开始对AI有了新的认知，并且随着LLM发展越来越快，其能力也在不断上升，许多CTF比赛AI一把梭也成常态，也有很多用Agent取得不错成绩的选手。</p>
+<p>于是后来我就去官网上学习了一些比赛的开源项目以及相关的技术文章，并且开始从0学起一些agent开发框架和范式，像ReAct-Agent、Multi-Agent、LangChain、LanGraph等等，当然也包括MCP、SKILLS等这些概念，开始自己设计Agent去打比赛，也确定了我今后的研究方向——AI for Security。</p>
+<h1 id="学习与思考"><a href="#学习与思考" class="headerlink" title="学习与思考"></a>学习与思考</h1><p>在我开发和设计我的第一个agent时，看了很多文章，当时什么ReAct-Agent、Multi-Agent、kali MCP被吹的天花乱坠，于是我天真的认为只要设计一个Multi-Agent，就像一个专业团队一样互相配合，并且越复杂越好，里面还集成大量的MCP工具，后面了解RAG后也想着做RAG增强，反正就是堆agent、堆工具。但是才落地到一半我才发现并没我想的那么简单。</p>
+<p>这时我只设计了三个agent，一个负责推理和决策，一个负责探针如用python写一些POC脚本验证漏洞的存在等，一个负责调用工具。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20260418145435042.png"
+                      alt="image-20260418145435042"
+                ></p>
+<p>我的想法是全程由主agent进行决策并提供攻击思路，让探针agent执行并进行漏洞确认，如果漏洞不存在，返回给主agent继续思考；如果漏洞被确认存在，那么让主agent最终调用MCP agent进行最终的漏洞利用。看似很合理，但是一测试我才发现，负责漏洞探测的agent和MCP agent很难去配合，比如我从题库中选了一道特别简单的sql注入题，当探针agent发现SQL注入被确认时，主agent并没有让MCP agent执行sqlmap，而是一直在探测，几乎把sql注入的那几个类型都试了一遍(这可能也和我选的模型有关)，过了很久，最后才终于到了MCP agent。原因我想有几个，第一就是状态转移的边界无法明确；第二就是误报、噪声等因素影响主agent的判断；第三就是执行层的冲突，举个简单的例子，有时候探针agent写的POC都已经是或者接近最终EXP了，根本就轮不到MCP agent，但是主agent还是会去调用MCP agent执行一些不必要的工具，这可能也和上下文爆炸导致模型注意力下降有关，加上我没用像claude这样强大的模型做推理，导致实现的效果很差。</p>
+<p>经过这次的失败我也总结出一个问题，就是<strong>Agent的能力并不取决于架构设计得多复杂，而是LLM是否足够强大，同样的agent架构不同的模型我不认为会达到同样的效果</strong>。并且模型的强度要被配得上Agent架构实现的复杂度，不然有可能会事倍功半(比如agent做一道加减法题和做一道微积分的题所花的时间差不多)。而且我觉得设计的<strong>重心本就不应该放在复杂的架构和工具的堆积上，而在于如何解放模型的自我反思和推导能力，反复迭代，把渗透抽象化，发挥ai的主观能动性，解决本质问题，不能打补丁(agnet缺什么我就加什么)<strong>。我在开始设计Agent的初心，是用复杂的架构去平衡掉模型之间的差异，但是我错了，复杂的架构反而会约束LLM的发挥，并且随着MCP工具的堆积，token的消耗指数级别的增长，成本开销巨大。并且我个人认为，</strong>LLM应用层的开发感觉也不是技术壁垒，真正的壁垒本就应该聚焦于LLM本身</strong>。</p>
+<p>于是我一直在想，如何权衡模型最终的效果和其成本开销的问题，最终我有了思路。我在想，其实绝大部分漏洞利用的POC&#x2F;EXP，都可以通过python实现，那为什么还要用到大量的MCP工具呢？针对一些像端口监听、反弹shell、sqlmap命令等功能，我只需要给模型一个能运行终端命令的环境，不就解决了吗？但是这样token消耗依然没有得到缓解，因为编写python脚本和获取其运行结果，再对其结果进行分析，也需要消耗大量的token。于是我想到了第一届比赛笑神的项目：<a class="link"   target="_blank" rel="noopener" href="https://github.com/chainreactors/tinyctfer%EF%BC%8C%E5%85%B6%E8%AE%BE%E8%AE%A1%E7%9A%84%60meta-tooling%60%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E4%BA%86%E4%B8%8A%E8%BF%B0%E9%97%AE%E9%A2%98%E3%80%82%E5%AF%B9%E4%BA%8E%E7%AC%91%E7%A5%9E%E8%AE%BE%E8%AE%A1%E7%9A%84%60meta-tooling%60%E6%88%91%E5%9C%A8%E8%BF%99%E9%87%8C%E4%B8%8D%E5%81%9A%E8%BF%87%E5%A4%9A%E4%BB%8B%E7%BB%8D%EF%BC%8C%E5%B0%B1%E6%88%91%E8%87%AA%E5%B7%B1%E7%9A%84%E7%90%86%E8%A7%A3%E7%AE%80%E5%8D%95%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%9A%E8%BF%99%E9%87%8C%E6%9C%89%E4%B8%80%E5%A0%86%E5%B7%A5%E5%85%B7%EF%BC%8C%E4%BC%A0%E7%BB%9F%E6%96%B9%E5%BC%8F%E7%9A%84agent%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F%E6%98%AFagent%E8%87%AA%E5%B7%B1%E4%B8%80%E4%B8%AA%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7%E7%9A%84%E8%B0%83%E7%94%A8" >https://github.com/chainreactors/tinyctfer，其设计的`meta-tooling`完美解决了上述问题。对于笑神设计的`meta-tooling`我在这里不做过多介绍，就我自己的理解简单举个例子：这里有一堆工具，传统方式的agent调用方式是agent自己一个一个工具的调用 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>(调工具 A-&gt;看返回结果-&gt;再决定调工具 B-&gt;再看结果-&gt;再决定调工具 C…)，而Meta-Tooling实现方式则是让agent写一个脚本(这个脚本可理解为agent的意图并将其翻译成了一段可执行的操作流程，如agent现在调用哪些工具去实现自己的意图，如何对工具进行编排)，通过脚本去实现工具调用。</p>
+<p>于是我二开了tinyctfer，加入了msf mcp、skills、多并发编排等等，后来我在buu、nss、hack the box等等上测试，用国内大模型解决中等及以下难度的题大致都没问题，并且解题效率也很高，最快只用19秒就能得到flag了。但是由于我没有考虑代码细节问题，导致在真实比赛时agent卡死，由于无法比赛在运行时调试，只能通过日志去修复问题。</p>
+<h1 id="赛后反思"><a href="#赛后反思" class="headerlink" title="赛后反思"></a>赛后反思</h1><p><code>meta-tooling</code>用于CTF解题或许够用，但是遇到真实的渗透环境，长时任务导致AI幻觉、注意力下降、模型降智等等因素依然是难题，所以<code>memory管理</code>至关重要。我之前看的pentestGPT论文中将渗透测试过程抽象成PTT(Pentesting Task Tree)树形结构，但我认为更应该抽象成图结构，以为树的每一个分支互不相干，这显然不过合理，因为在真实环境中经常遇到组合拳的打法，从一个漏洞打到另一个漏洞，从一个机器横向到另一个机器。<strong>agent在渗透过程中通过维护这么一张图，去管理记忆，主要包括agent目前做了哪些事，下一步该怎么做，记录失败路径、成功路径、关键路径等等</strong>。但随之而来又会遇到一个问题，就是这张图会无限膨胀，导致agent上下文爆炸，token消耗和成本不断上升，所以也要<strong>考虑如何对图进行优化如结点合并、权重优化等等</strong>。</p>
+<p>也许强大的模型根本不需要一些花里胡哨的东西，就像笑神说的一样，他没给agent任何SKILLS，只是给了运行所需的环境，一样能AK比赛。这里插一句，还有prompt工程，再好的prompt，给到垃圾的模型，效果可能也不会有所提高，但是一些顶级的模型，你prompt写得一般，模型该强还是强。个人认为就prompt工程问题本就不该抛给使用模型的人，就像难题不该抛给客户一样，未来AI的发展应该会弱化prompt的门槛，做到真正服务全人类。</p>
+<p>上面的内容纯属个人观点，依旧想到什么说什么，后续再有想法会继续更新。</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 第二届腾讯云黑客松智能渗透挑战赛学习与反思</li>
+        <li><strong>Author:</strong> xiaolaisec</li>
+        <li><strong>Created at
+                :</strong> 2026-04-19 13:12:16</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-04-19 14:53:11
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2026/04/19/第二届腾讯云黑客松智能渗透挑战赛学习与反思/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/LangChain/">#LangChain</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/meta-tooling/">#meta-tooling</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/React-Agent/">#React Agent</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2026/03/16/SUCTF2026%20WP/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">SUCTF2026 WP</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">第二届腾讯云黑客松智能渗透挑战赛学习与反思</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%80%9D%E8%80%83"><span class="nav-text">学习与思考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%9B%E5%90%8E%E5%8F%8D%E6%80%9D"><span class="nav-text">赛后反思</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>

