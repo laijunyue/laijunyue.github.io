@@ -18,18 +18,18 @@
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="差不多零零散散加起来花了一周的时间，我用codex辅助编程，二次开发了一个agent准备这次的比赛(codex真不如claude)，原本也设计了一个sandbox，但是由于太菜，环境老崩，加上时间原因，遂放弃。 这次比赛打完是0成本，比赛期间全程用的是赛方提供的MINIMAX模型，主要两个原因，一是没钱，二是想测一下国产模型的能力。最终结果也不容乐观，agent就只有在开赛第一天上午不到5分钟的">
+        <meta name="description" content="项目地址：https:&#x2F;&#x2F;github.com&#x2F;laijunyue&#x2F;D0Pagent  差不多零零散散加起来花了一周的时间，我用codex辅助编程，二次开发了一个agent准备这次的比赛(codex真不如claude)，原本也设计了一个sandbox，但是由于太菜，环境老崩，加上时间原因，遂放弃。 这次比赛打完是0成本，比赛期间全程用的是赛方提供的MINIMAX模型，主要两个原因，一是没钱，二是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第二届腾讯云黑客松智能渗透挑战赛学习与反思">
 <meta property="og:url" content="http://laijunyue.github.io/2026/04/19/%E7%AC%AC%E4%BA%8C%E5%B1%8A%E8%85%BE%E8%AE%AF%E4%BA%91%E9%BB%91%E5%AE%A2%E6%9D%BE%E6%99%BA%E8%83%BD%E6%B8%97%E9%80%8F%E6%8C%91%E6%88%98%E8%B5%9B%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%8F%8D%E6%80%9D/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="差不多零零散散加起来花了一周的时间，我用codex辅助编程，二次开发了一个agent准备这次的比赛(codex真不如claude)，原本也设计了一个sandbox，但是由于太菜，环境老崩，加上时间原因，遂放弃。 这次比赛打完是0成本，比赛期间全程用的是赛方提供的MINIMAX模型，主要两个原因，一是没钱，二是想测一下国产模型的能力。最终结果也不容乐观，agent就只有在开赛第一天上午不到5分钟的">
+<meta property="og:description" content="项目地址：https:&#x2F;&#x2F;github.com&#x2F;laijunyue&#x2F;D0Pagent  差不多零零散散加起来花了一周的时间，我用codex辅助编程，二次开发了一个agent准备这次的比赛(codex真不如claude)，原本也设计了一个sandbox，但是由于太菜，环境老崩，加上时间原因，遂放弃。 这次比赛打完是0成本，比赛期间全程用的是赛方提供的MINIMAX模型，主要两个原因，一是没钱，二是">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20260410204331206.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20260417195824314.png">
 <meta property="og:image" content="http://laijunyue.github.io/images/image-20260418145435042.png">
 <meta property="article:published_time" content="2026-04-19T05:12:16.000Z">
-<meta property="article:modified_time" content="2026-04-19T06:53:11.832Z">
+<meta property="article:modified_time" content="2026-04-19T07:34:33.842Z">
 <meta property="article:author" content="xiaolaisec">
 <meta property="article:tag" content="LangChain">
 <meta property="article:tag" content="meta-tooling">
@@ -416,8 +416,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2026-04-19 14:53:11</span>
-            <span class="mobile">2026-04-19 14:53:11</span>
+            <span class="desktop">2026-04-19 15:34:33</span>
+            <span class="mobile">2026-04-19 15:34:33</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -464,6 +464,7 @@
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
             <blockquote>
+<p>项目地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/laijunyue/D0Pagent" >https://github.com/laijunyue/D0Pagent <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>差不多零零散散加起来花了一周的时间，我用<strong>codex</strong>辅助编程，二次开发了一个agent准备这次的比赛(codex真不如claude)，原本也设计了一个<strong>sandbox</strong>，但是由于太菜，环境老崩，加上时间原因，遂放弃。</p>
 <p>这次比赛打完是0成本，比赛期间全程用的是赛方提供的<strong>MINIMAX模型</strong>，主要两个原因，一是没钱，二是想测一下国产模型的能力。最终结果也不容乐观，agent就只有在开赛第一天上午<strong>不到5分钟的时间解了5道题</strong>，以为是开始，没想到是巅峰了…</p>
 <p>后续由于我代码逻辑的问题，如并发解题(同时开启三道赛题，每道赛题有独立的agent进行解题)死锁的问题、工具调用、请求超时等，让agent处理稍微高难度一点的题目的时候就会一直卡，后面也是修修补补，但也无济于事，可能也和模型能力有很大关系。</p>
@@ -494,7 +495,7 @@
 <p>我的想法是全程由主agent进行决策并提供攻击思路，让探针agent执行并进行漏洞确认，如果漏洞不存在，返回给主agent继续思考；如果漏洞被确认存在，那么让主agent最终调用MCP agent进行最终的漏洞利用。看似很合理，但是一测试我才发现，负责漏洞探测的agent和MCP agent很难去配合，比如我从题库中选了一道特别简单的sql注入题，当探针agent发现SQL注入被确认时，主agent并没有让MCP agent执行sqlmap，而是一直在探测，几乎把sql注入的那几个类型都试了一遍(这可能也和我选的模型有关)，过了很久，最后才终于到了MCP agent。原因我想有几个，第一就是状态转移的边界无法明确；第二就是误报、噪声等因素影响主agent的判断；第三就是执行层的冲突，举个简单的例子，有时候探针agent写的POC都已经是或者接近最终EXP了，根本就轮不到MCP agent，但是主agent还是会去调用MCP agent执行一些不必要的工具，这可能也和上下文爆炸导致模型注意力下降有关，加上我没用像claude这样强大的模型做推理，导致实现的效果很差。</p>
 <p>经过这次的失败我也总结出一个问题，就是<strong>Agent的能力并不取决于架构设计得多复杂，而是LLM是否足够强大，同样的agent架构不同的模型我不认为会达到同样的效果</strong>。并且模型的强度要被配得上Agent架构实现的复杂度，不然有可能会事倍功半(比如agent做一道加减法题和做一道微积分的题所花的时间差不多)。而且我觉得设计的<strong>重心本就不应该放在复杂的架构和工具的堆积上，而在于如何解放模型的自我反思和推导能力，反复迭代，把渗透抽象化，发挥ai的主观能动性，解决本质问题，不能打补丁(agnet缺什么我就加什么)<strong>。我在开始设计Agent的初心，是用复杂的架构去平衡掉模型之间的差异，但是我错了，复杂的架构反而会约束LLM的发挥，并且随着MCP工具的堆积，token的消耗指数级别的增长，成本开销巨大。并且我个人认为，</strong>LLM应用层的开发感觉也不是技术壁垒，真正的壁垒本就应该聚焦于LLM本身</strong>。</p>
 <p>于是我一直在想，如何权衡模型最终的效果和其成本开销的问题，最终我有了思路。我在想，其实绝大部分漏洞利用的POC&#x2F;EXP，都可以通过python实现，那为什么还要用到大量的MCP工具呢？针对一些像端口监听、反弹shell、sqlmap命令等功能，我只需要给模型一个能运行终端命令的环境，不就解决了吗？但是这样token消耗依然没有得到缓解，因为编写python脚本和获取其运行结果，再对其结果进行分析，也需要消耗大量的token。于是我想到了第一届比赛笑神的项目：<a class="link"   target="_blank" rel="noopener" href="https://github.com/chainreactors/tinyctfer%EF%BC%8C%E5%85%B6%E8%AE%BE%E8%AE%A1%E7%9A%84%60meta-tooling%60%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E4%BA%86%E4%B8%8A%E8%BF%B0%E9%97%AE%E9%A2%98%E3%80%82%E5%AF%B9%E4%BA%8E%E7%AC%91%E7%A5%9E%E8%AE%BE%E8%AE%A1%E7%9A%84%60meta-tooling%60%E6%88%91%E5%9C%A8%E8%BF%99%E9%87%8C%E4%B8%8D%E5%81%9A%E8%BF%87%E5%A4%9A%E4%BB%8B%E7%BB%8D%EF%BC%8C%E5%B0%B1%E6%88%91%E8%87%AA%E5%B7%B1%E7%9A%84%E7%90%86%E8%A7%A3%E7%AE%80%E5%8D%95%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%9A%E8%BF%99%E9%87%8C%E6%9C%89%E4%B8%80%E5%A0%86%E5%B7%A5%E5%85%B7%EF%BC%8C%E4%BC%A0%E7%BB%9F%E6%96%B9%E5%BC%8F%E7%9A%84agent%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F%E6%98%AFagent%E8%87%AA%E5%B7%B1%E4%B8%80%E4%B8%AA%E4%B8%80%E4%B8%AA%E5%B7%A5%E5%85%B7%E7%9A%84%E8%B0%83%E7%94%A8" >https://github.com/chainreactors/tinyctfer，其设计的`meta-tooling`完美解决了上述问题。对于笑神设计的`meta-tooling`我在这里不做过多介绍，就我自己的理解简单举个例子：这里有一堆工具，传统方式的agent调用方式是agent自己一个一个工具的调用 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>(调工具 A-&gt;看返回结果-&gt;再决定调工具 B-&gt;再看结果-&gt;再决定调工具 C…)，而Meta-Tooling实现方式则是让agent写一个脚本(这个脚本可理解为agent的意图并将其翻译成了一段可执行的操作流程，如agent现在调用哪些工具去实现自己的意图，如何对工具进行编排)，通过脚本去实现工具调用。</p>
-<p>于是我二开了tinyctfer，加入了msf mcp、skills、多并发编排等等，后来我在buu、nss、hack the box等等上测试，用国内大模型解决中等及以下难度的题大致都没问题，并且解题效率也很高，最快只用19秒就能得到flag了。但是由于我没有考虑代码细节问题，导致在真实比赛时agent卡死，由于无法比赛在运行时调试，只能通过日志去修复问题。</p>
+<p>于是我二开了tinyctfer，加入了msf mcp、skills、多并发编排等等，后来我在buu、nss、hack the box等等上测试，用国内大模型解决中等及以下难度的题大致都没问题，并且解题效率也很高，最快只用19秒就能得到flag了。但是由于我没有考虑代码细节问题，导致在真实比赛时agent卡死，由于比赛在运行时无法调试，只能通过日志去修复问题。</p>
 <h1 id="赛后反思"><a href="#赛后反思" class="headerlink" title="赛后反思"></a>赛后反思</h1><p><code>meta-tooling</code>用于CTF解题或许够用，但是遇到真实的渗透环境，长时任务导致AI幻觉、注意力下降、模型降智等等因素依然是难题，所以<code>memory管理</code>至关重要。我之前看的pentestGPT论文中将渗透测试过程抽象成PTT(Pentesting Task Tree)树形结构，但我认为更应该抽象成图结构，以为树的每一个分支互不相干，这显然不过合理，因为在真实环境中经常遇到组合拳的打法，从一个漏洞打到另一个漏洞，从一个机器横向到另一个机器。<strong>agent在渗透过程中通过维护这么一张图，去管理记忆，主要包括agent目前做了哪些事，下一步该怎么做，记录失败路径、成功路径、关键路径等等</strong>。但随之而来又会遇到一个问题，就是这张图会无限膨胀，导致agent上下文爆炸，token消耗和成本不断上升，所以也要<strong>考虑如何对图进行优化如结点合并、权重优化等等</strong>。</p>
 <p>也许强大的模型根本不需要一些花里胡哨的东西，就像笑神说的一样，他没给agent任何SKILLS，只是给了运行所需的环境，一样能AK比赛。这里插一句，还有prompt工程，再好的prompt，给到垃圾的模型，效果可能也不会有所提高，但是一些顶级的模型，你prompt写得一般，模型该强还是强。个人认为就prompt工程问题本就不该抛给使用模型的人，就像难题不该抛给客户一样，未来AI的发展应该会弱化prompt的门槛，做到真正服务全人类。</p>
 <p>上面的内容纯属个人观点，依旧想到什么说什么，后续再有想法会继续更新。</p>
@@ -512,7 +513,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2026-04-19 14:53:11
+                    :</strong> 2026-04-19 15:34:33
             </li>
         
         <li>
